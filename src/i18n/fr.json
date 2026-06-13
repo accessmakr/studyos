@@ -1,0 +1,20 @@
+{
+  "app": {
+    "name": "StudyOS",
+    "tagline": "Transformez n'importe quoi en kits d'étude en 3 secondes"
+  },
+  "tabs": {
+    "snap": "StudySnap",
+    "pdf": "Surligneur PDF",
+    "chat": "Analyseur Chat",
+    "voice": "Notes Vocales",
+    "url": "URL"
+  },
+  "common": {
+    "generate": "Générer",
+    "loading": "Traitement...",
+    "error": "Quelque chose s'est mal passé",
+    "copy": "Copier",
+    "download": "Télécharger PDF"
+  }
+}
