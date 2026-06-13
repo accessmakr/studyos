@@ -1,0 +1,20 @@
+{
+  "app": {
+    "name": "StudyOS",
+    "tagline": "Juya komai zuwa kayan karatu cikin daƙiƙa 3"
+  },
+  "tabs": {
+    "snap": "StudySnap",
+    "pdf": "PDF Highlighter",
+    "chat": "Mai Binciken Chat",
+    "voice": "Rubutun Murya",
+    "url": "URL"
+  },
+  "common": {
+    "generate": "Ƙirƙira",
+    "loading": "Ana sarrafawa...",
+    "error": "Wani abu ya tafi ba daidai ba",
+    "copy": "Kwafa",
+    "download": "Zazzage PDF"
+  }
+}
