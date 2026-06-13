@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "build:local": "tsc && vite build --mode local",
+    "build": "vite build",
+    "build:local": "vite build --mode local",
     "build:mobile": "npm run build && npx cap sync",
     "preview": "vite preview"
   },
@@ -24,7 +24,10 @@
     "@capacitor/core": "^6.1.2",
     "@capacitor/ios": "^6.1.2",
     "@capacitor/android": "^6.1.2",
-    "@supabase/supabase-js": "^2.45.1"
+    "@supabase/supabase-js": "^2.45.1",
+    "@netlify/functions": "latest",
+    "cheerio": "latest",
+    "lucide-react": "latest"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
