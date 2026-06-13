@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Turn any PDF, link, or notes into flashcards, quizzes, summaries in 3 seconds. Free AI study tools for students.">
+<meta name="keywords" content="AI study tools, PDF highlighter, flashcards, quiz generator, summary tool">
+<meta name="robots" content="index, follow">
+<meta name="author" content="StudyOS">
+<link rel="canonical" href="https://studyos.cc/">
+<link rel="alternate" hreflang="en" href="https://studyos.cc/">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<meta property="og:title" content="StudyOS - AI Study Tools">
+<meta property="og:description" content="Turn any PDF, link, or notes into study kits in 3 seconds">
+<meta property="og:url" content="https://studyos.cc/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#10b981">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PhoneTools">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/assets/images/icons/apple-touch-icon.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="preconnect" href="https://api.groq.com">
+<meta name="geo.position" content="6.5244;3.3792">
+<meta name="ICBM" content="6.5244, 3.3792">
+<title>StudyOS - AI Study Tools</title>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://studyos.cc/#website",
+  "name": "StudyOS",
+  "url": "https://studyos.cc/",
+  "dateModified": ""
+}
+</script>
+</head>
+<body class="bg-slate-50">
+<div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-emerald-500 z-50"></div>
+
+<header>
+  <div class="flex justify-between items-center p-4 max-w-7xl mx-auto">
+    <a href="index.html" class="flex items-center gap-2">
+      <span class="text-2xl font-bold text-slate-900">StudyOS</span>
+    </a>
+    <button type="button" class="trigger-search flex items-center text-gray-600 hover:text-emerald-700 transition-colors duration-200 focus:outline-none" aria-label="Open Search">
+      <span class="mr-2 text-sm font-medium hidden sm:inline">Search</span>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+    </button>
+    <div id="master-nav-dock" class="flex items-center justify-between"></div>
+  </div>
+</header>
+
+<main id="root"></main>
+<div id="dynamic-internal-links"></div>
+<div id="toast-container"></div>
+
+<script defer src="../js/registry.js"></script>
+<script defer src="../js/root-config.js"></script>
+<script defer src="../js/menu-system.js"></script>
+<script defer src="../js/search-system.js"></script>
+<script defer src="../js/schema.js"></script>
+<script defer src="../js/internal-links.js"></script>
+<script defer src="../js/legal-engine.js"></script>
+<script defer src="./js/sw-register.js"></script>
+<script>
+document.getElementById('scroll-progress').style.width = '0%';
+window.addEventListener('scroll', () => {
+  const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  document.getElementById('scroll-progress').style.width = (winScroll / height) * 100 + '%';
+});
+document.querySelector('script[type="application/ld+json"]').textContent = document.querySelector('script[type="application/ld+json"]').textContent.replace('"dateModified": ""', '"dateModified": "' + new Date().toISOString().split('T')[0] + '"');
+document.querySelectorAll('a[href="index.html"]').forEach(a => a.href = 'https://studyos.cc/');
+</script>
+</body>
+</html>
