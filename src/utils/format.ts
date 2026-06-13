@@ -1,14 +1,14 @@
-export function truncateText(text: string, maxCharz: number): string {
-  if (text.length <= maxCharz) return text
-  return text.slice(0, maxCharz) + '...'
+export function truncateText(text: string, maxChars: number): string {
+  if (text.length <= maxChars) return text
+  return text.slice(0, maxChars) + '...'
 }
 
-export function formatBytez(bytes: number): string {
+export function formatBytes(bytes: number): string {
   if (bytes === 0) return '0 B'
   const k = 1024
   const sizes = ['B', 'KB', 'MB', 'GB']
   const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' + sizes[i] // fixed quote here
+  return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' + sizes[i] // <- fixed: ' + not ' +
 }
 
 export function sanitizeFilename(name: string): string {
