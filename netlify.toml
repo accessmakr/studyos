@@ -1,18 +1,70 @@
+# =========================================
+# StudyOS — Netlify Configuration
+# Deploy: drag all 4 files to
+#         app.netlify.com/drop
+# =========================================
+
 [build]
-  command = "npm run build"
-  publish = "dist"
+  publish = "."
 
-[functions]
-  directory = "netlify/functions"
+# ── SPA routing ──────────────────────────
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
 
+# ── Security headers (all pages) ─────────
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options           = "SAMEORIGIN"
+    X-Content-Type-Options    = "nosniff"
+    X-XSS-Protection          = "1; mode=block"
+    Referrer-Policy           = "strict-origin-when-cross-origin"
+    Permissions-Policy        = "camera=(*), microphone=(*)"
+    Content-Security-Policy   = """
+      default-src 'self';
+      script-src  'self' 'unsafe-inline'
+                  https://cdnjs.cloudflare.com
+                  https://cdn.jsdelivr.net;
+      style-src   'self' 'unsafe-inline'
+                  https://fonts.googleapis.com;
+      font-src    'self' https://fonts.gstatic.com;
+      img-src     'self' data: blob:;
+      media-src   'self' blob:;
+      connect-src 'self'
+                  https://api.groq.com
+                  https://generativelanguage.googleapis.com
+                  https://api.anthropic.com
+                  https://*.supabase.co
+                  https://api.allorigins.win
+                  https://corsproxy.io;
+      worker-src  blob: 'self'
+                  https://cdnjs.cloudflare.com;
+    """
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# ── Service worker — never cache ─────────
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-store, no-cache, must-revalidate"
+    Content-Type  = "application/javascript"
+
+# ── Manifest ─────────────────────────────
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Content-Type  = "application/manifest+json"
+    Cache-Control = "public, max-age=86400"
+
+# ── HTML — always fresh ───────────────────
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-store"
+
+# ── Static assets — long cache ────────────
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
