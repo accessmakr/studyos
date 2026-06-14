@@ -1,7 +1,7 @@
 {
   "name": "StudyOS — AI Study Toolkit",
   "short_name": "StudyOS",
-  "description": "7 input tools. 5 output types. AI-powered study kits from photos, PDFs, voice, chat, and URLs.",
+  "description": "7 input tools. AI-powered flashcards, quiz, and notes. Free to start.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -11,46 +11,15 @@
   "categories": ["education", "productivity"],
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='38' fill='%2318181b'/><rect x='16' y='16' width='160' height='160' rx='28' fill='%2310b981'/><text x='96' y='128' font-size='96' text-anchor='middle' font-family='system-ui'>📚</text></svg>",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='38' fill='%2318181b'/><rect x='12' y='12' width='168' height='168' rx='30' fill='%2310b981'/><text x='96' y='130' font-size='96' text-anchor='middle'>📚</text></svg>",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%2318181b'/><rect x='40' y='40' width='432' height='432' rx='76' fill='%2310b981'/><text x='256' y='340' font-size='260' text-anchor='middle' font-family='system-ui'>📚</text></svg>",
-      "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [
-    {
-      "label": "StudyOS Home Dashboard",
-      "sizes": "390x844",
-      "type": "image/png"
-    }
-  ],
   "shortcuts": [
-    {
-      "name": "Camera Snap",
-      "short_name": "Camera",
-      "description": "Snap a photo of notes",
-      "url": "/?tool=photo",
-      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='76' font-size='76'>📷</text></svg>", "sizes": "96x96" }]
-    },
-    {
-      "name": "Voice Notes",
-      "short_name": "Voice",
-      "description": "Record and transcribe",
-      "url": "/?tool=voice",
-      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='76' font-size='76'>🎤</text></svg>", "sizes": "96x96" }]
-    },
-    {
-      "name": "PDF Reader",
-      "short_name": "PDF",
-      "description": "Upload and extract PDF",
-      "url": "/?tool=pdf",
-      "icons": [{ "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><text y='76' font-size='76'>📄</text></svg>", "sizes": "96x96" }]
-    }
+    { "name": "Camera", "url": "/?tool=photo", "description": "Snap photo of notes" },
+    { "name": "Voice",  "url": "/?tool=voice", "description": "Record a lecture"   },
+    { "name": "PDF",    "url": "/?tool=pdf",   "description": "Upload a PDF"       }
   ]
 }
