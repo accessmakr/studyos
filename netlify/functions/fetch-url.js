@@ -1,41 +1,60 @@
 /**
- * StudyOS — /fetch-url endpoint
- * Fetches a URL server-side (no CORS issues),
- * strips HTML, returns clean readable text.
- * No API key needed — this is a proxy.
+ * StudyOS — /fetch-url
+ * Server-side URL content extractor.
+ * Primary: direct fetch + HTML strip.
+ * Fallback: Jina AI Reader (handles JS-rendered pages).
+ * No API key needed for either approach.
  */
 
 const CORS = {
-  'Access-Control-Allow-Origin':  '*',
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
-  'Content-Type':                 'application/json'
+  'Content-Type': 'application/json'
 };
 
-/* Tags whose entire content we remove (not just the tag) */
-const REMOVE_TAGS = ['script','style','nav','footer','header','aside','iframe','noscript','svg','form'];
+const REMOVE_TAGS = ['script','style','nav','footer','header','aside','iframe','noscript','svg','form','button','menu'];
 
 function stripHTML(html) {
-  let text = html;
-  /* Remove full blocks */
-  for (const tag of REMOVE_TAGS) {
-    text = text.replace(new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}>`, 'gi'), ' ');
+  let t = html;
+  REMOVE_TAGS.forEach(tag => {
+    t = t.replace(new RegExp(`<${tag}[\\s\\S]*?<\\/${tag}>`, 'gi'), ' ');
+  });
+  t = t.replace(/<\/(p|div|li|h[1-6]|blockquote|tr|br)>/gi, '\n');
+  t = t.replace(/<[^>]+>/g, ' ');
+  return t
+    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/&hellip;/g, '...').replace(/[ \t]+/g, ' ')
+    .replace(/\n{3,}/g, '\n\n').trim();
+}
+
+async function fetchDirect(url) {
+  const r = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (compatible; StudyOS/2.0)',
+      'Accept': 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8'
+    },
+    signal: AbortSignal.timeout(10000),
+    redirect: 'follow'
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  const ct = r.headers.get('content-type') || '';
+  if (!ct.includes('text/html') && !ct.includes('text/plain')) {
+    throw new Error('Not a readable page');
   }
-  /* Convert block-level tags to newlines for readability */
-  text = text.replace(/<\/(p|div|li|h[1-6]|blockquote|tr)>/gi, '\n');
-  /* Strip remaining tags */
-  text = text.replace(/<[^>]+>/g, ' ');
-  /* Decode common HTML entities */
-  text = text
-    .replace(/&nbsp;/g,  ' ')
-    .replace(/&amp;/g,   '&')
-    .replace(/&lt;/g,    '<')
-    .replace(/&gt;/g,    '>')
-    .replace(/&quot;/g,  '"')
-    .replace(/&#39;/g,   "'")
-    .replace(/&hellip;/g,'...');
-  /* Collapse whitespace */
-  return text.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
+  const html = await r.text();
+  return stripHTML(html);
+}
+
+async function fetchViaJina(url) {
+  /* Jina AI Reader: renders JS pages server-side, returns clean markdown */
+  const r = await fetch(`https://r.jina.ai/${url}`, {
+    headers: { 'Accept': 'text/plain', 'User-Agent': 'StudyOS/2.0' },
+    signal: AbortSignal.timeout(15000)
+  });
+  if (!r.ok) throw new Error(`Jina HTTP ${r.status}`);
+  return (await r.text()).trim();
 }
 
 exports.handler = async (event) => {
@@ -44,7 +63,6 @@ exports.handler = async (event) => {
   const rawUrl = event.queryStringParameters?.url;
   if (!rawUrl) return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'url parameter required' }) };
 
-  /* Validate URL */
   let parsed;
   try {
     parsed = new URL(rawUrl);
@@ -53,39 +71,37 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Invalid URL: ' + e.message }) };
   }
 
+  let text = '';
+  let method = '';
+
   try {
-    const r = await fetch(rawUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; StudyOS/2.0; +https://studyos.app)',
-        'Accept':     'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5'
-      },
-      signal: AbortSignal.timeout(12000),
-      redirect: 'follow'
-    });
-
-    if (!r.ok) throw new Error(`Page returned ${r.status}`);
-
-    const contentType = r.headers.get('content-type') || '';
-    if (!contentType.includes('text/html') && !contentType.includes('text/plain')) {
-      throw new Error('URL does not point to a readable page (got ' + contentType.split(';')[0] + ')');
+    text = await fetchDirect(rawUrl);
+    method = 'direct';
+  } catch (e1) {
+    console.log('Direct fetch failed:', e1.message, '— trying Jina');
+    try {
+      text = await fetchViaJina(rawUrl);
+      method = 'jina';
+    } catch (e2) {
+      return {
+        statusCode: 500,
+        headers: CORS,
+        body: JSON.stringify({ error: 'Could not read this page. Try pasting the text directly instead.' })
+      };
     }
-
-    const html = await r.text();
-    const text = stripHTML(html);
-
-    if (text.length < 80) throw new Error('Page has too little readable text. Try pasting the content directly.');
-
-    /* Return first 8000 chars — enough for any study kit */
-    return {
-      statusCode: 200,
-      headers:    CORS,
-      body:       JSON.stringify({ text: text.substring(0, 8000), length: text.length })
-    };
-
-  } catch (e) {
-    const msg = e.name === 'AbortError' ? 'Page took too long to load (>12s). Try another URL.'
-              : e.message || 'Failed to fetch URL';
-    return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: msg }) };
   }
+
+  if (!text || text.length < 80) {
+    return {
+      statusCode: 422,
+      headers: CORS,
+      body: JSON.stringify({ error: 'Page has too little readable text. Paste the content directly.' })
+    };
+  }
+
+  return {
+    statusCode: 200,
+    headers: CORS,
+    body: JSON.stringify({ text: text.substring(0, 8000), length: text.length, method })
+  };
 };
