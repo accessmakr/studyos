@@ -644,7 +644,7 @@ input[type=file]{display:none}
    with your Supabase anon key
 ══════════════════════════════════ */
 const SUPABASE_URL      = 'https://rbqekyzvmgmcgzbiuryy.supabase.co';
-const SUPABASE_ANON_KEY = 'PASTE_YOUR_NEW_ANON_KEY_HERE';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJicWVreXp2bWdtY2d6Yml1cnl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTcxNDIsImV4cCI6MjA5NjkzMzE0Mn0.vFr8IMUd9xBrujcB5XbXDDmkFIKmKYMpFDDZW9BjpPE';
 
 /* ══════════════════════════════════
    INIT LIBRARIES
@@ -654,7 +654,7 @@ if(typeof pdfjsLib!=='undefined')
 
 let SB=null;
 try{
-  if(typeof supabase!=='undefined'&&SUPABASE_ANON_KEY!=='PASTE_YOUR_NEW_ANON_KEY_HERE')
+  if(typeof supabase!=='undefined'&&SUPABASE_ANON_KEY!=='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJicWVreXp2bWdtY2d6Yml1cnl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTcxNDIsImV4cCI6MjA5NjkzMzE0Mn0.vFr8IMUd9xBrujcB5XbXDDmkFIKmKYMpFDDZW9BjpPE')
     SB=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 }catch(e){console.warn('Supabase init:',e)}
 
