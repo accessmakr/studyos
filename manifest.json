@@ -1,7 +1,7 @@
 {
-  "name": "StudyOS — AI Study Toolkit",
+  "name": "StudyOS — AI Exam Preparation",
   "short_name": "StudyOS",
-  "description": "7 input tools. AI-powered flashcards, quiz, and notes. Free to start.",
+  "description": "30 global exams. 7 input tools. AI-powered flashcards, quiz, and notes.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -11,15 +11,15 @@
   "categories": ["education", "productivity"],
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='38' fill='%2318181b'/><rect x='12' y='12' width='168' height='168' rx='30' fill='%2310b981'/><text x='96' y='130' font-size='96' text-anchor='middle'>📚</text></svg>",
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%2318181b'/><rect x='14' y='14' width='164' height='164' rx='30' fill='%2310b981'/><text x='96' y='132' font-size='100' text-anchor='middle'>📚</text></svg>",
       "sizes": "192x192",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ],
   "shortcuts": [
-    { "name": "Camera", "url": "/?tool=photo", "description": "Snap photo of notes" },
-    { "name": "Voice",  "url": "/?tool=voice", "description": "Record a lecture"   },
-    { "name": "PDF",    "url": "/?tool=pdf",   "description": "Upload a PDF"       }
+    { "name": "Camera", "url": "/?tool=photo", "description": "Snap a photo of notes" },
+    { "name": "Voice",  "url": "/?tool=voice", "description": "Record a lecture"      },
+    { "name": "PDF",    "url": "/?tool=pdf",   "description": "Upload a PDF"          }
   ]
 }
