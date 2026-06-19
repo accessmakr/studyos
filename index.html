@@ -5,95 +5,102 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#10b981">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="StudyOS">
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-<title>StudyOS — AI Study Toolkit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="https://js.paystack.co/v2/inline.js"></script>
+<title>StudyOS</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#18181b;--sf:#27272a;--sf2:#3f3f46;--bd:#52525b;
+  --bg:#18181b;--sf:#27272a;--sf2:#3f3f46;--bd:#52525b;--bd2:#71717a;
   --t1:#fafafa;--t2:#a1a1aa;--t3:#71717a;
-  --em:#10b981;--eml:rgba(16,185,129,.15);--emd:#059669;--emt:#34d399;
+  --em:#10b981;--eml:rgba(16,185,129,.14);--emd:#059669;--emt:#34d399;
   --blue:#60a5fa;--bll:rgba(96,165,250,.13);
   --amber:#fbbf24;--ambl:rgba(251,191,36,.13);
   --red:#f87171;--rl:rgba(248,113,113,.13);
   --purple:#a78bfa;--pl:rgba(167,139,250,.13);
-  --nav:60px;--r:14px;--rs:10px;
-  --sh:0 1px 4px rgba(0,0,0,.45);--shm:0 6px 20px rgba(0,0,0,.55)
+  --nav:62px;--r:14px;--rs:10px;
+  --sh:0 1px 4px rgba(0,0,0,.4);--shm:0 6px 24px rgba(0,0,0,.5)
 }
 [data-theme=light]{
-  --bg:#f4f4f5;--sf:#fff;--sf2:#f4f4f5;--bd:#d4d4d8;
+  --bg:#f4f4f5;--sf:#fff;--sf2:#f4f4f5;--bd:#d4d4d8;--bd2:#a1a1aa;
   --t1:#18181b;--t2:#52525b;--t3:#a1a1aa;
   --eml:rgba(16,185,129,.1);--bll:rgba(96,165,250,.1);
   --ambl:rgba(251,191,36,.1);--rl:rgba(248,113,113,.1);--pl:rgba(167,139,250,.1)
 }
 html,body{height:100%;overflow:hidden;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased}
 button{font-family:inherit;cursor:pointer}
-#app{height:100%;display:flex;flex-direction:column;max-width:520px;margin:0 auto;position:relative}
-.screen{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--nav)+20px)}
+#app{height:100%;display:flex;flex-direction:column;max-width:520px;margin:0 auto}
+.screen{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--nav)+24px)}
 .screen.active{display:flex}
 #s-results{overflow:hidden!important;padding-bottom:0}
-@media(min-width:521px){.bnav{border-left:1px solid var(--bd);border-right:1px solid var(--bd)}}
-
-/* ── NAV ── */
+/* NAV */
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;height:var(--nav);background:var(--sf);border-top:1px solid var(--bd);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom,0)}
+@media(min-width:521px){.bnav{border-left:1px solid var(--bd);border-right:1px solid var(--bd)}}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:var(--t3);transition:color .15s;position:relative}
 .nb.on{color:var(--em)}
 .nb svg{width:20px;height:20px;stroke-width:2}
-.nb span{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-.nb-badge{position:absolute;top:6px;right:calc(50% - 18px);background:var(--red);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 3px;display:none}
-.nb-badge.on{display:flex}
-
-/* ── HOME ── */
-.dash-hero{padding:22px 16px 14px;text-align:center}
-.dash-logo{font-size:28px;font-weight:700;letter-spacing:-.8px}
+.nb-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+/* HEADER PATTERN */
+.hdr{padding:20px 16px 0;display:flex;align-items:center;justify-content:space-between}
+.page-title{font-size:22px;font-weight:700;letter-spacing:-.5px}
+.ibtn{background:none;border:none;color:var(--t2);width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ibtn:active{background:var(--sf2)}
+/* HOME */
+.dash-hero{padding:28px 16px 20px;text-align:center}
+.dash-logo{font-size:32px;font-weight:800;letter-spacing:-1px}
 .dash-logo em{color:var(--em);font-style:normal}
-.dash-sub{font-size:13px;color:var(--t2);margin-top:3px}
-.dash-user{margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px}
-.du-avatar{width:26px;height:26px;border-radius:50%;background:var(--em);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
-.du-name{font-size:12px;color:var(--t2)}
-.du-btn{font-size:11px;color:var(--em);border:none;background:none;font-weight:600}
-.sec-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);padding:14px 16px 8px}
+.dash-sub{font-size:13px;color:var(--t2);margin-top:4px}
+.dash-user{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:10px}
+.du-chip{display:flex;align-items:center;gap:6px;background:var(--sf);border:1px solid var(--bd);border-radius:20px;padding:5px 12px}
+.du-avatar{width:22px;height:22px;border-radius:50%;background:var(--em);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.du-name{font-size:12px;font-weight:500;color:var(--t1)}
+.du-signout{font-size:11px;color:var(--red);border:none;background:none;font-weight:600}
+.du-login{font-size:12px;font-weight:600;color:var(--em);border:1px solid var(--em);border-radius:20px;padding:6px 16px;background:none}
+.sec-h{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);padding:16px 16px 8px}
+/* TOOL GRID */
 .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 4px}
-.tc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 13px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:4px}
+.tc{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:14px 13px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:4px}
 .tc:active{transform:scale(.97);border-color:var(--em)}
-.tc-ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:2px}
-.tc-name{font-size:13px;font-weight:600;color:var(--t1)}
+.tc-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:3px}
+.tc-name{font-size:13px;font-weight:600}
 .tc-desc{font-size:11px;color:var(--t2);line-height:1.4}
-.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 16px 14px}
-.sb{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:11px 10px;text-align:center}
-.sb-n{font-size:20px;font-weight:700;color:var(--em)}
-.sb-l{font-size:10px;color:var(--t2);margin-top:2px}
-.rec-list{padding:0 16px;display:flex;flex-direction:column;gap:8px}
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 16px 14px}
+.stat{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 10px;text-align:center}
+.stat-n{font-size:22px;font-weight:700;color:var(--em)}
+.stat-l{font-size:10px;color:var(--t2);margin-top:2px}
+/* RECENT */
+.recent-list{padding:0 16px;display:flex;flex-direction:column;gap:8px}
 .rec{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:10px}
 .rec:active{background:var(--sf2)}
 .rec-ico{font-size:20px;flex-shrink:0}
 .rec-info{flex:1;min-width:0}
 .rec-t{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rec-m{font-size:11px;color:var(--t3);margin-top:1px}
-
-/* ── CREATE ── */
+.rec-m{font-size:11px;color:var(--t3);margin-top:2px}
+/* CREATE */
 .cr-hdr{padding:18px 16px 0;display:flex;align-items:center;justify-content:space-between}
 .cr-title{font-size:18px;font-weight:700}
-/* exam selector */
-.exam-sel{padding:12px 16px 0}
-.exam-sel-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.exam-drop{flex:1;min-width:120px;padding:9px 12px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rs);color:var(--t1);font-size:12px;font-family:inherit;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none}
+/* EXAM SELECTOR */
+.exam-sel{padding:12px 16px 0;display:flex;flex-direction:column;gap:8px}
+.exam-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.exam-drop{padding:10px 12px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rs);color:var(--t1);font-size:12px;font-family:inherit;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;width:100%}
 .exam-drop:focus{border-color:var(--em)}
-.topic-input{width:100%;padding:9px 12px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rs);color:var(--t1);font-size:12px;font-family:inherit;outline:none}
-.topic-input:focus{border-color:var(--em)}
-.topic-input::placeholder{color:var(--t3)}
-/* tool tabs */
+.exam-drop option{background:var(--sf)}
+.topic-field{padding:10px 12px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rs);color:var(--t1);font-size:12px;font-family:inherit;outline:none;width:100%}
+.topic-field:focus{border-color:var(--em)}
+.topic-field::placeholder{color:var(--t3)}
+/* TOOL TABS */
 .ttabs{display:flex;gap:6px;padding:14px 16px 0;overflow-x:auto;scrollbar-width:none}
 .ttabs::-webkit-scrollbar{display:none}
 .ttab{flex-shrink:0;padding:7px 13px;border-radius:20px;border:1.5px solid var(--bd);background:none;color:var(--t2);font-size:12px;font-weight:500;white-space:nowrap;transition:all .15s}
 .ttab.on{background:var(--em);border-color:var(--em);color:#fff}
+/* INPUT PANELS */
 .tpanels{padding:14px 16px 0}
 .tpanel{display:none}
 .tpanel.on{display:block}
@@ -104,201 +111,202 @@ textarea::placeholder{color:var(--t3)}
 .uzone:active{border-color:var(--em);background:var(--sf2)}
 .uz-ico{font-size:36px}
 .uz-lbl{font-size:14px;font-weight:500;color:var(--t2)}
-.uz-hint{font-size:12px;color:var(--t3)}
+.uz-hint{font-size:11px;color:var(--t3)}
 .uz-file{font-size:12px;color:var(--em);font-weight:500;margin-top:4px;word-break:break-all}
 input[type=file]{display:none}
-/* voice */
-.voice-ui{display:flex;flex-direction:column;align-items:center;padding:22px 16px;gap:14px}
+/* OCR/PDF progress */
+.progress-box{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:12px 14px;margin-top:10px;display:none}
+.progress-box.on{display:block}
+.pb-step{font-size:12px;font-weight:500;margin-bottom:6px}
+.pb-track{height:4px;background:var(--sf2);border-radius:2px;overflow:hidden}
+.pb-fill{height:100%;background:var(--em);border-radius:2px;transition:width .4s ease;width:0}
+.pb-log{font-size:11px;color:var(--t3);margin-top:5px}
+/* VOICE */
+.voice-wrap{display:flex;flex-direction:column;align-items:center;padding:20px 16px;gap:14px}
 .v-vis{position:relative;width:130px;height:130px;display:flex;align-items:center;justify-content:center}
 .vr{position:absolute;border-radius:50%;border:2px solid var(--em);opacity:0;pointer-events:none}
-.vr1{width:76px;height:76px}.vr2{width:104px;height:104px}.vr3{width:130px;height:130px}
+.vr1{width:80px;height:80px}.vr2{width:108px;height:108px}.vr3{width:130px;height:130px}
 .recording .vr1{animation:vp 1.5s ease infinite 0s}
 .recording .vr2{animation:vp 1.5s ease infinite .3s}
 .recording .vr3{animation:vp 1.5s ease infinite .6s}
 @keyframes vp{0%{transform:scale(.85);opacity:.8}100%{transform:scale(1.1);opacity:0}}
-.vbtn{width:60px;height:60px;border-radius:50%;border:none;background:var(--em);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px var(--eml),var(--shm);z-index:2;transition:all .2s}
-.vbtn.rec{background:var(--red)}
-.vtimer{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
-.vstatus{font-size:13px;color:var(--t2)}
-.vtrans{width:100%;min-height:70px;max-height:150px;overflow-y:auto;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:12px;font-size:13px;line-height:1.6;display:none}
+.vbtn{width:62px;height:62px;border-radius:50%;border:none;background:var(--em);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .2s;box-shadow:0 0 0 5px var(--eml)}
+.vbtn.rec{background:var(--red);box-shadow:0 0 0 5px var(--rl)}
+.vtimer{font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
+.vstatus{font-size:13px;color:var(--t2);text-align:center}
+.vtrans{width:100%;max-height:140px;overflow-y:auto;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:12px;font-size:13px;line-height:1.6;display:none}
 .vtrans.on{display:block}
-/* chat */
-.ctags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.ctag{padding:4px 10px;border-radius:20px;border:1px solid var(--bd);background:none;color:var(--t2);font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
-.ctag.on{background:var(--em);border-color:var(--em);color:#fff}
-.eq-box{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 12px;margin-top:8px;display:none;max-height:110px;overflow-y:auto}
+/* CHAT */
+.chat-types{display:flex;gap:6px;margin-bottom:10px}
+.ctype{padding:5px 12px;border-radius:20px;border:1px solid var(--bd);background:none;color:var(--t2);font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+.ctype.on{background:var(--em);border-color:var(--em);color:#fff}
+.eq-box{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 12px;margin-top:8px;max-height:110px;overflow-y:auto;display:none}
 .eq-box.on{display:block}
 .eq-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:6px}
 .eq-item{font-size:12px;padding:3px 0;border-bottom:.5px solid var(--bd);line-height:1.5}
 .eq-item:last-child{border:none}
-/* progress loader */
-.prog-box{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:12px 14px;margin-top:12px;display:none}
-.prog-box.on{display:block}
-.prog-step{font-size:13px;font-weight:500;color:var(--t1);margin-bottom:6px}
-.prog-bar-wrap{height:4px;background:var(--sf2);border-radius:2px;overflow:hidden}
-.prog-bar{height:100%;background:var(--em);border-radius:2px;transition:width .4s ease;width:0%}
-.prog-log{font-size:11px;color:var(--t3);margin-top:6px}
-/* generate */
-.gen-area{padding:14px 16px 0}
-.btn-gen{width:100%;padding:15px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(16,185,129,.3);transition:all .15s}
+/* GENERATE */
+.gen-wrap{padding:14px 16px 0}
+.btn-gen{width:100%;padding:15px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(16,185,129,.3);transition:all .15s}
 .btn-gen:active{transform:scale(.98)}
-.btn-gen:disabled{background:var(--t3);box-shadow:none;transform:none}
-.usage-bar{margin:10px 0 0;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:10px 14px;display:flex;align-items:center;gap:10px}
-.ub-text{font-size:12px;color:var(--t2)}
-.ub-text b{color:var(--t1)}
-.ub-track{flex:1;height:4px;background:var(--sf2);border-radius:2px;overflow:hidden}
-.ub-fill{height:100%;background:var(--em);border-radius:2px;transition:width .4s}
-.ub-fill.warn{background:var(--amber)}
-.ub-fill.full{background:var(--red)}
-.btn-up-sm{font-size:11px;font-weight:600;color:var(--em);border:none;background:none;white-space:nowrap;flex-shrink:0}
-
-/* ── RESULTS ── */
+.btn-gen:disabled{background:var(--t3);box-shadow:none;transform:none;cursor:default}
+.usage-strip{margin-top:10px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:10px 14px;display:flex;align-items:center;gap:10px}
+.us-label{font-size:12px;color:var(--t2)}
+.us-label b{color:var(--t1)}
+.us-bar{flex:1;height:4px;background:var(--sf2);border-radius:2px;overflow:hidden}
+.us-fill{height:100%;background:var(--em);border-radius:2px;transition:width .4s}
+.us-fill.warn{background:var(--amber)}
+.us-fill.danger{background:var(--red)}
+.us-upg{font-size:11px;font-weight:600;color:var(--em);border:none;background:none;flex-shrink:0}
+/* STATUS BANNER */
+.status-banner{margin:10px 16px 0;padding:10px 14px;border-radius:var(--rs);font-size:12px;line-height:1.6;display:none}
+.status-banner.on{display:block}
+.status-banner.warn{background:var(--ambl);border:1px solid var(--amber);color:var(--amber)}
+.status-banner.err{background:var(--rl);border:1px solid var(--red);color:var(--red)}
+/* RESULTS */
 .res-hdr{padding:14px 16px 0;display:flex;align-items:center;gap:8px;flex-shrink:0}
-.res-title{font-size:14px;font-weight:600;flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.res-title{font-size:14px;font-weight:600;flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
 .rtabs{display:flex;border-bottom:1px solid var(--bd);background:var(--sf);padding:0 4px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .rtabs::-webkit-scrollbar{display:none}
 .rtab{padding:11px 12px;font-size:12px;font-weight:500;color:var(--t3);border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;flex-shrink:0}
 .rtab.on{color:var(--em);border-bottom-color:var(--em)}
 .rpanel{display:none;flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .rpanel.on{display:flex;flex-direction:column}
-/* flashcards */
+/* FLASHCARDS */
 .fca{display:flex;flex-direction:column;align-items:center;padding:18px 16px;gap:14px}
 .fc-ctr{font-size:12px;color:var(--t3);font-weight:500}
-.fcwrap{width:100%;perspective:1000px;cursor:pointer}
-.fcinner{position:relative;width:100%;min-height:200px;transform-style:preserve-3d;transition:transform .45s ease}
+.fcwrap{width:100%;perspective:1100px;cursor:pointer;user-select:none}
+.fcinner{position:relative;width:100%;min-height:200px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
 .fcinner.flip{transform:rotateY(180deg)}
 .fcface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);display:flex;flex-direction:column;padding:20px;border:1.5px solid var(--bd)}
-.fcf{background:var(--sf);box-shadow:var(--shm);justify-content:center;align-items:center;text-align:center}
-.fcb{background:var(--sf);border-color:var(--em);transform:rotateY(180deg);overflow-y:auto}
-.fclbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:10px}
-.fctxt{font-size:15px;font-weight:500;line-height:1.5}
+.fc-front{background:var(--sf);box-shadow:var(--shm);align-items:center;justify-content:center;text-align:center}
+.fc-back{background:var(--sf2);transform:rotateY(180deg);overflow-y:auto}
+.fc-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:10px}
+.fc-question{font-size:16px;font-weight:500;line-height:1.5}
 .fc-hint{font-size:11px;color:var(--t3);margin-top:10px}
-.fc-marks{font-size:10px;font-weight:600;color:var(--em);background:var(--eml);border-radius:4px;padding:2px 7px;display:inline-block;margin-bottom:8px}
-.fc-scheme{font-size:12px;color:var(--t1);line-height:1.7;margin-bottom:8px;white-space:pre-wrap}
-.fc-mistake{font-size:11px;color:var(--amber);background:var(--ambl);border-radius:6px;padding:7px 10px;margin-top:4px;line-height:1.5}
-.fc-mistake::before{content:"⚠️ Common mistake: ";font-weight:600}
-.fcnav{display:flex;gap:12px;align-items:center}
-.fcnb{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--bd);background:var(--sf);color:var(--t2);font-size:20px;display:flex;align-items:center;justify-content:center}
+.fc-marks-badge{display:inline-block;background:var(--eml);color:var(--emt);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:8px}
+.fc-scheme{font-size:13px;color:var(--t1);line-height:1.75;white-space:pre-wrap;margin-bottom:8px}
+.fc-mistake-box{background:var(--ambl);border:1px solid var(--amber);border-radius:var(--rs);padding:8px 12px;font-size:12px;color:var(--amber);line-height:1.5}
+.fc-mistake-box::before{content:"⚠ Common mistake: ";font-weight:600}
+.fc-nav{display:flex;gap:12px;align-items:center}
+.fcnb{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--bd);background:var(--sf);color:var(--t2);font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .15s}
 .fcnb:active{background:var(--sf2)}
 .fc-shuf{padding:9px 16px;border-radius:20px;border:1.5px solid var(--bd);background:var(--sf);color:var(--t2);font-size:12px;font-weight:500}
-/* quiz */
+/* QUIZ */
 .qa{padding:14px 16px;display:flex;flex-direction:column;gap:12px}
-.qprog{display:flex;align-items:center;gap:8px}
-.qpbar{flex:1;height:3px;background:var(--sf2);border-radius:2px;overflow:hidden}
-.qpfill{height:100%;background:var(--em);border-radius:2px;transition:width .3s}
-.qcard{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px}
-.qnum{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.q-marks-badge{font-size:9px;font-weight:600;color:var(--em);background:var(--eml);border-radius:3px;padding:1px 6px}
-.qtxt{font-size:14px;font-weight:500;line-height:1.5}
-.qopts{display:flex;flex-direction:column;gap:8px}
-.qopt{padding:12px 14px;border-radius:var(--rs);border:1.5px solid var(--bd);background:var(--sf);color:var(--t1);font-size:13px;text-align:left;transition:all .15s;line-height:1.4}
-.qopt.ok{background:var(--eml);border-color:var(--em);color:var(--emt)}
-.qopt.ng{background:var(--rl);border-color:var(--red);color:var(--red)}
-.qexp{background:var(--bll);border-radius:var(--rs);padding:11px 14px;font-size:12px;color:var(--blue);line-height:1.6;display:none}
-.qexp.on{display:block}
-.btn-next{width:100%;padding:13px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;display:none}
+.q-prog-row{display:flex;align-items:center;gap:8px}
+.q-prog-bar{flex:1;height:3px;background:var(--sf2);border-radius:2px;overflow:hidden}
+.q-prog-fill{height:100%;background:var(--em);transition:width .3s}
+.q-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px}
+.q-num{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.q-marks{font-size:9px;font-weight:700;background:var(--eml);color:var(--emt);padding:1px 7px;border-radius:3px}
+.q-text{font-size:14px;font-weight:500;line-height:1.5}
+.q-opts{display:flex;flex-direction:column;gap:8px}
+.q-opt{padding:12px 14px;border-radius:var(--rs);border:1.5px solid var(--bd);background:var(--sf);color:var(--t1);font-size:13px;text-align:left;transition:all .15s;line-height:1.4}
+.q-opt.ok{background:var(--eml);border-color:var(--em);color:var(--emt)}
+.q-opt.ng{background:var(--rl);border-color:var(--red);color:var(--red)}
+.q-expl{background:var(--bll);border-radius:var(--rs);padding:11px 14px;font-size:12px;color:var(--blue);line-height:1.6;display:none}
+.q-expl.on{display:block}
+.btn-next{width:100%;padding:13px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;display:none;transition:all .15s}
 .btn-next.on{display:block}
-.score-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:28px;text-align:center;margin:16px;box-shadow:var(--shm)}
-.sce{font-size:52px;margin-bottom:10px}
-.scn{font-size:38px;font-weight:700;color:var(--em)}
-.scl{font-size:13px;color:var(--t2);margin-top:4px}
-.btn-retry{margin-top:18px;padding:11px 28px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:600}
-/* notes/summary/terms */
-.txt-view,.suma{padding:14px 16px}
-.txt-card,.sumc{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px}
-.txt-card{font-size:14px;line-height:1.8;white-space:pre-wrap;word-break:break-word}
-.sumt{font-size:14px;line-height:1.8}
-.sumt p{margin-bottom:13px}
-.sumt p:last-child{margin-bottom:0}
-.terms-area{padding:14px 16px;display:flex;flex-direction:column;gap:8px}
-.tc2{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rs);padding:12px 14px}
-.tc2-n{font-size:13px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:6px}
-.tc2-marks{font-size:9px;font-weight:600;color:var(--em);background:var(--eml);border-radius:3px;padding:1px 6px}
-.tc2-d{font-size:12px;color:var(--t2);line-height:1.6}
-/* result actions */
+.score-wrap{display:flex;flex-direction:column;align-items:center;padding:28px 16px;gap:10px}
+.score-emoji{font-size:56px}
+.score-pct{font-size:40px;font-weight:800;color:var(--em);letter-spacing:-1px}
+.score-label{font-size:14px;color:var(--t2)}
+.btn-retry{margin-top:8px;padding:12px 28px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:600}
+/* NOTES/SUMMARY */
+.text-view{padding:14px 16px}
+.text-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px;font-size:14px;line-height:1.8;white-space:pre-wrap;word-break:break-word}
+.sum-wrap{padding:14px 16px}
+.sum-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px}
+.sum-text{font-size:14px;line-height:1.8}
+.sum-text p{margin-bottom:13px}
+.sum-text p:last-child{margin:0}
+/* KEY TERMS */
+.terms-list{padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.term-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rs);padding:12px 14px}
+.term-top{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.term-name{font-size:13px;font-weight:600}
+.term-marks{font-size:9px;font-weight:700;background:var(--eml);color:var(--emt);padding:1px 7px;border-radius:3px}
+.term-def{font-size:12px;color:var(--t2);line-height:1.6}
+/* RESULT ACTIONS */
 .ract{padding:10px 16px;display:flex;gap:7px;border-top:1px solid var(--bd);background:var(--sf);flex-shrink:0;padding-bottom:calc(10px + env(safe-area-inset-bottom,0))}
-.ba{flex:1;padding:9px 6px;border-radius:var(--rs);border:1.5px solid var(--bd);background:var(--sf2);color:var(--t2);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:3px}
-.ba:active{background:var(--bd)}
-.ba.pri{background:var(--em);border-color:var(--em);color:#fff}
-
-/* ── LIBRARY ── */
+.ra{flex:1;padding:9px 4px;border-radius:var(--rs);border:1.5px solid var(--bd);background:var(--sf2);color:var(--t2);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:3px;transition:all .15s}
+.ra:active{background:var(--bd)}
+.ra.hi{background:var(--em);border-color:var(--em);color:#fff}
+/* LIBRARY */
 .lib-hdr{padding:20px 16px 14px;display:flex;align-items:center;justify-content:space-between}
-.lib-title{font-size:20px;font-weight:700}
 .lib-list{padding:0 16px;display:flex;flex-direction:column;gap:9px}
-.lcard{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:13px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;box-shadow:var(--sh)}
-.lcard:active{background:var(--sf2)}
-.lico{width:38px;height:38px;border-radius:11px;background:var(--eml);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
-.linf{flex:1;min-width:0}
-.lt{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
-.lm{font-size:11px;color:var(--t3)}
-.ldel{width:28px;height:28px;border-radius:50%;border:none;background:none;color:var(--t3);font-size:15px;flex-shrink:0}
+.lib-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:13px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;box-shadow:var(--sh)}
+.lib-card:active{background:var(--sf2)}
+.lib-ico{width:40px;height:40px;border-radius:12px;background:var(--eml);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.lib-info{flex:1;min-width:0}
+.lib-t{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.lib-m{font-size:11px;color:var(--t3)}
+.lib-del{width:28px;height:28px;border-radius:50%;border:none;background:none;color:var(--t3);font-size:15px;flex-shrink:0}
 .empty{padding:60px 20px;text-align:center;color:var(--t3)}
-.ei{font-size:50px;margin-bottom:12px}
-.el{font-size:14px;line-height:1.6}
-
-/* ── SETTINGS ── */
+.empty-icon{font-size:52px;margin-bottom:12px}
+.empty-text{font-size:14px;line-height:1.6}
+/* SETTINGS */
 .set-hdr{padding:20px 16px 0;display:flex;align-items:center;gap:10px}
-.set-title{font-size:20px;font-weight:700}
 .slist{padding:14px 16px;display:flex;flex-direction:column;gap:5px}
-.stitle{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);padding:10px 4px 6px}
+.slabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);padding:10px 4px 6px}
 .scard{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);overflow:hidden}
 .srow{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:.5px solid var(--bd)}
 .srow:last-child{border-bottom:none}
-.sico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.slb{flex:1}
-.slbt{font-size:13px;font-weight:500}
-.slbs{font-size:11px;color:var(--t3);margin-top:1px}
-.stog{width:42px;height:24px;background:var(--bd);border-radius:12px;border:none;position:relative;transition:background .2s;flex-shrink:0}
+.sico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.sinfo{flex:1}
+.sinfo-t{font-size:13px;font-weight:500}
+.sinfo-s{font-size:11px;color:var(--t3);margin-top:1px}
+.stog{width:44px;height:26px;background:var(--bd);border-radius:13px;border:none;position:relative;transition:background .2s;flex-shrink:0}
 .stog.on{background:var(--em)}
-.stog::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.stog::after{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
 .stog.on::after{left:21px}
-.premium-card{background:linear-gradient(135deg,#064e3b,#065f46);border:1px solid var(--em);border-radius:var(--r);padding:16px;margin-bottom:6px}
-.pc-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
-.pc-sub{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:12px;line-height:1.5}
-.pc-perks{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
-.pc-perk{font-size:12px;color:rgba(255,255,255,.9);display:flex;align-items:center;gap:6px}
-.pc-perk::before{content:"✓";color:var(--emt);font-weight:700;font-size:13px}
-.btn-premium{width:100%;padding:13px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:700}
-.btn-premium:active{background:var(--emd)}
-
-/* ── AUTH MODAL ── */
+.sact{font-size:11px;font-weight:600;color:var(--em);border:none;background:none}
+/* PREMIUM CARD */
+.premium-card{background:linear-gradient(135deg,#064e3b 0%,#065f46 100%);border:1px solid var(--em);border-radius:var(--r);padding:18px;margin-bottom:6px}
+.pc-head{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.pc-sub{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:14px;line-height:1.5}
+.pc-features{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:16px}
+.pc-feat{background:rgba(255,255,255,.1);border-radius:var(--rs);padding:8px 10px;font-size:11px;color:#fff;font-weight:500}
+.pc-feat::before{content:"✓ ";color:var(--emt);font-weight:700}
+.btn-pay{width:100%;padding:14px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:700;box-shadow:0 4px 14px rgba(16,185,129,.35)}
+.btn-pay:active{background:var(--emd)}
+/* LOADER */
+.loader{display:none;position:fixed;inset:0;background:rgba(24,24,27,.94);z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.loader.on{display:flex}
+.spin{width:46px;height:46px;border:3px solid var(--sf2);border-top-color:var(--em);border-radius:50%;animation:spin .75s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-title{font-size:15px;font-weight:600}
+.load-sub{font-size:12px;color:var(--t2)}
+.load-bar-wrap{width:220px;height:4px;background:var(--sf2);border-radius:2px;overflow:hidden;margin-top:2px}
+.load-bar{height:100%;background:var(--em);border-radius:2px;transition:width .4s ease;width:0}
+/* AUTH MODAL */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:400;align-items:flex-end;justify-content:center}
 .modal-bg.on{display:flex}
-.modal-card{background:var(--sf);border-radius:var(--r) var(--r) 0 0;padding:28px 24px;width:100%;max-width:520px}
-.modal-title{font-size:18px;font-weight:700;margin-bottom:4px}
-.modal-sub{font-size:13px;color:var(--t2);margin-bottom:20px}
-.auth-input{width:100%;padding:13px 14px;background:var(--sf2);border:1.5px solid var(--bd);border-radius:var(--rs);color:var(--t1);font-size:14px;font-family:inherit;outline:none;margin-bottom:10px}
-.auth-input:focus{border-color:var(--em)}
-.auth-input::placeholder{color:var(--t3)}
-.btn-auth{width:100%;padding:14px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:15px;font-weight:700;margin-bottom:10px}
-.btn-auth:active{background:var(--emd)}
-.btn-auth:disabled{background:var(--t3)}
+.modal-box{background:var(--sf);border-radius:var(--r) var(--r) 0 0;padding:28px 22px 32px;width:100%;max-width:520px}
+.modal-title{font-size:20px;font-weight:700;margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--t2);margin-bottom:18px}
+.field{width:100%;padding:13px 14px;background:var(--sf2);border:1.5px solid var(--bd);border-radius:var(--rs);color:var(--t1);font-size:14px;font-family:inherit;outline:none;margin-bottom:10px}
+.field:focus{border-color:var(--em)}
+.field::placeholder{color:var(--t3)}
+.btn-submit{width:100%;padding:14px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:15px;font-weight:700;margin-bottom:10px;transition:all .15s}
+.btn-submit:disabled{background:var(--t3)}
+.auth-err-msg{font-size:12px;color:var(--red);background:var(--rl);border:1px solid var(--red);border-radius:var(--rs);padding:9px 12px;margin-bottom:10px;display:none;line-height:1.5}
+.auth-err-msg.on{display:block}
 .auth-switch{text-align:center;font-size:13px;color:var(--t2)}
 .auth-switch button{color:var(--em);border:none;background:none;font-weight:600;font-size:13px}
-.auth-err{font-size:12px;color:var(--red);margin-bottom:10px;display:none}
-.auth-err.on{display:block}
-/* paywall */
-.pw-emoji{font-size:48px;margin-bottom:12px;text-align:center}
+/* PAYWALL */
+.pw-body{text-align:center}
+.pw-emoji{font-size:52px;margin-bottom:12px}
 .pw-title{font-size:20px;font-weight:700;margin-bottom:8px}
-.pw-body{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:18px}
+.pw-copy{font-size:13px;color:var(--t2);margin-bottom:18px;line-height:1.6}
 .pw-perks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
 .pw-perk{background:var(--eml);border-radius:var(--rs);padding:10px;font-size:12px;font-weight:500;color:var(--emt);text-align:left}
 .pw-perk::before{content:"✓ ";font-weight:700}
-.btn-pay{width:100%;padding:15px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:700;margin-bottom:10px;box-shadow:0 4px 14px rgba(16,185,129,.35)}
-.btn-pay:active{background:var(--emd)}
-.btn-skip{width:100%;padding:12px;background:none;color:var(--t3);border:none;font-size:13px}
-
-/* ── SHARED ── */
-.ibtn{background:none;border:none;color:var(--t2);width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center}
-.ibtn:active{background:var(--sf2)}
-.loader{display:none;position:fixed;inset:0;background:rgba(24,24,27,.93);z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:16px}
-.loader.on{display:flex}
-.spin{width:44px;height:44px;border:3px solid var(--sf2);border-top-color:var(--em);border-radius:50%;animation:sp .7s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
-.lt2{font-size:14px;font-weight:500}
-.ls{font-size:12px;color:var(--t2)}
-.lp-bar-wrap{width:200px;height:4px;background:var(--sf2);border-radius:2px;overflow:hidden;margin-top:4px}
-.lp-bar{height:100%;background:var(--em);border-radius:2px;transition:width .4s}
+.btn-pw-pay{width:100%;padding:15px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:700;margin-bottom:10px;box-shadow:0 4px 14px rgba(16,185,129,.35)}
+.btn-pw-skip{width:100%;padding:12px;background:none;color:var(--t3);border:none;font-size:13px}
+/* TOAST */
 .toast{position:fixed;bottom:calc(var(--nav)+14px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--sf);color:var(--t1);border:1px solid var(--bd);padding:10px 18px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:all .25s;z-index:500;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis;box-shadow:var(--shm)}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -306,37 +314,33 @@ input[type=file]{display:none}
 <body>
 <div id="app">
 
-<!-- ══ HOME ══ -->
+<!-- HOME -->
 <div id="s-home" class="screen active">
   <div class="dash-hero">
     <div class="dash-logo">Study<em>OS</em></div>
-    <div class="dash-sub">AI exam preparation · global · every subject</div>
-    <div class="dash-user" id="dash-user">
-      <button class="du-btn" onclick="openAuth('login')">Sign in</button>
-      <span style="color:var(--t3);font-size:12px">·</span>
-      <button class="du-btn" onclick="openAuth('signup')">Create account</button>
-    </div>
+    <div class="dash-sub">AI exam preparation &mdash; every exam, every subject, globally</div>
+    <div class="dash-user" id="dash-user-area"></div>
   </div>
-  <div class="sec-title">Choose input tool</div>
+  <div class="sec-h">Input tools</div>
   <div class="tools-grid">
-    <div class="tc" onclick="openTool('photo')"><div class="tc-ico" style="background:var(--ambl)">📷</div><div class="tc-name">Camera / Photo</div><div class="tc-desc">Snap notes, textbooks, whiteboards</div></div>
-    <div class="tc" onclick="openTool('pdf')"><div class="tc-ico" style="background:var(--rl)">📄</div><div class="tc-name">PDF</div><div class="tc-desc">Upload any PDF document</div></div>
-    <div class="tc" onclick="openTool('voice')"><div class="tc-ico" style="background:var(--pl)">🎤</div><div class="tc-name">Voice</div><div class="tc-desc">Record and transcribe lectures</div></div>
-    <div class="tc" onclick="openTool('chat')"><div class="tc-ico" style="background:var(--bll)">💬</div><div class="tc-name">Chat</div><div class="tc-desc">WhatsApp / Telegram study groups</div></div>
-    <div class="tc" onclick="openTool('url')"><div class="tc-ico" style="background:var(--eml)">🔗</div><div class="tc-name">URL / Article</div><div class="tc-desc">Any webpage, Wikipedia, article</div></div>
-    <div class="tc" onclick="openTool('text')"><div class="tc-ico" style="background:var(--sf2)">✏️</div><div class="tc-name">Paste Text</div><div class="tc-desc">Copy-paste any content directly</div></div>
+    <div class="tc" onclick="openTool('photo')"><div class="tc-ico" style="background:var(--ambl)">&#128247;</div><div class="tc-name">Camera / Photo</div><div class="tc-desc">Snap notes, textbooks, whiteboards</div></div>
+    <div class="tc" onclick="openTool('pdf')"><div class="tc-ico" style="background:var(--rl)">&#128196;</div><div class="tc-name">PDF</div><div class="tc-desc">Upload any PDF document</div></div>
+    <div class="tc" onclick="openTool('voice')"><div class="tc-ico" style="background:var(--pl)">&#127908;</div><div class="tc-name">Voice</div><div class="tc-desc">Record and transcribe lectures</div></div>
+    <div class="tc" onclick="openTool('chat')"><div class="tc-ico" style="background:var(--bll)">&#128172;</div><div class="tc-name">Chat</div><div class="tc-desc">WhatsApp / Telegram study groups</div></div>
+    <div class="tc" onclick="openTool('url')"><div class="tc-ico" style="background:var(--eml)">&#128279;</div><div class="tc-name">URL / Article</div><div class="tc-desc">Any webpage or article</div></div>
+    <div class="tc" onclick="openTool('text')"><div class="tc-ico" style="background:var(--sf2)">&#9999;&#65039;</div><div class="tc-name">Paste Text</div><div class="tc-desc">Copy-paste any content</div></div>
   </div>
-  <div class="sec-title">Your progress</div>
-  <div class="stat-row">
-    <div class="sb"><div class="sb-n" id="stat-gen">0</div><div class="sb-l">Kits made</div></div>
-    <div class="sb"><div class="sb-n" id="stat-cards">0</div><div class="sb-l">Flashcards</div></div>
-    <div class="sb"><div class="sb-n" id="stat-saved">0</div><div class="sb-l">Saved</div></div>
+  <div class="sec-h">Stats</div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-n" id="stat-gen">0</div><div class="stat-l">Kits made</div></div>
+    <div class="stat"><div class="stat-n" id="stat-cards">0</div><div class="stat-l">Flashcards</div></div>
+    <div class="stat"><div class="stat-n" id="stat-saved">0</div><div class="stat-l">Saved</div></div>
   </div>
-  <div class="sec-title">Recent</div>
-  <div class="rec-list" id="rec-list"></div>
+  <div class="sec-h">Recent</div>
+  <div class="recent-list" id="rec-list"></div>
 </div>
 
-<!-- ══ CREATE ══ -->
+<!-- CREATE -->
 <div id="s-create" class="screen">
   <div class="cr-hdr">
     <div class="cr-title">Create Study Kit</div>
@@ -344,113 +348,101 @@ input[type=file]{display:none}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </button>
   </div>
-
-  <!-- Exam selector -->
   <div class="exam-sel">
-    <div class="exam-sel-row">
+    <div class="exam-row">
       <select class="exam-drop" id="sel-exam" onchange="onExamChange()">
         <option value="">Select exam (optional)</option>
       </select>
-      <select class="exam-drop" id="sel-subject" onchange="onSubjectChange()" disabled>
+      <select class="exam-drop" id="sel-subject" disabled>
         <option value="">Select subject</option>
       </select>
     </div>
-    <input class="topic-input" id="inp-topic" placeholder="Topic (e.g. Electrolysis, Calculus, Cold War)" autocomplete="off">
+    <input class="topic-field" id="inp-topic" placeholder="Topic e.g. Organic Chemistry, Cold War, Calculus">
   </div>
-
-  <!-- Tool tabs -->
   <div class="ttabs">
-    <button class="ttab on" id="tt-photo" onclick="selTool('photo',this)">📷 Camera</button>
-    <button class="ttab" id="tt-pdf"   onclick="selTool('pdf',this)">📄 PDF</button>
-    <button class="ttab" id="tt-voice" onclick="selTool('voice',this)">🎤 Voice</button>
-    <button class="ttab" id="tt-chat"  onclick="selTool('chat',this)">💬 Chat</button>
-    <button class="ttab" id="tt-url"   onclick="selTool('url',this)">🔗 URL</button>
-    <button class="ttab" id="tt-text"  onclick="selTool('text',this)">✏️ Text</button>
-    <button class="ttab" id="tt-topic" onclick="selTool('topic',this)">💡 Topic</button>
+    <button class="ttab on" id="tt-photo" onclick="selTool('photo',this)">&#128247; Camera</button>
+    <button class="ttab" id="tt-pdf"   onclick="selTool('pdf',this)">&#128196; PDF</button>
+    <button class="ttab" id="tt-voice" onclick="selTool('voice',this)">&#127908; Voice</button>
+    <button class="ttab" id="tt-chat"  onclick="selTool('chat',this)">&#128172; Chat</button>
+    <button class="ttab" id="tt-url"   onclick="selTool('url',this)">&#128279; URL</button>
+    <button class="ttab" id="tt-text"  onclick="selTool('text',this)">&#9999;&#65039; Text</button>
+    <button class="ttab" id="tt-topic" onclick="selTool('topic',this)">&#128161; Topic</button>
   </div>
-
   <div class="tpanels">
-    <!-- Camera -->
     <div id="tp-photo" class="tpanel on">
       <div class="uzone" onclick="document.getElementById('f-photo').click()">
-        <div class="uz-ico">📷</div>
+        <div class="uz-ico">&#128247;</div>
         <div class="uz-lbl">Take photo or upload image</div>
-        <div class="uz-hint">Tesseract OCR reads the text locally — no upload needed</div>
+        <div class="uz-hint">OCR runs on your device &mdash; Tesseract reads printed &amp; handwritten text</div>
         <div id="fn-photo" class="uz-file"></div>
       </div>
       <input type="file" id="f-photo" accept="image/*" capture="environment" onchange="loadPhoto(this)">
-      <img id="photo-prev" style="display:none;width:100%;border-radius:var(--rs);margin-top:10px;max-height:200px;object-fit:cover" alt="">
-      <div class="prog-box" id="ocr-prog">
-        <div class="prog-step" id="ocr-step">Initialising OCR…</div>
-        <div class="prog-bar-wrap"><div class="prog-bar" id="ocr-bar"></div></div>
-        <div class="prog-log" id="ocr-log"></div>
+      <img id="photo-prev" style="display:none;width:100%;border-radius:var(--rs);margin-top:10px;max-height:200px;object-fit:cover" alt="preview">
+      <div class="progress-box" id="ocr-box">
+        <div class="pb-step" id="ocr-step">Initialising OCR...</div>
+        <div class="pb-track"><div class="pb-fill" id="ocr-fill"></div></div>
+        <div class="pb-log" id="ocr-log"></div>
       </div>
     </div>
-    <!-- PDF -->
     <div id="tp-pdf" class="tpanel">
       <div class="uzone" onclick="document.getElementById('f-pdf').click()">
-        <div class="uz-ico">📄</div>
+        <div class="uz-ico">&#128196;</div>
         <div class="uz-lbl">Upload PDF</div>
-        <div class="uz-hint">Text-based PDFs · up to 30 pages</div>
+        <div class="uz-hint">Text &amp; scanned PDFs supported &mdash; up to 30 pages</div>
         <div id="fn-pdf" class="uz-file"></div>
       </div>
       <input type="file" id="f-pdf" accept=".pdf" onchange="loadPDF(this)">
-      <div class="prog-box" id="pdf-prog">
-        <div class="prog-step" id="pdf-step">Reading PDF…</div>
-        <div class="prog-bar-wrap"><div class="prog-bar" id="pdf-bar"></div></div>
+      <div class="progress-box" id="pdf-box">
+        <div class="pb-step" id="pdf-step">Reading PDF...</div>
+        <div class="pb-track"><div class="pb-fill" id="pdf-fill"></div></div>
       </div>
     </div>
-    <!-- Voice -->
     <div id="tp-voice" class="tpanel">
-      <div class="voice-ui">
+      <div class="voice-wrap">
         <div class="v-vis" id="v-vis">
           <div class="vr vr1"></div><div class="vr vr2"></div><div class="vr vr3"></div>
-          <button class="vbtn" id="vbtn" onclick="toggleVoice()">🎤</button>
+          <button class="vbtn" id="vbtn" onclick="toggleVoice()">&#127908;</button>
         </div>
         <div class="vtimer" id="vtimer">00:00</div>
         <div class="vstatus" id="vstatus">Tap mic to start recording</div>
         <div class="vtrans" id="vtrans"></div>
-        <p style="font-size:11px;color:var(--t3);text-align:center">Auto-stops at 2 minutes</p>
+        <p style="font-size:11px;color:var(--t3);text-align:center">Auto-stops at 2 minutes &bull; Groq Whisper transcribes</p>
       </div>
     </div>
-    <!-- Chat -->
     <div id="tp-chat" class="tpanel">
-      <div class="ctags">
-        <button class="ctag on" id="ct-wa" onclick="setChatType('whatsapp',this)">WhatsApp</button>
-        <button class="ctag" id="ct-tg" onclick="setChatType('telegram',this)">Telegram</button>
-        <button class="ctag" id="ct-oth" onclick="setChatType('other',this)">Other</button>
+      <div class="chat-types">
+        <button class="ctype on" id="ct-wa" onclick="setChatType('whatsapp',this)">WhatsApp</button>
+        <button class="ctype" id="ct-tg" onclick="setChatType('telegram',this)">Telegram</button>
+        <button class="ctype" id="ct-ot" onclick="setChatType('other',this)">Other</button>
       </div>
-      <textarea id="t-chat" placeholder="Paste your group chat export here…" style="min-height:150px" oninput="analyzeChat()"></textarea>
+      <textarea id="t-chat" placeholder="Paste your group chat export here...&#10;&#10;Questions and discussions will be extracted and turned into a deep study kit." style="min-height:150px" oninput="analyzeChat()"></textarea>
       <div class="eq-box" id="eq-box">
         <div class="eq-title">Found <span id="eq-count">0</span> questions</div>
         <div id="eq-list"></div>
       </div>
     </div>
-    <!-- URL -->
     <div id="tp-url" class="tpanel">
-      <textarea id="t-url" placeholder="Paste a URL…&#10;&#10;Wikipedia · blog posts · news articles · any webpage" style="min-height:80px"></textarea>
+      <textarea id="t-url" placeholder="Paste any URL...&#10;&#10;Wikipedia, blog posts, news articles, lecture slides" style="min-height:80px"></textarea>
     </div>
-    <!-- Text -->
     <div id="tp-text" class="tpanel">
-      <textarea id="t-text" placeholder="Paste notes, lecture content, textbook excerpts…"></textarea>
+      <textarea id="t-text" placeholder="Paste notes, lecture content, textbook excerpts..."></textarea>
     </div>
-    <!-- Topic -->
     <div id="tp-topic" class="tpanel">
-      <textarea id="t-topic-input" placeholder="Describe what to study…&#10;&#10;e.g. Organic chemistry — functional groups&#10;e.g. The causes and consequences of World War 1&#10;e.g. Python recursion and dynamic programming" style="min-height:100px"></textarea>
+      <textarea id="t-topic-inp" placeholder="Describe what to study...&#10;&#10;e.g. The role of enzymes in digestion&#10;e.g. Shakespeare Macbeth themes&#10;e.g. Newton Laws of Motion with worked examples" style="min-height:100px"></textarea>
     </div>
   </div>
-
-  <div class="gen-area">
-    <button class="btn-gen" id="btn-gen" onclick="generate()">⚡ Generate Study Kit</button>
-    <div class="usage-bar">
-      <div class="ub-text"><b id="ub-used">0</b>/5 free today</div>
-      <div class="ub-track"><div class="ub-fill" id="ub-fill" style="width:0%"></div></div>
-      <button class="btn-up-sm" onclick="showPaywall()">Upgrade →</button>
+  <div class="gen-wrap">
+    <button class="btn-gen" id="btn-gen" onclick="generate()">&#9889; Generate Study Kit</button>
+    <div class="usage-strip">
+      <div class="us-label"><b id="us-used">0</b>/5 free today</div>
+      <div class="us-bar"><div class="us-fill" id="us-fill" style="width:0%"></div></div>
+      <button class="us-upg" onclick="showPaywall()">Upgrade &#8594;</button>
     </div>
+    <div class="status-banner" id="gen-banner"></div>
   </div>
 </div>
 
-<!-- ══ RESULTS ══ -->
+<!-- RESULTS -->
 <div id="s-results" class="screen">
   <div class="res-hdr">
     <button class="ibtn" onclick="showScreen('create')">
@@ -462,357 +454,488 @@ input[type=file]{display:none}
     </button>
   </div>
   <div class="rtabs">
-    <button class="rtab on" onclick="switchRT('fc',this)">🃏 Cards</button>
-    <button class="rtab" onclick="switchRT('quiz',this)">❓ Quiz</button>
-    <button class="rtab" onclick="switchRT('notes',this)">🗒️ Notes</button>
-    <button class="rtab" onclick="switchRT('sum',this)">📝 Summary</button>
-    <button class="rtab" onclick="switchRT('terms',this)">📖 Terms</button>
+    <button class="rtab on" onclick="switchRT('fc',this)">&#127183; Cards</button>
+    <button class="rtab" onclick="switchRT('quiz',this)">&#10067; Quiz</button>
+    <button class="rtab" onclick="switchRT('notes',this)">&#128221; Notes</button>
+    <button class="rtab" onclick="switchRT('sum',this)">&#128196; Summary</button>
+    <button class="rtab" onclick="switchRT('terms',this)">&#128214; Terms</button>
   </div>
-  <!-- Flashcards -->
   <div id="rp-fc" class="rpanel on">
     <div class="fca">
       <div class="fc-ctr" id="fc-ctr">Card 0 of 0</div>
       <div class="fcwrap" onclick="flipCard()">
         <div class="fcinner" id="fcinner">
-          <div class="fcface fcf">
-            <div class="fclbl">Question</div>
-            <div class="fctxt" id="fc-q">–</div>
-            <div class="fc-hint">Tap to see mark scheme</div>
+          <div class="fcface fc-front">
+            <div class="fc-label">Question</div>
+            <div class="fc-question" id="fc-q">&#8211;</div>
+            <div class="fc-hint">Tap to reveal mark scheme</div>
           </div>
-          <div class="fcface fcb">
-            <div class="fclbl">Answer</div>
-            <div class="fc-marks" id="fc-marks"></div>
-            <div class="fc-scheme" id="fc-scheme"></div>
-            <div class="fc-mistake" id="fc-mistake" style="display:none"></div>
+          <div class="fcface fc-back">
+            <div class="fc-label">Mark Scheme</div>
+            <div class="fc-marks-badge" id="fc-mbadge" style="display:none"></div>
+            <div class="fc-scheme" id="fc-scheme">&#8211;</div>
+            <div class="fc-mistake-box" id="fc-mistake" style="display:none"></div>
           </div>
         </div>
       </div>
-      <div class="fcnav">
-        <button class="fcnb" onclick="prevCard()">←</button>
-        <button class="fc-shuf" onclick="shuffleCards()">🔀 Shuffle</button>
-        <button class="fcnb" onclick="nextCard()">→</button>
+      <div class="fc-nav">
+        <button class="fcnb" onclick="prevCard()">&#8592;</button>
+        <button class="fc-shuf" onclick="shuffleCards()">&#128256; Shuffle</button>
+        <button class="fcnb" onclick="nextCard()">&#8594;</button>
       </div>
     </div>
   </div>
-  <!-- Quiz -->
-  <div id="rp-quiz" class="rpanel"><div class="qa" id="qa"></div></div>
-  <!-- Notes -->
-  <div id="rp-notes" class="rpanel"><div class="txt-view"><div class="txt-card" id="notes-txt">–</div></div></div>
-  <!-- Summary -->
-  <div id="rp-sum" class="rpanel"><div class="suma"><div class="sumc"><div class="sumt" id="sum-txt">–</div></div></div></div>
-  <!-- Terms -->
-  <div id="rp-terms" class="rpanel"><div class="terms-area" id="terms-area"></div></div>
+  <div id="rp-quiz" class="rpanel"><div class="qa" id="qa-area"></div></div>
+  <div id="rp-notes" class="rpanel"><div class="text-view"><div class="text-card" id="notes-content">&#8211;</div></div></div>
+  <div id="rp-sum" class="rpanel"><div class="sum-wrap"><div class="sum-card"><div class="sum-text" id="sum-content">&#8211;</div></div></div></div>
+  <div id="rp-terms" class="rpanel"><div class="terms-list" id="terms-list"></div></div>
   <div class="ract">
-    <button class="ba" onclick="saveKit()">💾 Save</button>
-    <button class="ba" onclick="copyTab()">📋 Copy</button>
-    <button class="ba" onclick="exportTxt()">📤 Export</button>
-    <button class="ba pri" onclick="generate()">🔄 Redo</button>
+    <button class="ra" onclick="saveKit()">&#128190; Save</button>
+    <button class="ra" onclick="copyTab()">&#128203; Copy</button>
+    <button class="ra" onclick="exportTxt()">&#128228; Export</button>
+    <button class="ra hi" onclick="generate()">&#128260; Redo</button>
   </div>
 </div>
 
-<!-- ══ LIBRARY ══ -->
+<!-- LIBRARY -->
 <div id="s-library" class="screen">
   <div class="lib-hdr">
-    <div class="lib-title">Library</div>
+    <div class="page-title">Library</div>
     <button class="ibtn" style="color:var(--red)" onclick="clearLib()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg>
     </button>
   </div>
   <div class="lib-list" id="lib-list"></div>
 </div>
 
-<!-- ══ SETTINGS ══ -->
+<!-- SETTINGS -->
 <div id="s-settings" class="screen">
   <div class="set-hdr">
     <button class="ibtn" onclick="goBack()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
-    <div class="set-title">Settings</div>
+    <div class="page-title">Settings</div>
   </div>
   <div class="slist">
     <div class="premium-card">
-      <div class="pc-title">🚀 Upgrade to Premium</div>
-      <div class="pc-sub">Unlimited generations, no ads, priority processing.</div>
-      <div class="pc-perks">
-        <div class="pc-perk">Unlimited daily kits</div>
-        <div class="pc-perk">Priority AI speed</div>
-        <div class="pc-perk">No ads</div>
-        <div class="pc-perk">All input tools</div>
+      <div class="pc-head">&#128640; Premium</div>
+      <div class="pc-sub">Remove daily limits. Faster generation. No ads. Support StudyOS.</div>
+      <div class="pc-features">
+        <div class="pc-feat">Unlimited generations</div>
+        <div class="pc-feat">Priority AI speed</div>
+        <div class="pc-feat">No ads</div>
+        <div class="pc-feat">All input tools</div>
       </div>
-      <button class="btn-premium" onclick="goPremium()">Upgrade — $2.99 / month</button>
+      <button class="btn-pay" onclick="goPremium()">Upgrade &mdash; $2.99 / month</button>
     </div>
-    <div class="stitle">Account</div>
-    <div class="scard" id="auth-card">
+    <div class="slabel">Account</div>
+    <div class="scard" id="account-card">
       <div class="srow">
-        <div class="sico" style="background:var(--eml)">👤</div>
-        <div class="slb"><div class="slbt" id="auth-status">Not signed in</div><div class="slbs" id="auth-email"></div></div>
-        <button id="auth-action-btn" style="font-size:12px;font-weight:600;color:var(--em);border:none;background:none" onclick="handleAuthAction()">Sign in</button>
+        <div class="sico" style="background:var(--eml)">&#128100;</div>
+        <div class="sinfo"><div class="sinfo-t" id="acc-status">Not signed in</div><div class="sinfo-s" id="acc-email">Sign in to sync kits across devices</div></div>
+        <button class="sact" id="acc-btn" onclick="handleAccBtn()">Sign in</button>
       </div>
     </div>
-    <div class="stitle">Appearance</div>
+    <div class="slabel">Appearance</div>
     <div class="scard">
       <div class="srow">
-        <div class="sico" style="background:var(--sf2)">🌙</div>
-        <div class="slb"><div class="slbt">Dark Mode</div></div>
+        <div class="sico" style="background:var(--sf2)">&#127769;</div>
+        <div class="sinfo"><div class="sinfo-t">Dark Mode</div></div>
         <button class="stog" id="dark-tog" onclick="toggleDark(this)"></button>
       </div>
     </div>
-    <div class="stitle">Usage</div>
+    <div class="slabel">Usage</div>
     <div class="scard">
       <div class="srow">
-        <div class="sico" style="background:var(--ambl)">⚡</div>
-        <div class="slb"><div class="slbt">Today's generations</div><div class="slbs" id="usage-det">0/5</div></div>
-        <button style="font-size:11px;color:var(--em);border:none;background:none;font-weight:700" onclick="resetUsage()">Reset</button>
+        <div class="sico" style="background:var(--ambl)">&#9889;</div>
+        <div class="sinfo"><div class="sinfo-t">Today</div><div class="sinfo-s" id="usage-detail">0 / 5 generated</div></div>
+        <button class="sact" onclick="resetUsage()">Reset</button>
+      </div>
+      <div class="srow">
+        <div class="sico" style="background:var(--eml)">&#128218;</div>
+        <div class="sinfo"><div class="sinfo-t">Lifetime</div><div class="sinfo-s" id="lifetime-detail">0 kits generated</div></div>
       </div>
     </div>
-    <div class="stitle">About</div>
+    <div class="slabel">System status</div>
     <div class="scard">
-      <div class="srow"><div class="sico" style="background:var(--eml)">📚</div><div class="slb"><div class="slbt">StudyOS v2.0</div><div class="slbs">30 global exam systems · AI-powered</div></div></div>
-      <div class="srow"><div class="sico" style="background:var(--bll)">🔒</div><div class="slb"><div class="slbt">Privacy</div><div class="slbs">Camera OCR runs on your device. Text is sent to our AI server only during generation.</div></div></div>
+      <div class="srow">
+        <div class="sico" style="background:var(--eml)">&#129302;</div>
+        <div class="sinfo"><div class="sinfo-t">Groq AI</div><div class="sinfo-s" id="status-groq">Checking...</div></div>
+        <div id="status-groq-dot" style="width:8px;height:8px;border-radius:50%;background:var(--t3)"></div>
+      </div>
+      <div class="srow">
+        <div class="sico" style="background:var(--bll)">&#9749;</div>
+        <div class="sinfo"><div class="sinfo-t">Supabase</div><div class="sinfo-s" id="status-sb">Checking...</div></div>
+        <div id="status-sb-dot" style="width:8px;height:8px;border-radius:50%;background:var(--t3)"></div>
+      </div>
+    </div>
+    <div class="slabel">About</div>
+    <div class="scard">
+      <div class="srow"><div class="sico" style="background:var(--eml)">&#128218;</div><div class="sinfo"><div class="sinfo-t">StudyOS v2.0</div><div class="sinfo-s">30 global exams &bull; 7 input tools &bull; AI-powered</div></div></div>
+      <div class="srow"><div class="sico" style="background:var(--pl)">&#128274;</div><div class="sinfo"><div class="sinfo-t">Privacy</div><div class="sinfo-s">Camera OCR runs on your device. Content sent to Groq only during generation. Keys stored in Netlify environment, never in the HTML.</div></div></div>
     </div>
   </div>
 </div>
 
-<!-- NAV -->
 <nav class="bnav">
   <button class="nb on" id="nb-home" onclick="showScreen('home')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    <span>Home</span>
+    <span class="nb-lbl">Home</span>
   </button>
   <button class="nb" id="nb-create" onclick="showScreen('create')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    <span>Create</span>
+    <span class="nb-lbl">Create</span>
   </button>
   <button class="nb" id="nb-results" onclick="showScreen('results')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-    <span>Results</span>
+    <span class="nb-lbl">Results</span>
   </button>
   <button class="nb" id="nb-library" onclick="showScreen('library')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-    <span>Library</span>
+    <span class="nb-lbl">Library</span>
   </button>
   <button class="nb" id="nb-settings" onclick="showScreen('settings')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-    <span>Settings</span>
+    <span class="nb-lbl">Settings</span>
   </button>
 </nav>
 </div>
 
-<!-- Loader -->
+<!-- LOADER -->
 <div class="loader" id="loader">
   <div class="spin"></div>
-  <div class="lt2" id="lt2">Generating…</div>
-  <div class="ls"  id="ls">Building your study kit</div>
-  <div class="lp-bar-wrap"><div class="lp-bar" id="lp-bar" style="width:0%"></div></div>
+  <div class="load-title" id="load-title">Generating...</div>
+  <div class="load-sub" id="load-sub">Building your study kit</div>
+  <div class="load-bar-wrap"><div class="load-bar" id="load-bar"></div></div>
 </div>
 
-<!-- Auth modal -->
+<!-- AUTH MODAL -->
 <div class="modal-bg" id="auth-modal">
-  <div class="modal-card">
-    <div class="modal-title" id="auth-modal-title">Sign in</div>
-    <div class="modal-sub" id="auth-modal-sub">Access your study kits on any device</div>
-    <div class="auth-err" id="auth-err"></div>
-    <input class="auth-input" id="auth-email-inp" type="email" placeholder="Email address">
-    <input class="auth-input" id="auth-pass-inp" type="password" placeholder="Password (min 8 characters)">
-    <button class="btn-auth" id="auth-submit-btn" onclick="submitAuth()">Sign in</button>
-    <div class="auth-switch"><span id="auth-switch-text">Don't have an account?</span> <button id="auth-switch-btn" onclick="toggleAuthMode()">Sign up</button></div>
+  <div class="modal-box">
+    <div class="modal-title" id="auth-title">Sign in</div>
+    <div class="modal-sub" id="auth-sub">Sync your kits across devices</div>
+    <div class="auth-err-msg" id="auth-err"></div>
+    <input class="field" id="auth-email" type="email" placeholder="Email address" autocomplete="email">
+    <input class="field" id="auth-pass"  type="password" placeholder="Password (min 8 characters)" autocomplete="current-password">
+    <button class="btn-submit" id="auth-btn" onclick="submitAuth()">Sign in</button>
+    <div class="auth-switch"><span id="auth-switch-text">No account?</span> <button id="auth-switch-btn" onclick="toggleAuthMode()">Sign up free</button></div>
   </div>
 </div>
 
-<!-- Paywall modal -->
+<!-- PAYWALL MODAL -->
 <div class="modal-bg" id="paywall">
-  <div class="modal-card">
-    <div class="pw-emoji">🚀</div>
-    <div class="pw-title">You've hit today's limit</div>
-    <div class="pw-body">You've used all 5 free generations for today. Upgrade to Premium for unlimited access.</div>
-    <div class="pw-perks">
-      <div class="pw-perk">Unlimited kits</div>
-      <div class="pw-perk">Priority speed</div>
-      <div class="pw-perk">No ads</div>
-      <div class="pw-perk">All tools</div>
+  <div class="modal-box">
+    <div class="pw-body">
+      <div class="pw-emoji">&#128640;</div>
+      <div class="pw-title">Daily limit reached</div>
+      <div class="pw-copy">You have used all 5 free generations today. Upgrade to Premium for unlimited access and faster generation.</div>
+      <div class="pw-perks">
+        <div class="pw-perk">Unlimited kits</div>
+        <div class="pw-perk">Priority speed</div>
+        <div class="pw-perk">No ads</div>
+        <div class="pw-perk">All tools</div>
+      </div>
+      <button class="btn-pw-pay" onclick="goPremium()">Upgrade &mdash; $2.99 / month</button>
+      <button class="btn-pw-skip" onclick="closeModal('paywall')">Not now</button>
     </div>
-    <button class="btn-pay" onclick="goPremium()">Upgrade — $2.99/month</button>
-    <button class="btn-skip" onclick="closePaywall()">Maybe tomorrow</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
-
 <script>
-/* ══════════════════════════════════
-   CONFIG — replace PASTE_ANON_KEY
-   with your Supabase anon key
-══════════════════════════════════ */
-const SUPABASE_URL      = 'https://rbqekyzvmgmcgzbiuryy.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJicWVreXp2bWdtY2d6Yml1cnl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTcxNDIsImV4cCI6MjA5NjkzMzE0Mn0.vFr8IMUd9xBrujcB5XbXDDmkFIKmKYMpFDDZW9BjpPE';
-
-/* ══════════════════════════════════
-   INIT LIBRARIES
-══════════════════════════════════ */
+/* =========================================================
+   PDF.js worker
+========================================================= */
 if(typeof pdfjsLib!=='undefined')
-  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  pdfjsLib.GlobalWorkerOptions.workerSrc=
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-let SB=null;
-try{
-  if(typeof supabase!=='undefined'&&SUPABASE_ANON_KEY!=='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJicWVreXp2bWdtY2d6Yml1cnl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEzNTcxNDIsImV4cCI6MjA5NjkzMzE0Mn0.vFr8IMUd9xBrujcB5XbXDDmkFIKmKYMpFDDZW9BjpPE')
-    SB=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-}catch(e){console.warn('Supabase init:',e)}
+/* =========================================================
+   LOCAL EXAM DATA — works with zero API calls
+   Selector populates immediately on page load
+========================================================= */
+const LOCAL_EXAMS=[
+  {code:'igcse',       name:'Cambridge IGCSE'},
+  {code:'caslevel',    name:'Cambridge AS & A Level'},
+  {code:'sat',         name:'SAT'},
+  {code:'act',         name:'ACT'},
+  {code:'ap',          name:'AP Exams'},
+  {code:'ib_diploma',  name:'IB Diploma Programme'},
+  {code:'gcse_aqa',    name:'GCSE (AQA)'},
+  {code:'gcse_edx',    name:'GCSE (Edexcel)'},
+  {code:'alevel_aqa',  name:'A Level (AQA)'},
+  {code:'alevel_edx',  name:'A Level (Edexcel)'},
+  {code:'wassce',      name:'WAEC WASSCE'},
+  {code:'neco_ss',     name:'NECO SSCE'},
+  {code:'utme',        name:'JAMB UTME'},
+  {code:'kcse',        name:'KCSE (Kenya)'},
+  {code:'kcpe',        name:'KCPE (Kenya Primary)'},
+  {code:'csee',        name:'CSEE Tanzania'},
+  {code:'acsee',       name:'ACSEE Tanzania'},
+  {code:'uce',         name:'UCE Uganda'},
+  {code:'uace',        name:'UACE Uganda'},
+  {code:'nsc',         name:'NSC Matric (South Africa)'},
+  {code:'zimsec_o',    name:'ZIMSEC O Level'},
+  {code:'zimsec_a',    name:'ZIMSEC A Level'},
+  {code:'cbse_board',  name:'CBSE Board Exams'},
+  {code:'jee_main',    name:'JEE Main'},
+  {code:'jee_advanced',name:'JEE Advanced'},
+  {code:'neet',        name:'NEET'},
+  {code:'fslic',       name:'FSc / ICS (Pakistan)'},
+  {code:'baccalaureat',name:'Baccalaureat (France)'},
+  {code:'enem',        name:'ENEM (Brazil)'}
+];
 
-/* ══════════════════════════════════
-   STATE
-══════════════════════════════════ */
-const S={
-  tool:'photo', resultTab:'fc',
-  kit:null, chatType:'whatsapp',
-  photoFile:null, photoText:'',
-  pdfText:'',
-  voiceText:'', recording:false,
-  mediaRec:null, speechRec:null, voiceTimer:null, voiceStart:0,
-  cards:[], cardIdx:0,
-  quiz:[], qIdx:0, qScore:0,
-  prevScreen:'home',
-  user:null,
-  examTypes:[], subjects:[],
-  authMode:'login'
+const LOCAL_SUBJECTS={
+  igcse:['Mathematics','Additional Mathematics','English Language','English Literature','Physics','Chemistry','Biology','Combined Science','History','Geography','Economics','Accounting','Computer Science','Business Studies','French','Spanish','Sociology','Psychology'],
+  caslevel:['Mathematics','Further Mathematics','Physics','Chemistry','Biology','English Language','English Literature','History','Geography','Economics','Psychology','Sociology','Business','Computer Science','Accounting'],
+  sat:['Evidence-Based Reading and Writing','Mathematics'],
+  act:['English','Mathematics','Reading','Science','Writing'],
+  ap:['AP Biology','AP Chemistry','AP Physics 1','AP Physics 2','AP Physics C','AP Calculus AB','AP Calculus BC','AP Statistics','AP English Language','AP English Literature','AP World History','AP US History','AP Psychology','AP Computer Science A','AP Macroeconomics','AP Microeconomics'],
+  ib_diploma:['Mathematics AA','Mathematics AI','Physics','Chemistry','Biology','English A Literature','English A Language','History','Economics','Geography','Psychology','Computer Science','Theory of Knowledge'],
+  gcse_aqa:['Mathematics','English Language','English Literature','Biology','Chemistry','Physics','Combined Science','History','Geography','Computer Science','Business','Economics','Psychology','Sociology','French','Spanish','Art and Design'],
+  gcse_edx:['Mathematics','English Language','English Literature','Biology','Chemistry','Physics','Combined Science','History','Geography','Computer Science','Business','Economics'],
+  alevel_aqa:['Mathematics','Further Mathematics','Physics','Chemistry','Biology','English Literature','History','Geography','Economics','Psychology','Sociology','Computer Science','Business'],
+  alevel_edx:['Mathematics','Further Mathematics','Physics','Chemistry','Biology','English Literature','History','Geography','Economics','Psychology','Business','Computer Science'],
+  wassce:['English Language','Mathematics','Physics','Chemistry','Biology','Agricultural Science','Economics','Government','Literature in English','Geography','Financial Accounting','Commerce','Further Mathematics','Technical Drawing','Food and Nutrition','Christian Religious Studies','Islamic Religious Studies','Yoruba','Hausa','Igbo'],
+  neco_ss:['English Language','Mathematics','Physics','Chemistry','Biology','Economics','Government','Agricultural Science','Geography','Financial Accounting','Literature in English','Commerce','Further Mathematics'],
+  utme:['Use of English','Mathematics','Physics','Chemistry','Biology','Economics','Government','Literature in English','Accounting','Geography','Agricultural Science','Commerce','Christian Religious Studies','Islamic Religious Studies'],
+  kcse:['English','Kiswahili','Mathematics','Physics','Chemistry','Biology','History','Geography','CRE','IRE','Business Studies','Agriculture','Computer Studies','Home Science','Art and Design'],
+  kcpe:['English','Kiswahili','Mathematics','Science and Technology','Social Studies and CRE/IRE'],
+  csee:['Kiswahili','English','Mathematics','Physics','Chemistry','Biology','History','Geography','Civics','Commerce','Book Keeping','Agriculture','English Language'],
+  acsee:['General Studies','English','Advanced Mathematics','Physics','Chemistry','Biology','History','Geography','Economics','Accountancy','Agriculture'],
+  uce:['English Language','Mathematics','Physics','Chemistry','Biology','History','Geography','CRE','IRE','Commerce','Agriculture','Entrepreneurship'],
+  uace:['General Paper','Mathematics','Physics','Chemistry','Biology','History','Geography','Economics','Divinity','Entrepreneurship','Fine Art'],
+  nsc:['Mathematics','Mathematical Literacy','English Home Language','Afrikaans First Additional Language','Physical Sciences','Life Sciences','Accounting','Economics','Business Studies','Geography','History','Life Orientation','Computer Applications Technology','Information Technology'],
+  zimsec_o:['Mathematics','English Language','Physics','Chemistry','Biology','History','Geography','Commerce','Accounts','Agriculture','Combined Science','Food and Nutrition'],
+  zimsec_a:['Pure Mathematics','Physics','Chemistry','Biology','History','Geography','Economics','Accounting','Business Studies','English Literature','Computer Science'],
+  cbse_board:['Mathematics','Physics','Chemistry','Biology','English Core','Computer Science','Accountancy','Economics','Business Studies','History','Political Science','Geography','Psychology','Sociology'],
+  jee_main:['Physics','Chemistry','Mathematics'],
+  jee_advanced:['Physics','Chemistry','Mathematics'],
+  neet:['Physics','Chemistry','Botany','Zoology'],
+  fslic:['Physics','Chemistry','Biology','Mathematics','English','Urdu','Islamic Studies','Computer Science','Statistics'],
+  baccalaureat:['Philosophie','Mathematiques','Physique-Chimie','Sciences de la Vie et de la Terre','Histoire-Geographie','Sciences Economiques et Sociales','Langues Vivantes'],
+  enem:['Linguagens e Codigos','Ciencias Humanas','Ciencias da Natureza','Matematica e suas Tecnologias','Redacao']
 };
+
+/* =========================================================
+   STATE
+========================================================= */
+const S={
+  tool:'photo', currentExamCode:'', currentSubject:'', currentTopic:'',
+  photoText:'', pdfText:'', voiceText:'', chatType:'whatsapp',
+  recording:false, mediaRec:null, speechRec:null, voiceTimer:null, voiceStart:0,
+  kit:null, cards:[], cardIdx:0, quiz:[], qIdx:0, qScore:0,
+  user:null, SB:null, prevScreen:'home', resultTab:'fc'
+};
+
 const LIMIT=5;
-const DK='sos3_data', HK='sos3_hist';
+const DK='sos4', HK='sos4_hist';
 const ICONS={photo:'📷',pdf:'📄',voice:'🎤',chat:'💬',url:'🔗',text:'✏️',topic:'💡'};
 const TOOLS=['photo','pdf','voice','chat','url','text','topic'];
 
-/* ══════════════════════════════════
+/* =========================================================
    STORAGE
-══════════════════════════════════ */
+========================================================= */
 const ld=()=>{try{return JSON.parse(localStorage.getItem(DK)||'{}')}catch{return{}}};
 const sv=d=>localStorage.setItem(DK,JSON.stringify(d));
 const hist=()=>{try{return JSON.parse(localStorage.getItem(HK)||'[]')}catch{return[]}};
-const prefs=()=>ld().prefs||{};
 const today=()=>new Date().toDateString();
 function getUsed(){const d=ld();return d.usage?.date===today()?d.usage.count||0:0}
 function incUsed(){const d=ld(),t=today();d.usage=d.usage?.date===t?{date:t,count:(d.usage.count||0)+1}:{date:t,count:1};sv(d)}
-function resetUsage(){const d=ld();d.usage={date:today(),count:0};sv(d);updUsage();toast('Usage reset ✓')}
+function resetUsage(){const d=ld();d.usage={date:today(),count:0};sv(d);updUsage();toast('Usage reset')}
 
-function updUsage(){
-  const used=getUsed(),pct=Math.min(100,(used/LIMIT)*100);
-  const el=document.getElementById('ub-used');
-  const fill=document.getElementById('ub-fill');
-  const det=document.getElementById('usage-det');
-  if(el)el.textContent=used;
-  if(det)det.textContent=`${used} / ${LIMIT} used today`;
-  if(fill){fill.style.width=pct+'%';fill.className='ub-fill'+(used>=LIMIT?' full':used>=3?' warn':'')}
-}
-function updStats(){
-  const h=hist(),d=ld();
-  const g=document.getElementById('stat-gen');
-  const c=document.getElementById('stat-cards');
-  const s=document.getElementById('stat-saved');
-  if(g)g.textContent=d.genCount||0;
-  if(c)c.textContent=h.reduce((a,e)=>a+(e.kit?.flashcards?.length||0),0);
-  if(s)s.textContent=h.length;
+/* =========================================================
+   INIT — load config from server, no hardcoded keys
+========================================================= */
+let _initDone=false;
+async function initApp(){
+  if(_initDone)return; _initDone=true;
+
+  /* Apply saved theme */
+  const p=ld().prefs||{};
+  if(p.dark!==undefined)document.documentElement.setAttribute('data-theme',p.dark?'dark':'light');
+  const tog=document.getElementById('dark-tog');
+  if(tog)tog.classList.toggle('on',p.dark!==false);
+
+  /* Populate exam selector immediately from local data */
+  populateExamSelector();
+  updUsage(); updStats(); renderRecent();
+
+  /* Load server config for Supabase — non-blocking */
+  try{
+    const cfg=await fetch('/.netlify/functions/config',{signal:AbortSignal.timeout(5000)}).then(r=>r.json());
+    if(cfg.hasSupabase && typeof supabase!=='undefined'){
+      S.SB=supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
+      const{data:{session}}=await S.SB.auth.getSession();
+      if(session?.user)setUser(session.user);
+      S.SB.auth.onAuthStateChange((_,sess)=>setUser(sess?.user||null));
+    }
+  }catch(e){console.warn('Config load:',e.message)}
+
+  /* System status check */
+  checkStatus();
+
+  if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 
-/* ══════════════════════════════════
-   SUPABASE AUTH
-══════════════════════════════════ */
-async function initAuth(){
-  if(!SB)return;
-  const{data:{session}}=await SB.auth.getSession();
-  if(session?.user)setUser(session.user);
-  SB.auth.onAuthStateChange((_,session)=>{
-    setUser(session?.user||null);
+/* =========================================================
+   EXAM SELECTOR — from local data, instant
+========================================================= */
+function populateExamSelector(){
+  const sel=document.getElementById('sel-exam');
+  if(!sel)return;
+  LOCAL_EXAMS.forEach(e=>{
+    const o=document.createElement('option');
+    o.value=e.code; o.textContent=e.name;
+    sel.appendChild(o);
   });
 }
-function setUser(user){
-  S.user=user;
-  const du=document.getElementById('dash-user');
-  const as=document.getElementById('auth-status');
-  const ae=document.getElementById('auth-email');
-  const ab=document.getElementById('auth-action-btn');
-  if(user){
-    const name=user.email?.split('@')[0]||'Student';
-    if(du)du.innerHTML=`<div class="du-avatar">${name[0].toUpperCase()}</div><span class="du-name">${name}</span><button class="du-btn" onclick="signOut()">Sign out</button>`;
-    if(as)as.textContent='Signed in';
-    if(ae)ae.textContent=user.email;
-    if(ab){ab.textContent='Sign out';ab.onclick=signOut}
-  }else{
-    if(du)du.innerHTML=`<button class="du-btn" onclick="openAuth('login')">Sign in</button><span style="color:var(--t3);font-size:12px">·</span><button class="du-btn" onclick="openAuth('signup')">Create account</button>`;
-    if(as)as.textContent='Not signed in';
-    if(ae)ae.textContent='';
-    if(ab){ab.textContent='Sign in';ab.onclick=()=>openAuth('login')}
-  }
-}
-function openAuth(mode){
-  S.authMode=mode;
-  const isLogin=mode==='login';
-  document.getElementById('auth-modal-title').textContent=isLogin?'Sign in':'Create account';
-  document.getElementById('auth-modal-sub').textContent=isLogin?'Access your kits on any device':'Free account · sync across devices';
-  document.getElementById('auth-submit-btn').textContent=isLogin?'Sign in':'Create account';
-  document.getElementById('auth-switch-text').textContent=isLogin?"Don't have an account?":'Already have an account?';
-  document.getElementById('auth-switch-btn').textContent=isLogin?'Sign up':'Sign in';
-  document.getElementById('auth-err').className='auth-err';
-  document.getElementById('auth-modal').classList.add('on');
-}
-function toggleAuthMode(){openAuth(S.authMode==='login'?'signup':'login')}
-function closeAuth(){document.getElementById('auth-modal').classList.remove('on')}
-function handleAuthAction(){S.user?signOut():openAuth('login')}
-async function submitAuth(){
-  if(!SB){toast('Auth not configured');closeAuth();return}
-  const email=document.getElementById('auth-email-inp').value.trim();
-  const pass=document.getElementById('auth-pass-inp').value;
-  const btn=document.getElementById('auth-submit-btn');
-  const errEl=document.getElementById('auth-err');
-  if(!email||!pass){errEl.textContent='Enter email and password';errEl.className='auth-err on';return}
-  btn.disabled=true;btn.textContent='Please wait…';
-  const{error}=S.authMode==='login'
-    ?await SB.auth.signInWithPassword({email,password:pass})
-    :await SB.auth.signUp({email,password:pass});
-  btn.disabled=false;
-  btn.textContent=S.authMode==='login'?'Sign in':'Create account';
-  if(error){errEl.textContent=error.message;errEl.className='auth-err on'}
-  else{closeAuth();toast(S.authMode==='login'?'Welcome back! ✓':'Account created ✓')}
-}
-async function signOut(){
-  if(SB)await SB.auth.signOut();
-  S.user=null;setUser(null);toast('Signed out');
-}
-
-/* ══════════════════════════════════
-   EXAM SELECTOR — loads from Supabase
-══════════════════════════════════ */
-async function loadExamTypes(){
-  if(!SB)return;
-  try{
-    const{data}=await SB.from('exam_types').select('id,name,code').order('name');
-    if(!data?.length)return;
-    S.examTypes=data;
-    const sel=document.getElementById('sel-exam');
-    data.forEach(e=>{
-      const opt=document.createElement('option');
-      opt.value=e.id;opt.textContent=e.name;
-      sel.appendChild(opt);
-    });
-  }catch(e){console.warn('Failed to load exam types:',e)}
-}
-async function onExamChange(){
-  const examId=document.getElementById('sel-exam').value;
+function onExamChange(){
+  const code=document.getElementById('sel-exam').value;
+  S.currentExamCode=code;
   const subSel=document.getElementById('sel-subject');
   subSel.innerHTML='<option value="">Select subject</option>';
-  subSel.disabled=!examId;
-  if(!examId||!SB)return;
-  try{
-    const{data}=await SB.from('subjects').select('id,name').eq('exam_type_id',examId).order('name');
-    if(data)data.forEach(s=>{
-      const opt=document.createElement('option');
-      opt.value=s.id;opt.textContent=s.name;
-      subSel.appendChild(opt);
-    });
-  }catch(e){console.warn('Failed to load subjects:',e)}
+  subSel.disabled=!code;
+  if(!code)return;
+  const subs=LOCAL_SUBJECTS[code]||[];
+  subs.forEach(s=>{
+    const o=document.createElement('option');
+    o.value=s; o.textContent=s;
+    subSel.appendChild(o);
+  });
 }
-function onSubjectChange(){}
 
-/* ══════════════════════════════════
+/* =========================================================
+   AUTH — loads Supabase client from config, not hardcoded
+========================================================= */
+let _authMode='login';
+function openAuth(mode){
+  if(!S.SB){
+    toast('Auth requires Supabase env vars in Netlify');
+    return;
+  }
+  _authMode=mode||'login';
+  const isLogin=_authMode==='login';
+  document.getElementById('auth-title').textContent=isLogin?'Sign in':'Create account';
+  document.getElementById('auth-sub').textContent=isLogin?'Sync your kits across devices':'Free — sync kits across devices';
+  document.getElementById('auth-btn').textContent=isLogin?'Sign in':'Create account';
+  document.getElementById('auth-switch-text').textContent=isLogin?'No account?':'Already have one?';
+  document.getElementById('auth-switch-btn').textContent=isLogin?'Sign up free':'Sign in';
+  document.getElementById('auth-err').className='auth-err-msg';
+  document.getElementById('auth-email').value='';
+  document.getElementById('auth-pass').value='';
+  document.getElementById('auth-modal').classList.add('on');
+}
+function toggleAuthMode(){openAuth(_authMode==='login'?'signup':'login')}
+function closeAuth(){document.getElementById('auth-modal').classList.remove('on')}
+
+async function submitAuth(){
+  const email=document.getElementById('auth-email').value.trim();
+  const pass=document.getElementById('auth-pass').value;
+  const errEl=document.getElementById('auth-err');
+  const btn=document.getElementById('auth-btn');
+  const showErr=msg=>{errEl.textContent=msg;errEl.className='auth-err-msg on'};
+
+  if(!email){showErr('Enter your email address');return}
+  if(!/^[^@]+@[^@]+\.[^@]+$/.test(email)){showErr('Enter a valid email address');return}
+  if(!pass||pass.length<8){showErr('Password must be at least 8 characters');return}
+  if(!S.SB){showErr('Supabase not configured — check Netlify env vars');return}
+
+  btn.disabled=true;
+  btn.textContent='Please wait...';
+
+  const{data,error}=_authMode==='login'
+    ?await S.SB.auth.signInWithPassword({email,password:pass})
+    :await S.SB.auth.signUp({email,password:pass});
+
+  btn.disabled=false;
+  btn.textContent=_authMode==='login'?'Sign in':'Create account';
+
+  if(error){
+    showErr(error.message);
+    return;
+  }
+  if(_authMode==='signup'&&!data.session){
+    showErr('Check your email for a verification link, then sign in here.');
+    return;
+  }
+  closeAuth();
+  toast(_authMode==='login'?'Welcome back! ✓':'Account created! ✓');
+}
+
+async function signOut(){
+  if(S.SB)await S.SB.auth.signOut();
+  S.user=null;
+  updateAuthUI();
+  toast('Signed out');
+}
+
+function handleAccBtn(){S.user?signOut():openAuth('login')}
+
+function setUser(user){
+  S.user=user;
+  updateAuthUI();
+}
+function updateAuthUI(){
+  const area=document.getElementById('dash-user-area');
+  const accStatus=document.getElementById('acc-status');
+  const accEmail=document.getElementById('acc-email');
+  const accBtn=document.getElementById('acc-btn');
+  if(S.user){
+    const name=S.user.email.split('@')[0];
+    if(area)area.innerHTML=`<div class="du-chip"><div class="du-avatar">${name[0].toUpperCase()}</div><span class="du-name">${name}</span><button class="du-signout" onclick="signOut()">Sign out</button></div>`;
+    if(accStatus)accStatus.textContent='Signed in as '+S.user.email;
+    if(accEmail)accEmail.textContent='Kits sync across your devices';
+    if(accBtn){accBtn.textContent='Sign out';accBtn.onclick=signOut}
+  }else{
+    if(area)area.innerHTML=`<button class="du-login" onclick="openAuth('login')">Sign in / Sign up</button>`;
+    if(accStatus)accStatus.textContent='Not signed in';
+    if(accEmail)accEmail.textContent='Sign in to sync kits across devices';
+    if(accBtn){accBtn.textContent='Sign in';accBtn.onclick=()=>openAuth('login')}
+  }
+}
+
+/* =========================================================
+   SYSTEM STATUS CHECK
+========================================================= */
+async function checkStatus(){
+  const groqDot=document.getElementById('status-groq-dot');
+  const groqTxt=document.getElementById('status-groq');
+  const sbDot=document.getElementById('status-sb-dot');
+  const sbTxt=document.getElementById('status-sb');
+
+  /* Check Groq via our generate function with tiny content */
+  try{
+    const r=await fetch('/.netlify/functions/generate',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({content:'test',examCode:'',subject:'',topic:''}),
+      signal:AbortSignal.timeout(8000)
+    });
+    const d=await r.json();
+    if(r.ok||d.kit){
+      groqDot.style.background='var(--em)';groqTxt.textContent='Connected';
+    }else if(d.error&&d.error.includes('GROQ_API_KEY')){
+      groqDot.style.background='var(--red)';groqTxt.textContent='GROQ_API_KEY missing in Netlify env vars';
+    }else{
+      groqDot.style.background='var(--em)';groqTxt.textContent='Connected';
+    }
+  }catch(e){
+    groqDot.style.background='var(--amber)';
+    groqTxt.textContent=e.name==='AbortError'?'Timeout — check connection':'Not reachable';
+  }
+
+  /* Supabase */
+  if(S.SB){
+    sbDot.style.background='var(--em)';sbTxt.textContent='Connected';
+  }else{
+    sbDot.style.background='var(--amber)';sbTxt.textContent='Not configured — add SUPABASE_URL + SUPABASE_ANON_KEY to Netlify';
+  }
+}
+
+/* =========================================================
    NAVIGATION
-══════════════════════════════════ */
+========================================================= */
 function showScreen(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
@@ -822,14 +945,10 @@ function showScreen(name){
   if(name==='home'){updStats();renderRecent()}
   if(name==='create')updUsage();
   if(name==='library')renderLib();
-  if(name==='settings'){updUsage();const p=prefs();const tog=document.getElementById('dark-tog');if(tog)tog.classList.toggle('on',!!p.dark)}
+  if(name==='settings'){updUsage();updSettings()}
 }
 function goBack(){showScreen(S.prevScreen||'home')}
 function openTool(tool){selTool(tool,document.getElementById('tt-'+tool));showScreen('create')}
-
-/* ══════════════════════════════════
-   TOOL SELECTION
-══════════════════════════════════ */
 function selTool(tool,btn){
   S.tool=tool;
   TOOLS.forEach(t=>{
@@ -838,117 +957,110 @@ function selTool(tool,btn){
   });
 }
 
-/* ══════════════════════════════════
-   CAMERA — Tesseract OCR in browser
-══════════════════════════════════ */
+/* =========================================================
+   INPUT HANDLERS
+========================================================= */
+/* Camera — Tesseract.js, runs on device */
 function loadPhoto(inp){
   if(!inp.files[0])return;
-  S.photoFile=inp.files[0];S.photoText='';
-  document.getElementById('fn-photo').textContent='📎 '+inp.files[0].name;
+  const file=inp.files[0];
+  document.getElementById('fn-photo').textContent=''+file.name;
   const prev=document.getElementById('photo-prev');
-  prev.src=URL.createObjectURL(inp.files[0]);prev.style.display='block';
-  runOCR(inp.files[0]);
+  prev.src=URL.createObjectURL(file); prev.style.display='block';
+  runOCR(file);
 }
 async function runOCR(file){
-  const prog=document.getElementById('ocr-prog');
-  const stepEl=document.getElementById('ocr-step');
-  const barEl=document.getElementById('ocr-bar');
-  const logEl=document.getElementById('ocr-log');
-  prog.classList.add('on');
-  stepEl.textContent='Loading OCR engine…';barEl.style.width='5%';
+  const box=document.getElementById('ocr-box');
+  const step=document.getElementById('ocr-step');
+  const fill=document.getElementById('ocr-fill');
+  const log=document.getElementById('ocr-log');
+  box.classList.add('on'); fill.style.width='5%';
+  S.photoText='';
   try{
     const worker=await Tesseract.createWorker('eng',1,{
       logger:m=>{
-        if(m.status==='recognizing text'){
-          const pct=Math.round(m.progress*85)+10;
-          barEl.style.width=pct+'%';
-          logEl.textContent=`Reading characters… ${Math.round(m.progress*100)}%`;
-        }else if(m.status==='loading tesseract core'){
-          stepEl.textContent='Loading OCR engine…';barEl.style.width='10%';
-        }else if(m.status==='initializing tesseract'){
-          stepEl.textContent='Initialising…';barEl.style.width='15%';
-        }else if(m.status==='loading language traineddata'){
-          stepEl.textContent='Loading language model…';barEl.style.width='25%';
+        if(m.status==='loading tesseract core'){step.textContent='Loading OCR engine...';fill.style.width='10%'}
+        else if(m.status==='loading language traineddata'){step.textContent='Loading language data...';fill.style.width='25%'}
+        else if(m.status==='recognizing text'){
+          const p=Math.round(m.progress*70)+25;
+          fill.style.width=p+'%';
+          log.textContent='Reading characters... '+Math.round(m.progress*100)+'%';
         }
       }
     });
-    stepEl.textContent='Reading image text…';
+    step.textContent='Recognising text in image...';
     const{data:{text,confidence}}=await worker.recognize(file);
     await worker.terminate();
-    barEl.style.width='100%';
+    fill.style.width='100%';
     if(!text||text.trim().length<15){
-      stepEl.textContent='⚠️ Little text found — try better lighting or focus';
-      logEl.textContent='You can still generate using the Topic input instead';
-      S.photoText='';return;
+      step.textContent='Very little text found. Try better lighting, or use the Topic tool instead.';
+      log.textContent=''; S.photoText=''; return;
     }
     S.photoText=text.trim();
-    stepEl.textContent=`✓ Text extracted (${Math.round(confidence)}% confidence)`;
-    logEl.textContent=`${S.photoText.length} characters ready · tap Generate`;
+    step.textContent='Text extracted ('+Math.round(confidence)+'% confidence) — tap Generate';
+    log.textContent=S.photoText.length+' characters ready';
   }catch(e){
-    stepEl.textContent='OCR error: '+e.message.slice(0,60);
-    barEl.style.width='0%';
-    S.photoText='';
+    step.textContent='OCR failed: '+e.message.slice(0,60);
+    fill.style.width='0'; S.photoText='';
   }
 }
 
-/* ══════════════════════════════════
-   PDF
-══════════════════════════════════ */
+/* PDF */
 async function loadPDF(inp){
   if(!inp.files[0])return;
   const file=inp.files[0];
-  document.getElementById('fn-pdf').textContent='📎 '+file.name;
-  const prog=document.getElementById('pdf-prog');
+  document.getElementById('fn-pdf').textContent=''+file.name;
+  const box=document.getElementById('pdf-box');
   const step=document.getElementById('pdf-step');
-  const bar=document.getElementById('pdf-bar');
-  prog.classList.add('on');step.textContent='Loading PDF…';bar.style.width='5%';
+  const fill=document.getElementById('pdf-fill');
+  box.classList.add('on'); fill.style.width='5%'; S.pdfText='';
   try{
-    if(typeof pdfjsLib==='undefined')throw new Error('PDF reader unavailable');
+    if(typeof pdfjsLib==='undefined')throw new Error('PDF library not loaded — try refresh');
     const buf=await file.arrayBuffer();
     const pdf=await pdfjsLib.getDocument({data:buf}).promise;
     const total=Math.min(pdf.numPages,30);
     let txt='';
     for(let i=1;i<=total;i++){
-      step.textContent=`Reading page ${i} of ${total}…`;
-      bar.style.width=Math.round((i/total)*90)+'%';
+      step.textContent='Reading page '+i+' of '+total+'...';
+      fill.style.width=Math.round((i/total)*85)+'%';
       const pg=await pdf.getPage(i);
       const ct=await pg.getTextContent();
       const pageText=ct.items.map(x=>x.str).join(' ');
       txt+=pageText+'\n';
-      /* If page has no text (scanned), run Tesseract on rendered canvas */
       if(pageText.trim().length<20&&typeof Tesseract!=='undefined'){
-        step.textContent=`OCR scanning page ${i} (image PDF)…`;
+        step.textContent='OCR scanning page '+i+' (image-based)...';
         const canvas=document.createElement('canvas');
-        const viewport=pg.getViewport({scale:1.5});
-        canvas.width=viewport.width;canvas.height=viewport.height;
-        await pg.render({canvasContext:canvas.getContext('2d'),viewport}).promise;
-        const worker=await Tesseract.createWorker('eng',1,{logger:()=>{}});
-        const{data:{text}}=await worker.recognize(canvas);
-        await worker.terminate();
+        const vp=pg.getViewport({scale:1.5});
+        canvas.width=vp.width; canvas.height=vp.height;
+        await pg.render({canvasContext:canvas.getContext('2d'),viewport:vp}).promise;
+        const w=await Tesseract.createWorker('eng',1,{logger:()=>{}});
+        const{data:{text}}=await w.recognize(canvas);
+        await w.terminate();
         txt+=text+'\n';
       }
     }
     S.pdfText=txt.trim();
-    bar.style.width='100%';
-    step.textContent=S.pdfText.length>50?`✓ PDF loaded (${Math.round(S.pdfText.length/1000)}k chars)`:'⚠️ Very little text — may be an image-only PDF';
-  }catch(e){step.textContent='PDF error: '+e.message.slice(0,60);bar.style.width='0%';S.pdfText=''}
+    fill.style.width='100%';
+    step.textContent=S.pdfText.length>50
+      ?'PDF loaded ('+Math.round(S.pdfText.length/1000)+'k chars) — tap Generate'
+      :'Very little text found. This may be an image-only PDF.';
+  }catch(e){step.textContent='PDF error: '+e.message.slice(0,60);fill.style.width='0';S.pdfText=''}
 }
 
-/* ══════════════════════════════════
-   VOICE
-══════════════════════════════════ */
+/* Voice */
 async function toggleVoice(){
   if(S.recording){stopVoice();return}
   try{
     const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-    const mime=MediaRecorder.isTypeSupported('audio/webm')?'audio/webm':MediaRecorder.isTypeSupported('audio/mp4')?'audio/mp4':'audio/ogg';
+    const mime=MediaRecorder.isTypeSupported('audio/webm')?'audio/webm':
+                MediaRecorder.isTypeSupported('audio/mp4')?'audio/mp4':'audio/ogg';
     const chunks=[];
     S.mediaRec=new MediaRecorder(stream,{mimeType:mime});
     S.mediaRec.ondataavailable=e=>chunks.push(e.data);
     S.mediaRec.onstop=async()=>{
       stream.getTracks().forEach(t=>t.stop());
       const blob=new Blob(chunks,{type:mime});
-      await transcribeAudio(blob,mime);
+      await transcribeBlob(blob,mime);
     };
     const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
     if(SR){
@@ -960,174 +1072,211 @@ async function toggleVoice(){
           if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';
           else interim+=e.results[i][0].transcript;
         }
+        S.voiceText=final+interim;
         const vt=document.getElementById('vtrans');
-        vt.textContent=final+interim;vt.classList.add('on');S.voiceText=final+interim;
+        vt.textContent=S.voiceText; vt.classList.add('on');
       };
       try{S.speechRec.start()}catch{}
     }
-    S.mediaRec.start(1000);S.recording=true;S.voiceStart=Date.now();
-    document.getElementById('vbtn').classList.add('rec');document.getElementById('vbtn').textContent='⏹';
-    document.getElementById('vstatus').textContent='Recording… tap to stop';
+    S.mediaRec.start(1000);
+    S.recording=true; S.voiceStart=Date.now();
+    document.getElementById('vbtn').classList.add('rec');
+    document.getElementById('vbtn').innerHTML='&#9209;';
+    document.getElementById('vstatus').textContent='Recording... tap to stop';
     document.getElementById('v-vis').classList.add('recording');
     S.voiceTimer=setInterval(()=>{
-      const secs=Math.floor((Date.now()-S.voiceStart)/1000);
-      document.getElementById('vtimer').textContent=`${String(Math.floor(secs/60)).padStart(2,'0')}:${String(secs%60).padStart(2,'0')}`;
-      if(secs>=120)stopVoice();
+      const sec=Math.floor((Date.now()-S.voiceStart)/1000);
+      document.getElementById('vtimer').textContent=
+        String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
+      if(sec>=120)stopVoice();
     },500);
-  }catch(e){toast('Mic access denied: '+e.message.slice(0,50))}
+  }catch(e){toast('Microphone access denied: '+e.message.slice(0,60))}
 }
 function stopVoice(){
-  S.recording=false;clearInterval(S.voiceTimer);
+  S.recording=false; clearInterval(S.voiceTimer);
   if(S.mediaRec?.state!=='inactive')S.mediaRec.stop();
   try{S.speechRec?.stop()}catch{}
-  document.getElementById('vbtn').classList.remove('rec');document.getElementById('vbtn').textContent='🎤';
-  document.getElementById('vstatus').textContent='Processing transcript…';
+  document.getElementById('vbtn').classList.remove('rec');
+  document.getElementById('vbtn').innerHTML='&#127908;';
+  document.getElementById('vstatus').textContent='Processing...';
   document.getElementById('v-vis').classList.remove('recording');
 }
-async function transcribeAudio(blob,mime){
-  setLoad('Transcribing voice…','Groq Whisper',30);showLoader(true);
+async function transcribeBlob(blob,mime){
+  setLoad('Transcribing audio...','Groq Whisper',30); showLoader(true);
   try{
-    const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>res(e.target.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(blob)});
+    const b64=await new Promise((res,rej)=>{
+      const r=new FileReader();
+      r.onload=e=>res(e.target.result.split(',')[1]); r.onerror=rej; r.readAsDataURL(blob);
+    });
     const resp=await fetch('/.netlify/functions/transcribe',{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({audioBase64:b64,mimeType:mime})
+      body:JSON.stringify({audioBase64:b64,mimeType:mime}),
+      signal:AbortSignal.timeout(30000)
     });
-    const data=await resp.json();
-    if(!resp.ok||data.error)throw new Error(data.error||'Transcription failed');
-    S.voiceText=data.text||'';
+    const d=await resp.json();
+    if(!resp.ok||d.error)throw new Error(d.error||'Transcription failed');
+    S.voiceText=d.text||'';
     const vt=document.getElementById('vtrans');
-    vt.textContent=S.voiceText||'No speech detected.';vt.classList.add('on');
-    document.getElementById('vstatus').textContent='✓ Transcript ready — tap Generate';
+    vt.textContent=S.voiceText||'No speech detected'; vt.classList.add('on');
+    document.getElementById('vstatus').textContent=
+      S.voiceText?'Transcript ready — tap Generate':'No speech detected';
     showLoader(false);
-  }catch(e){showLoader(false);document.getElementById('vstatus').textContent='Error: '+e.message.slice(0,60);toast('Transcription error')}
+  }catch(e){
+    showLoader(false);
+    document.getElementById('vstatus').textContent='Error: '+e.message.slice(0,70);
+    toast('Transcription error: '+e.message.slice(0,60));
+  }
 }
 
-/* ══════════════════════════════════
-   CHAT
-══════════════════════════════════ */
+/* Chat parser */
 function setChatType(type,btn){
   S.chatType=type;
-  document.querySelectorAll('.ctag').forEach(b=>b.classList.remove('on'));btn.classList.add('on');analyzeChat();
+  document.querySelectorAll('.ctype').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on'); analyzeChat();
 }
 function analyzeChat(){
   const txt=document.getElementById('t-chat').value;
   if(!txt||txt.length<20){document.getElementById('eq-box').classList.remove('on');return}
   const lines=txt.split('\n');
   let qs=[];
-  if(S.chatType==='whatsapp'){
+  if(S.chatType==='whatsapp')
     qs=lines.filter(l=>/\]\s*.+?:/.test(l)&&l.includes('?')).map(l=>l.replace(/^\[?.+?\]?\s*.+?:\s*/,'').trim()).filter(Boolean);
-  }else if(S.chatType==='telegram'){
+  else if(S.chatType==='telegram')
     qs=lines.filter(l=>/^\[?\d/.test(l)&&l.includes('?')).map(l=>l.replace(/^\[?.+?\]?\s*.+?:\s*/,'').trim()).filter(Boolean);
-  }else{
-    qs=lines.filter(l=>l.trim().endsWith('?')&&l.length>6).map(l=>l.trim());
-  }
+  else
+    qs=lines.filter(l=>l.trim().endsWith('?')&&l.length>8).map(l=>l.trim());
   document.getElementById('eq-count').textContent=qs.length;
-  document.getElementById('eq-list').innerHTML=qs.slice(0,8).map(q=>`<div class="eq-item">${q}</div>`).join('');
+  document.getElementById('eq-list').innerHTML=qs.slice(0,8).map(q=>'<div class="eq-item">'+q+'</div>').join('');
   document.getElementById('eq-box').classList.toggle('on',qs.length>0);
 }
 
-/* ══════════════════════════════════
+/* =========================================================
    GET CONTENT
-══════════════════════════════════ */
+========================================================= */
 async function getContent(){
   switch(S.tool){
     case'photo':
-      if(!S.photoText)throw new Error('No text extracted yet. Wait for OCR to finish or try another tool.');
+      if(!S.photoText)throw new Error('No text extracted yet. Wait for OCR to finish, or try another input tool.');
       return S.photoText;
     case'pdf':
-      if(!S.pdfText)throw new Error('Upload a PDF first and wait for it to load.');
+      if(!S.pdfText)throw new Error('Upload a PDF first and wait for it to finish loading.');
       return S.pdfText;
     case'voice':
-      if(!S.voiceText)throw new Error('Record audio first — tap the mic button.');
+      if(!S.voiceText)throw new Error('Record audio first — tap the microphone button.');
       return S.voiceText;
     case'chat':{
       const v=document.getElementById('t-chat').value.trim();
       if(!v)throw new Error('Paste a chat export first.');
-      return `Chat export (${S.chatType}):\n\n${v}`;
+      return 'Chat export ('+S.chatType+'):\n\n'+v;
     }
     case'url':{
       const v=document.getElementById('t-url').value.trim();
       if(!v)throw new Error('Enter a URL first.');
-      setLoad('Fetching page…','Reading content from URL',20);
-      const r=await fetch(`/.netlify/functions/fetch-url?url=${encodeURIComponent(v)}`);
+      setLoad('Fetching page...','Reading content from URL',15);
+      const r=await fetch('/.netlify/functions/fetch-url?url='+encodeURIComponent(v),
+        {signal:AbortSignal.timeout(18000)});
       const d=await r.json();
-      if(!r.ok||d.error)throw new Error(d.error||'Could not fetch URL');
+      if(!r.ok||d.error)throw new Error(d.error||'Could not fetch URL — try pasting the text directly');
       return d.text;
     }
     case'text':{
       const v=document.getElementById('t-text').value.trim();
-      if(!v||v.length<10)throw new Error('Add some text content first.');
+      if(!v||v.length<15)throw new Error('Add some content to the text area first.');
       return v;
     }
     case'topic':{
-      const main=document.getElementById('t-topic-input').value.trim();
-      const topicInput=document.getElementById('inp-topic').value.trim();
-      const v=main||topicInput;
-      if(!v)throw new Error('Enter a topic or description first.');
-      return `Generate comprehensive study materials for: "${v}". Cover all key concepts, definitions, examples, and important relationships.`;
+      const main=document.getElementById('t-topic-inp').value.trim();
+      const fallback=document.getElementById('inp-topic').value.trim();
+      const v=main||fallback;
+      if(!v)throw new Error('Describe a topic first — e.g. "Photosynthesis" or "The French Revolution"');
+      return 'Generate comprehensive study materials for: "'+v+'". Cover key concepts, definitions, worked examples, and important relationships between ideas.';
     }
   }
 }
 
-/* ══════════════════════════════════
+/* =========================================================
    GENERATE
-══════════════════════════════════ */
+========================================================= */
 async function generate(){
   if(getUsed()>=LIMIT){showPaywall();return}
   const btn=document.getElementById('btn-gen');
-  btn.disabled=true;
+  const banner=document.getElementById('gen-banner');
+  banner.className='status-banner';
+  btn.disabled=true; btn.textContent='Generating...';
+
   let content;
-  try{content=await getContent()}catch(e){toast(e.message);btn.disabled=false;return}
-  showLoader(true);setLoad('Building exam prompt…','Preparing AI context',10);
-  const examId=document.getElementById('sel-exam')?.value||'';
-  const subjectId=document.getElementById('sel-subject')?.value||'';
+  try{content=await getContent()}
+  catch(e){
+    toast(e.message);
+    btn.disabled=false; btn.textContent='Generate Study Kit';
+    return;
+  }
+
+  showLoader(true);
+  setLoad('Building exam prompt...','Groq LLaMA 3.3 70B',10);
+
+  const examCode=document.getElementById('sel-exam')?.value||'';
+  const subject=document.getElementById('sel-subject')?.value||'';
   const topic=document.getElementById('inp-topic')?.value.trim()||'';
+
   try{
-    setLoad('Asking AI…','Groq LLaMA 3.3 70B',40);
+    setLoad('Asking AI...','Processing your content',40);
     const resp=await fetch('/.netlify/functions/generate',{
-      method:'POST',headers:{'Content-Type':'application/json'},
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         content,
-        examTypeId:examId||null,
-        subjectId:subjectId||null,
+        examCode:examCode||null,
+        subject:subject||null,
         topic:topic||null,
+        tool:S.tool,
         userId:S.user?.id||null
       }),
-      signal:AbortSignal.timeout(35000)
+      signal:AbortSignal.timeout(40000)
     });
-    setLoad('Formatting study kit…','Almost done',85);
+
+    setLoad('Formatting study kit...','Building flashcards and quiz',85);
     const data=await resp.json();
-    if(!resp.ok||data.error)throw new Error(data.error||`Server error ${resp.status}`);
+
+    if(!resp.ok||data.error){
+      throw new Error(data.error||'Server error '+resp.status+'. Check Netlify env vars and function logs.');
+    }
+
     const kit=data.kit;
-    if(!kit?.flashcards?.length&&!kit?.summary)throw new Error('Invalid response — please try again');
-    kit.createdAt=new Date().toISOString();kit.tool=S.tool;
-    S.kit=kit;S.cards=kit.flashcards||[];S.cardIdx=0;
-    S.quiz=kit.quiz||[];S.qIdx=0;S.qScore=0;
-    incUsed();updUsage();
-    const d=ld();d.genCount=(d.genCount||0)+1;sv(d);
-    renderKit(kit);showLoader(false);btn.disabled=false;openResults();
+    if(!kit?.flashcards?.length&&!kit?.summary){
+      throw new Error('AI returned incomplete data. Please try again.');
+    }
+
+    kit.createdAt=new Date().toISOString(); kit.tool=S.tool; kit.examCode=examCode;
+    S.kit=kit;
+    S.cards=kit.flashcards||[]; S.cardIdx=0;
+    S.quiz=kit.quiz||[]; S.qIdx=0; S.qScore=0;
+    incUsed(); updUsage();
+    const d=ld(); d.genCount=(d.genCount||0)+1; sv(d);
+    renderKit(kit);
+    showLoader(false); btn.disabled=false; btn.textContent='Generate Study Kit';
+    openResults();
+
   }catch(e){
-    showLoader(false);btn.disabled=false;
-    const msg=e.name==='AbortError'?'Request timed out — check your connection':e.message.slice(0,90);
-    toast('Error: '+msg);
+    showLoader(false); btn.disabled=false; btn.textContent='Generate Study Kit';
+    const msg=e.name==='AbortError'?'Request timed out — check your internet connection':e.message;
+    banner.textContent=msg; banner.className='status-banner on err';
+    toast('Error: '+msg.slice(0,80));
   }
 }
 
-/* ══════════════════════════════════
+/* =========================================================
    RENDER KIT
-══════════════════════════════════ */
+========================================================= */
 function renderKit(kit){
   document.getElementById('res-title').textContent=kit.title||'Study Kit';
-  document.getElementById('notes-txt').textContent=kit.notes||'–';
-  const s=document.getElementById('sum-txt');
-  s.innerHTML=(kit.summary||'No summary.').split('\n').filter(p=>p.trim()).map(p=>`<p>${p}</p>`).join('');
-  const ta=document.getElementById('terms-area');
-  ta.innerHTML=(kit.keyterms||[]).map(t=>`
-    <div class="tc2">
-      <div class="tc2-n">${t.term}${t.marks?`<span class="tc2-marks">${t.marks} mark${t.marks>1?'s':''}</span>`:''}
-      </div>
-      <div class="tc2-d">${t.definition}</div>
-    </div>`).join('')||'<p style="color:var(--t3);padding:20px;text-align:center">No terms found</p>';
+  document.getElementById('notes-content').textContent=kit.notes||'No notes extracted.';
+  const sumEl=document.getElementById('sum-content');
+  sumEl.innerHTML=(kit.summary||'No summary.').split('\n').filter(p=>p.trim()).map(p=>'<p>'+p+'</p>').join('');
+  const termsEl=document.getElementById('terms-list');
+  termsEl.innerHTML=(kit.keyterms||[]).length
+    ?(kit.keyterms.map(t=>'<div class="term-card"><div class="term-top"><span class="term-name">'+t.term+'</span>'+(t.marks?'<span class="term-marks">'+t.marks+' mark'+(t.marks>1?'s':'')+'</span>':'')+'</div><div class="term-def">'+t.definition+'</div></div>').join(''))
+    :'<div class="empty"><div class="empty-text">No key terms returned.</div></div>';
   renderCard();
 }
 function openResults(){
@@ -1135,174 +1284,255 @@ function openResults(){
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   document.getElementById('s-results').classList.add('active');
   document.getElementById('nb-results').classList.add('on');
+  S.prevScreen='results';
   switchRT('fc',document.querySelector('.rtab'));
 }
 
-/* ══════════════════════════════════
-   FLASHCARDS (with mark scheme)
-══════════════════════════════════ */
+/* =========================================================
+   FLASHCARDS
+========================================================= */
 function renderCard(){
-  if(!S.cards.length){document.getElementById('fc-ctr').textContent='No cards';return}
-  const c=S.cards[S.cardIdx];
+  const cards=S.cards;
+  if(!cards.length){document.getElementById('fc-ctr').textContent='No cards';return}
+  const c=cards[S.cardIdx];
   document.getElementById('fc-q').textContent=c.q||'';
-  document.getElementById('fc-marks').textContent=c.marks?`${c.marks} mark${c.marks>1?'s':''}`:'' ;
-  document.getElementById('fc-scheme').textContent=c.mark_scheme||c.a||'';
+  document.getElementById('fc-ctr').textContent='Card '+(S.cardIdx+1)+' of '+cards.length;
+  const mbadge=document.getElementById('fc-mbadge');
+  if(c.marks){mbadge.textContent=c.marks+' mark'+(c.marks>1?'s':'');mbadge.style.display='inline-block'}
+  else{mbadge.style.display='none'}
+  const scheme=document.getElementById('fc-scheme');
+  if(c.mark_scheme&&c.mark_scheme.trim()){scheme.textContent=c.mark_scheme}
+  else{scheme.textContent=c.a||'No answer provided.'}
   const mis=document.getElementById('fc-mistake');
-  if(c.common_mistake){mis.textContent=c.common_mistake;mis.style.display='block'}else mis.style.display='none';
-  document.getElementById('fc-ctr').textContent=`Card ${S.cardIdx+1} of ${S.cards.length}`;
+  if(c.common_mistake&&c.common_mistake.trim()){mis.textContent=c.common_mistake;mis.style.display='block'}
+  else{mis.style.display='none'}
   document.getElementById('fcinner').classList.remove('flip');
 }
 function flipCard(){document.getElementById('fcinner').classList.toggle('flip')}
-function nextCard(){if(S.cardIdx<S.cards.length-1){S.cardIdx++;renderCard()}else toast('Last card! 🎉')}
+function nextCard(){
+  if(S.cardIdx<S.cards.length-1){S.cardIdx++;renderCard()}
+  else toast('Last card! Start again from Card 1')
+}
 function prevCard(){if(S.cardIdx>0){S.cardIdx--;renderCard()}}
 function shuffleCards(){
-  for(let i=S.cards.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[S.cards[i],S.cards[j]]=[S.cards[j],S.cards[i]]}
-  S.cardIdx=0;renderCard();toast('Shuffled 🔀');
+  for(let i=S.cards.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [S.cards[i],S.cards[j]]=[S.cards[j],S.cards[i]];
+  }
+  S.cardIdx=0; renderCard(); toast('Cards shuffled');
 }
 
-/* ══════════════════════════════════
+/* =========================================================
    QUIZ
-══════════════════════════════════ */
+========================================================= */
 function renderQuiz(){
-  const a=document.getElementById('qa');
-  if(!S.quiz.length){a.innerHTML='<p style="color:var(--t3);padding:20px;text-align:center">No quiz questions</p>';return}
+  const a=document.getElementById('qa-area');
+  if(!S.quiz.length){a.innerHTML='<div class="empty"><div class="empty-icon">&#10067;</div><div class="empty-text">No quiz questions were generated.</div></div>';return}
   if(S.qIdx>=S.quiz.length){
-    const pct=~~(S.qScore/S.quiz.length*100),em=pct>=80?'🏆':pct>=60?'👍':pct>=40?'📚':'💪';
-    a.innerHTML=`<div class="score-card"><div class="sce">${em}</div><div class="scn">${pct}%</div><div class="scl">${S.qScore}/${S.quiz.length} correct</div><button class="btn-retry" onclick="S.qIdx=0;S.qScore=0;renderQuiz()">Try Again</button></div>`;
+    const pct=Math.round(S.qScore/S.quiz.length*100);
+    const emoji=pct>=80?'🏆':pct>=60?'👍':pct>=40?'📚':'💪';
+    a.innerHTML='<div class="score-wrap"><div class="score-emoji">'+emoji+'</div><div class="score-pct">'+pct+'%</div><div class="score-label">'+S.qScore+' / '+S.quiz.length+' correct</div><button class="btn-retry" onclick="S.qIdx=0;S.qScore=0;renderQuiz()">Try Again</button></div>';
     return;
   }
-  const q=S.quiz[S.qIdx],prog=(S.qIdx/S.quiz.length*100);
-  a.innerHTML=`
-    <div class="qprog"><span style="font-size:11px;color:var(--t3)">${S.qIdx+1}/${S.quiz.length}</span><div class="qpbar"><div class="qpfill" style="width:${prog}%"></div></div><span style="font-size:11px;color:var(--em);font-weight:600">${S.qScore}✓</span></div>
-    <div class="qcard">
-      <div class="qnum">Question ${S.qIdx+1}${q.marks?`<span class="q-marks-badge">${q.marks} mark${q.marks>1?'s':''}</span>`:''}</div>
-      <div class="qtxt">${q.question}</div>
-    </div>
-    <div class="qopts">${(q.options||[]).map((o,i)=>`<button class="qopt" onclick="answer(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
-    <div class="qexp" id="qexp">${q.explanation||''}</div>
-    <button class="btn-next" id="btn-next" onclick="S.qIdx++;renderQuiz()">Next →</button>`;
+  const q=S.quiz[S.qIdx];
+  const prog=Math.round(S.qIdx/S.quiz.length*100);
+  a.innerHTML='<div class="q-prog-row"><span style="font-size:11px;color:var(--t3)">'+( S.qIdx+1)+'/'+S.quiz.length+'</span><div class="q-prog-bar"><div class="q-prog-fill" style="width:'+prog+'%"></div></div><span style="font-size:11px;color:var(--em);font-weight:600">'+S.qScore+'&#10003;</span></div>'
+    +'<div class="q-card"><div class="q-num">Q'+(S.qIdx+1)+(q.marks?'<span class="q-marks">'+q.marks+' mark'+(q.marks>1?'s':'')+'</span>':'')+'</div><div class="q-text">'+q.question+'</div></div>'
+    +'<div class="q-opts">'+(q.options||[]).map((o,i)=>'<button class="q-opt" onclick="answerQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>').join('')+'</div>'
+    +'<div class="q-expl" id="qexpl">'+(q.explanation||'')+'</div>'
+    +'<button class="btn-next" id="qnext" onclick="S.qIdx++;renderQuiz()">Next &rarr;</button>';
 }
-function answer(sel){
-  const q=S.quiz[S.qIdx],cor=q.correct??0;
-  document.querySelectorAll('.qopt').forEach((o,i)=>{o.disabled=true;if(i===cor)o.classList.add('ok');else if(i===sel&&sel!==cor)o.classList.add('ng')});
+function answerQ(sel){
+  const q=S.quiz[S.qIdx]; const cor=q.correct??0;
+  document.querySelectorAll('.q-opt').forEach((o,i)=>{
+    o.disabled=true;
+    if(i===cor)o.classList.add('ok');
+    else if(i===sel&&sel!==cor)o.classList.add('ng');
+  });
   if(sel===cor)S.qScore++;
-  document.getElementById('qexp')?.classList.add('on');
-  document.getElementById('btn-next')?.classList.add('on');
+  document.getElementById('qexpl')?.classList.add('on');
+  document.getElementById('qnext')?.classList.add('on');
 }
 function switchRT(tab,btn){
   S.resultTab=tab;
   document.querySelectorAll('.rtab').forEach(t=>t.classList.remove('on'));
   document.querySelectorAll('.rpanel').forEach(p=>p.classList.remove('on'));
+  const tabs=['fc','quiz','notes','sum','terms'];
   if(btn)btn.classList.add('on');
-  else{const tabs=['fc','quiz','notes','sum','terms'];document.querySelectorAll('.rtab')[tabs.indexOf(tab)]?.classList.add('on')}
+  else document.querySelectorAll('.rtab')[tabs.indexOf(tab)]?.classList.add('on');
   document.getElementById('rp-'+tab)?.classList.add('on');
   if(tab==='quiz')renderQuiz();
 }
 
-/* ══════════════════════════════════
+/* =========================================================
    SAVE / SHARE / COPY / EXPORT
-══════════════════════════════════ */
+========================================================= */
 function saveKit(){
-  if(!S.kit){toast('Nothing to save');return}
+  if(!S.kit){toast('Nothing to save yet');return}
   const h=hist();
-  h.unshift({id:Date.now(),title:S.kit.title||'Study Kit',date:new Date().toLocaleDateString(),tool:S.tool,kit:S.kit});
+  h.unshift({id:Date.now(),title:S.kit.title||'Study Kit',date:new Date().toLocaleDateString(),tool:S.tool,examCode:S.kit.examCode||'',kit:S.kit});
   if(h.length>60)h.pop();
   localStorage.setItem(HK,JSON.stringify(h));
-  toast('Saved to Library ✓');updStats();
+  toast('Saved to Library');
+  updStats();
 }
 async function shareKit(){
   if(!S.kit)return;
-  const txt=`📚 ${S.kit.title}\n\nSUMMARY:\n${S.kit.summary||''}\n\nKEY TERMS:\n${(S.kit.keyterms||[]).slice(0,6).map(t=>`• ${t.term}: ${t.definition}`).join('\n')}\n\nFLASHCARDS:\n${(S.kit.flashcards||[]).slice(0,8).map(f=>`Q: ${f.q}\nA: ${f.mark_scheme||f.a}`).join('\n\n')}\n\n— StudyOS`;
-  if(navigator.share){try{await navigator.share({title:S.kit.title,text:txt});return}catch{}}
-  navigator.clipboard?.writeText(txt).then(()=>toast('Copied ✓')).catch(()=>toast('Share unavailable'));
+  const k=S.kit;
+  const txt='Study Kit: '+k.title+'\n\nSummary:\n'+(k.summary||'')+'\n\nKey Terms:\n'+(k.keyterms||[]).slice(0,6).map(t=>'- '+t.term+': '+t.definition).join('\n')+'\n\nFlashcards:\n'+(k.flashcards||[]).slice(0,8).map((f,i)=>(i+1)+'. Q: '+f.q+'\nA: '+(f.mark_scheme||f.a)).join('\n\n')+'\n\n— StudyOS';
+  if(navigator.share){try{await navigator.share({title:k.title,text:txt});return}catch{}}
+  if(navigator.clipboard){await navigator.clipboard.writeText(txt);toast('Copied to clipboard');}
+  else toast('Share not available on this browser');
 }
 function copyTab(){
-  if(!S.kit){toast('Nothing to copy');return}
+  if(!S.kit){toast('Nothing to copy yet');return}
   let txt='';
-  if(S.resultTab==='fc')txt=(S.kit.flashcards||[]).map((f,i)=>`${i+1}. Q: ${f.q}\n   A: ${f.mark_scheme||f.a}${f.marks?` (${f.marks} marks)`:''}`).join('\n\n');
-  else if(S.resultTab==='quiz')txt=(S.kit.quiz||[]).map((q,i)=>`${i+1}. ${q.question}\n${(q.options||[]).map((o,j)=>`   ${String.fromCharCode(65+j)}. ${o}`).join('\n')}\n   ✓ ${String.fromCharCode(65+(q.correct||0))}: ${q.explanation||''}`).join('\n\n');
-  else if(S.resultTab==='notes')txt=S.kit.notes||'';
-  else if(S.resultTab==='sum')txt=S.kit.summary||'';
-  else txt=(S.kit.keyterms||[]).map(t=>`${t.term}: ${t.definition}`).join('\n\n');
-  navigator.clipboard?.writeText(txt).then(()=>toast('Copied ✓')).catch(()=>toast('Copy failed'));
+  const t=S.resultTab;
+  if(t==='fc')txt=(S.kit.flashcards||[]).map((f,i)=>(i+1)+'. ['+( f.marks||1)+' mark(s)] '+f.q+'\n'+(f.mark_scheme||f.a)+(f.common_mistake?'\n Warning: '+f.common_mistake:'')).join('\n\n');
+  else if(t==='quiz')txt=(S.kit.quiz||[]).map((q,i)=>(i+1)+'. '+q.question+'\n'+(q.options||[]).map((o,j)=>'   '+String.fromCharCode(65+j)+'. '+o).join('\n')+'\n   Answer: '+String.fromCharCode(65+(q.correct||0))+'. '+q.explanation).join('\n\n');
+  else if(t==='notes')txt=S.kit.notes||'';
+  else if(t==='sum')txt=S.kit.summary||'';
+  else txt=(S.kit.keyterms||[]).map(t2=>t2.term+': '+t2.definition).join('\n\n');
+  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('Copied'));
+  else toast('Copy not available');
 }
 function exportTxt(){
   if(!S.kit)return;
   const k=S.kit;
-  const lines=[`# ${k.title||'Study Kit'}`,`Generated: ${new Date().toLocaleString()}`,``,`## SUMMARY`,k.summary||'',``,`## KEY TERMS`,(k.keyterms||[]).map(t=>`• ${t.term} (${t.marks||1} mark): ${t.definition}`).join('\n'),``,`## FLASHCARDS`,(k.flashcards||[]).map((f,i)=>`${i+1}. [${f.marks||1} mark(s)] ${f.q}\n${f.mark_scheme||f.a}${f.common_mistake?'\n⚠️ '+f.common_mistake:''}`).join('\n\n'),``,`## QUIZ`,(k.quiz||[]).map((q,i)=>`${i+1}. [${q.marks||1}m] ${q.question}\n${(q.options||[]).map((o,j)=>`   ${String.fromCharCode(65+j)}. ${o}`).join('\n')}\n   ✓ ${String.fromCharCode(65+(q.correct||0))}: ${q.explanation||''}`).join('\n\n')];
+  const lines=[
+    '# '+( k.title||'Study Kit'),'Generated: '+new Date().toLocaleString(),'',
+    '## NOTES',k.notes||'','',
+    '## SUMMARY',k.summary||'','',
+    '## KEY TERMS',(k.keyterms||[]).map(t=>'- '+(t.marks?'['+t.marks+'m] ':'')+t.term+': '+t.definition).join('\n'),'',
+    '## FLASHCARDS',(k.flashcards||[]).map((f,i)=>(i+1)+'. ['+( f.marks||1)+' mark(s)]\nQ: '+f.q+'\nA: '+(f.mark_scheme||f.a)+(f.common_mistake?'\nMistake: '+f.common_mistake:'')).join('\n\n'),'',
+    '## QUIZ',(k.quiz||[]).map((q,i)=>(i+1)+'. ['+( q.marks||1)+'m] '+q.question+'\n'+(q.options||[]).map((o,j)=>'   '+String.fromCharCode(65+j)+'. '+o).join('\n')+'\n   Answer: '+String.fromCharCode(65+(q.correct||0))+'\n   '+q.explanation).join('\n\n')
+  ];
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain'}));
-  a.download=(k.title||'StudyKit').replace(/[^a-z0-9]/gi,'_')+'.txt';
-  a.click();toast('Exported ✓');
+  a.download=((k.title||'StudyKit').replace(/[^a-z0-9]/gi,'_'))+'.txt';
+  a.click(); toast('Exported');
 }
 
-/* ══════════════════════════════════
+/* =========================================================
    LIBRARY
-══════════════════════════════════ */
+========================================================= */
 function renderLib(){
-  const h=hist(),el=document.getElementById('lib-list');if(!el)return;
-  if(!h.length){el.innerHTML=`<div class="empty"><div class="ei">📭</div><div class="el">No saved kits yet.<br>Generate one and tap Save!</div></div>`;return}
-  el.innerHTML=h.map(e=>`<div class="lcard" onclick="loadEntry(${e.id})"><div class="lico">${ICONS[e.tool]||'📚'}</div><div class="linf"><div class="lt">${e.title}</div><div class="lm">${e.date} · ${e.kit?.flashcards?.length||0} cards</div></div><button class="ldel" onclick="delEntry(event,${e.id})">✕</button></div>`).join('');
+  const h=hist(); const el=document.getElementById('lib-list'); if(!el)return;
+  if(!h.length){el.innerHTML='<div class="empty"><div class="empty-icon">&#128218;</div><div class="empty-text">No saved kits yet.<br>Generate one and tap Save.</div></div>';return}
+  el.innerHTML=h.map(e=>'<div class="lib-card" onclick="loadEntry('+e.id+')"><div class="lib-ico">'+(ICONS[e.tool]||'📚')+'</div><div class="lib-info"><div class="lib-t">'+e.title+'</div><div class="lib-m">'+e.date+' &bull; '+(e.kit?.flashcards?.length||0)+' cards</div></div><button class="lib-del" onclick="delEntry(event,'+e.id+')">&#10005;</button></div>').join('');
 }
 function loadEntry(id){
-  const e=hist().find(x=>x.id===id);if(!e)return;
-  S.kit=e.kit;S.tool=e.tool||'text';S.cards=e.kit.flashcards||[];S.cardIdx=0;
-  S.quiz=e.kit.quiz||[];S.qIdx=0;S.qScore=0;
-  renderKit(e.kit);openResults();
+  const e=hist().find(x=>x.id===id); if(!e)return;
+  S.kit=e.kit; S.tool=e.tool||'text';
+  S.cards=e.kit.flashcards||[]; S.cardIdx=0;
+  S.quiz=e.kit.quiz||[]; S.qIdx=0; S.qScore=0;
+  renderKit(e.kit); openResults();
 }
-function delEntry(ev,id){ev.stopPropagation();localStorage.setItem(HK,JSON.stringify(hist().filter(e=>e.id!==id)));renderLib();updStats();toast('Deleted ✓')}
-function clearLib(){if(!confirm('Clear all saved kits?'))return;localStorage.removeItem(HK);renderLib();updStats();toast('Library cleared')}
+function delEntry(ev,id){
+  ev.stopPropagation();
+  localStorage.setItem(HK,JSON.stringify(hist().filter(e=>e.id!==id)));
+  renderLib(); updStats(); toast('Deleted');
+}
+function clearLib(){
+  if(!confirm('Delete all saved kits? This cannot be undone.'))return;
+  localStorage.removeItem(HK); renderLib(); updStats(); toast('Library cleared');
+}
 function renderRecent(){
-  const h=hist().slice(0,4),el=document.getElementById('rec-list');if(!el)return;
-  if(!h.length){el.innerHTML=`<div class="empty" style="padding:20px"><div class="el">No recent activity.<br>Tap a tool above to start!</div></div>`;return}
-  el.innerHTML=h.map(e=>`<div class="rec" onclick="loadEntry(${e.id})"><div class="rec-ico">${ICONS[e.tool]||'📚'}</div><div class="rec-info"><div class="rec-t">${e.title}</div><div class="rec-m">${e.date}</div></div></div>`).join('');
+  const h=hist().slice(0,4); const el=document.getElementById('rec-list'); if(!el)return;
+  if(!h.length){el.innerHTML='<div class="empty" style="padding:20px"><div class="empty-text">No recent activity.<br>Tap a tool above to start.</div></div>';return}
+  el.innerHTML=h.map(e=>'<div class="rec" onclick="loadEntry('+e.id+')"><div class="rec-ico">'+(ICONS[e.tool]||'📚')+'</div><div class="rec-info"><div class="rec-t">'+e.title+'</div><div class="rec-m">'+e.date+'</div></div></div>').join('');
 }
 
-/* ══════════════════════════════════
-   MONETIZATION
-══════════════════════════════════ */
-function showPaywall(){document.getElementById('paywall').classList.add('on')}
-function closePaywall(){document.getElementById('paywall').classList.remove('on')}
-function goPremium(){
-  /* Connect Lemon Squeezy or Paystack here */
-  toast('Premium launching soon — follow us for updates!');closePaywall();
+/* =========================================================
+   USAGE + STATS
+========================================================= */
+function updUsage(){
+  const used=getUsed(); const pct=Math.min(100,(used/LIMIT)*100);
+  const usedEl=document.getElementById('us-used'); if(usedEl)usedEl.textContent=used;
+  const fill=document.getElementById('us-fill');
+  if(fill){fill.style.width=pct+'%';fill.className='us-fill'+(used>=LIMIT?' danger':used>=3?' warn':'');}
+  const det=document.getElementById('usage-detail'); if(det)det.textContent=used+' / '+LIMIT+' generated today';
+}
+function updStats(){
+  const h=hist(); const d=ld();
+  const g=document.getElementById('stat-gen'); if(g)g.textContent=d.genCount||0;
+  const c=document.getElementById('stat-cards'); if(c)c.textContent=h.reduce((a,e)=>a+(e.kit?.flashcards?.length||0),0);
+  const s=document.getElementById('stat-saved'); if(s)s.textContent=h.length;
+  const lf=document.getElementById('lifetime-detail'); if(lf)lf.textContent=(d.genCount||0)+' kits generated';
+}
+function updSettings(){
+  updStats(); updUsage();
+  const tog=document.getElementById('dark-tog');
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  if(tog)tog.classList.toggle('on',isDark);
 }
 
-/* ══════════════════════════════════
-   SETTINGS
-══════════════════════════════════ */
+/* =========================================================
+   APPEARANCE
+========================================================= */
 function toggleDark(btn){
   const dark=document.documentElement.getAttribute('data-theme')==='dark';
   document.documentElement.setAttribute('data-theme',dark?'light':'dark');
   btn.classList.toggle('on',!dark);
-  const d=ld();d.prefs={...prefs(),dark:!dark};sv(d);
+  const d=ld(); d.prefs={...( d.prefs||{}),dark:!dark}; sv(d);
 }
 
-/* ══════════════════════════════════
-   LOADER
-══════════════════════════════════ */
+/* =========================================================
+   MONETIZATION — Paystack integration
+   Replace pk_live_xxx with your Paystack public key
+========================================================= */
+function goPremium(){
+  closeModal('paywall');
+  /* Paystack inline checkout */
+  const userEmail=S.user?.email||'';
+  if(typeof PaystackPop!=='undefined'){
+    const handler=PaystackPop.newTransaction({
+      key:'pk_live_REPLACE_WITH_YOUR_PAYSTACK_KEY',
+      email:userEmail||prompt('Enter your email to continue:',''),
+      amount:299*100, // $2.99 in cents (USD) — adjust for your currency
+      currency:'USD',
+      label:'StudyOS Premium',
+      onSuccess:(t)=>{ unlockPremium(t.reference); },
+      onCancel:()=>{}
+    });
+  }else{
+    // Fallback: open payment page directly
+    window.open('https://paystack.com/pay/studyos-premium','_blank');
+    toast('Opening payment page...');
+  }
+}
+function unlockPremium(ref){
+  const d=ld(); d.premium={ref,date:new Date().toISOString()}; sv(d);
+  toast('Premium unlocked! Thank you.');
+}
+function showPaywall(){document.getElementById('paywall').classList.add('on')}
+function closeModal(id){document.getElementById(id)?.classList.remove('on')}
+
+/* =========================================================
+   UTILS
+========================================================= */
 function showLoader(on){document.getElementById('loader').classList.toggle('on',on)}
-function setLoad(t,s,pct){
-  document.getElementById('lt2').textContent=t;
-  document.getElementById('ls').textContent=s;
-  if(pct!==undefined)document.getElementById('lp-bar').style.width=pct+'%';
+function setLoad(title,sub,pct){
+  const t=document.getElementById('load-title'); if(t)t.textContent=title;
+  const s=document.getElementById('load-sub');   if(s)s.textContent=sub;
+  const b=document.getElementById('load-bar');   if(b&&pct!==undefined)b.style.width=pct+'%';
 }
-let _tt;
-function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('on'),2700)}
+let _toastTimer;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('on');
+  clearTimeout(_toastTimer);
+  _toastTimer=setTimeout(()=>el.classList.remove('on'),2800);
+}
+/* Close modals when tapping background */
+document.querySelectorAll('.modal-bg').forEach(bg=>{
+  bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('on')});
+});
 
-/* ══════════════════════════════════
-   INIT
-══════════════════════════════════ */
-function init(){
-  const p=prefs();
-  if(p.dark!==undefined)document.documentElement.setAttribute('data-theme',p.dark?'dark':'light');
-  const tog=document.getElementById('dark-tog');if(tog)tog.classList.toggle('on',!!p.dark);
-  updUsage();updStats();renderRecent();
-  initAuth();
-  loadExamTypes();
-  if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
-init();
+/* =========================================================
+   START
+========================================================= */
+initApp();
 </script>
 </body>
 </html>
