@@ -17,7 +17,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#18181b;--sf:#27272a;--sf2:#3f3f46;--bd:#52525b;--bd2:#71717a;
+  --bg:#18181b;--sf:#27272a;--sf2:#3f3f46;--bd:#52525b;
   --t1:#fafafa;--t2:#a1a1aa;--t3:#71717a;
   --em:#10b981;--eml:rgba(16,185,129,.14);--emd:#059669;--emt:#34d399;
   --blue:#60a5fa;--bll:rgba(96,165,250,.13);
@@ -27,142 +27,140 @@
   --nav:62px;--r:14px;--rs:10px;
   --sh:0 1px 4px rgba(0,0,0,.4);--shm:0 6px 24px rgba(0,0,0,.5)
 }
-[data-theme=light]{
-  --bg:#f4f4f5;--sf:#fff;--sf2:#f4f4f5;--bd:#d4d4d8;--bd2:#a1a1aa;
-  --t1:#18181b;--t2:#52525b;--t3:#a1a1aa;
-  --eml:rgba(16,185,129,.1);--bll:rgba(96,165,250,.1);
-  --ambl:rgba(251,191,36,.1);--rl:rgba(248,113,113,.1);--pl:rgba(167,139,250,.1)
-}
+[data-theme=light]{--bg:#f4f4f5;--sf:#fff;--sf2:#f4f4f5;--bd:#d4d4d8;--t1:#18181b;--t2:#52525b;--t3:#a1a1aa;--eml:rgba(16,185,129,.1);--bll:rgba(96,165,250,.1);--ambl:rgba(251,191,36,.1);--rl:rgba(248,113,113,.1);--pl:rgba(167,139,250,.1)}
 html,body{height:100%;overflow:hidden;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased}
 button{font-family:inherit;cursor:pointer}
 #app{height:100%;display:flex;flex-direction:column;max-width:520px;margin:0 auto}
-.screen{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--nav)+24px)}
+.screen{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--nav)+20px)}
 .screen.active{display:flex}
 #s-results{overflow:hidden!important;padding-bottom:0}
+@media(min-width:521px){.bnav{border-left:1px solid var(--bd);border-right:1px solid var(--bd)}}
 /* NAV */
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;height:var(--nav);background:var(--sf);border-top:1px solid var(--bd);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom,0)}
-@media(min-width:521px){.bnav{border-left:1px solid var(--bd);border-right:1px solid var(--bd)}}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:var(--t3);transition:color .15s;position:relative}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:none;color:var(--t3);transition:color .15s}
 .nb.on{color:var(--em)}
 .nb svg{width:20px;height:20px;stroke-width:2}
 .nb-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
-/* HEADER PATTERN */
-.hdr{padding:20px 16px 0;display:flex;align-items:center;justify-content:space-between}
-.page-title{font-size:22px;font-weight:700;letter-spacing:-.5px}
-.ibtn{background:none;border:none;color:var(--t2);width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ibtn{background:none;border:none;color:var(--t2);width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center}
 .ibtn:active{background:var(--sf2)}
 /* HOME */
-.dash-hero{padding:28px 16px 20px;text-align:center}
-.dash-logo{font-size:32px;font-weight:800;letter-spacing:-1px}
+.dash-hero{padding:26px 16px 16px;text-align:center}
+.dash-logo{font-size:30px;font-weight:800;letter-spacing:-1px}
 .dash-logo em{color:var(--em);font-style:normal}
 .dash-sub{font-size:13px;color:var(--t2);margin-top:4px}
-.dash-user{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:10px}
-.du-chip{display:flex;align-items:center;gap:6px;background:var(--sf);border:1px solid var(--bd);border-radius:20px;padding:5px 12px}
-.du-avatar{width:22px;height:22px;border-radius:50%;background:var(--em);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
-.du-name{font-size:12px;font-weight:500;color:var(--t1)}
-.du-signout{font-size:11px;color:var(--red);border:none;background:none;font-weight:600}
+.dash-user{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px}
+.du-chip{display:inline-flex;align-items:center;gap:6px;background:var(--sf);border:1px solid var(--bd);border-radius:20px;padding:5px 12px}
+.du-av{width:22px;height:22px;border-radius:50%;background:var(--em);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.du-nm{font-size:12px;font-weight:500}
+.du-out{font-size:11px;color:var(--red);border:none;background:none;font-weight:600}
 .du-login{font-size:12px;font-weight:600;color:var(--em);border:1px solid var(--em);border-radius:20px;padding:6px 16px;background:none}
-.sec-h{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);padding:16px 16px 8px}
-/* TOOL GRID */
+.sh{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);padding:16px 16px 8px}
+/* HOME TOOL GRID */
 .tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 4px}
-.tc{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:14px 13px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:4px}
+.tc{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:14px 12px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:4px}
 .tc:active{transform:scale(.97);border-color:var(--em)}
-.tc-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:3px}
+.tc-ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:2px}
 .tc-name{font-size:13px;font-weight:600}
 .tc-desc{font-size:11px;color:var(--t2);line-height:1.4}
-/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 16px 14px}
-.stat{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 10px;text-align:center}
+.stat{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:11px 10px;text-align:center}
 .stat-n{font-size:22px;font-weight:700;color:var(--em)}
 .stat-l{font-size:10px;color:var(--t2);margin-top:2px}
-/* RECENT */
-.recent-list{padding:0 16px;display:flex;flex-direction:column;gap:8px}
+.rec-list{padding:0 16px;display:flex;flex-direction:column;gap:8px}
 .rec{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:10px}
 .rec:active{background:var(--sf2)}
 .rec-ico{font-size:20px;flex-shrink:0}
 .rec-info{flex:1;min-width:0}
 .rec-t{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rec-m{font-size:11px;color:var(--t3);margin-top:2px}
-/* CREATE */
-.cr-hdr{padding:18px 16px 0;display:flex;align-items:center;justify-content:space-between}
+/* ============================================
+   CREATE — STEP-BASED FLOW
+============================================ */
+.cr-hdr{padding:16px 16px 0;display:flex;align-items:center;justify-content:space-between}
 .cr-title{font-size:18px;font-weight:700}
-/* EXAM SELECTOR */
-.exam-sel{padding:12px 16px 0;display:flex;flex-direction:column;gap:8px}
-.exam-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.exam-drop{padding:10px 12px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rs);color:var(--t1);font-size:12px;font-family:inherit;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;width:100%}
-.exam-drop:focus{border-color:var(--em)}
-.exam-drop option{background:var(--sf)}
-.topic-field{padding:10px 12px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rs);color:var(--t1);font-size:12px;font-family:inherit;outline:none;width:100%}
-.topic-field:focus{border-color:var(--em)}
-.topic-field::placeholder{color:var(--t3)}
-/* TOOL TABS */
-.ttabs{display:flex;gap:6px;padding:14px 16px 0;overflow-x:auto;scrollbar-width:none}
+/* Step sections */
+.step-section{padding:14px 16px 0}
+.step-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.step-num{width:24px;height:24px;border-radius:50%;background:var(--em);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-num.done{background:var(--emd)}
+.step-title{font-size:14px;font-weight:600;color:var(--t1)}
+.step-val{font-size:12px;color:var(--emt);font-weight:500;margin-left:auto}
+/* Chip grid */
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{padding:8px 14px;border-radius:20px;border:1.5px solid var(--bd);background:var(--sf);color:var(--t2);font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;white-space:nowrap}
+.chip:active{opacity:.8}
+.chip.on{background:var(--em);border-color:var(--em);color:#fff;font-weight:600}
+/* Topic chips have slightly different style */
+.topic-chip{padding:7px 12px;border-radius:var(--rs);border:1.5px solid var(--bd);background:var(--sf);color:var(--t2);font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+.topic-chip.on{background:var(--eml);border-color:var(--em);color:var(--emt);font-weight:600}
+.custom-topic{width:100%;padding:10px 14px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);color:var(--t1);font-size:13px;font-family:inherit;outline:none;margin-top:8px}
+.custom-topic:focus{border-color:var(--em)}
+.custom-topic::placeholder{color:var(--t3)}
+/* Step 4 tool tabs */
+.step-opt-badge{font-size:10px;font-weight:500;color:var(--t3);border:1px solid var(--bd);border-radius:4px;padding:1px 6px;margin-left:6px}
+.ttabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-top:2px}
 .ttabs::-webkit-scrollbar{display:none}
-.ttab{flex-shrink:0;padding:7px 13px;border-radius:20px;border:1.5px solid var(--bd);background:none;color:var(--t2);font-size:12px;font-weight:500;white-space:nowrap;transition:all .15s}
+.ttab{flex-shrink:0;padding:7px 12px;border-radius:20px;border:1.5px solid var(--bd);background:none;color:var(--t2);font-size:12px;font-weight:500;white-space:nowrap;transition:all .15s}
 .ttab.on{background:var(--em);border-color:var(--em);color:#fff}
-/* INPUT PANELS */
-.tpanels{padding:14px 16px 0}
+/* Input panels */
+.tpanels{margin-top:10px}
 .tpanel{display:none}
 .tpanel.on{display:block}
-textarea{width:100%;min-height:140px;padding:14px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);color:var(--t1);font-size:14px;font-family:inherit;resize:none;outline:none;transition:border-color .15s;line-height:1.6}
+textarea{width:100%;min-height:130px;padding:13px;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);color:var(--t1);font-size:14px;font-family:inherit;resize:none;outline:none;transition:border-color .15s;line-height:1.6}
 textarea:focus{border-color:var(--em)}
 textarea::placeholder{color:var(--t3)}
-.uzone{width:100%;min-height:130px;border:2px dashed var(--bd);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:var(--sf);padding:20px;text-align:center;transition:all .15s}
+.uzone{width:100%;min-height:120px;border:2px dashed var(--bd);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;background:var(--sf);padding:18px;text-align:center;transition:all .15s}
 .uzone:active{border-color:var(--em);background:var(--sf2)}
-.uz-ico{font-size:36px}
-.uz-lbl{font-size:14px;font-weight:500;color:var(--t2)}
+.uz-ico{font-size:32px}
+.uz-lbl{font-size:13px;font-weight:500;color:var(--t2)}
 .uz-hint{font-size:11px;color:var(--t3)}
-.uz-file{font-size:12px;color:var(--em);font-weight:500;margin-top:4px;word-break:break-all}
+.uz-file{font-size:11px;color:var(--em);font-weight:600;margin-top:3px;word-break:break-all}
 input[type=file]{display:none}
-/* OCR/PDF progress */
-.progress-box{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:12px 14px;margin-top:10px;display:none}
-.progress-box.on{display:block}
-.pb-step{font-size:12px;font-weight:500;margin-bottom:6px}
+.pb-box{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:11px 14px;margin-top:10px;display:none}
+.pb-box.on{display:block}
+.pb-step{font-size:12px;font-weight:500;margin-bottom:5px}
 .pb-track{height:4px;background:var(--sf2);border-radius:2px;overflow:hidden}
-.pb-fill{height:100%;background:var(--em);border-radius:2px;transition:width .4s ease;width:0}
-.pb-log{font-size:11px;color:var(--t3);margin-top:5px}
-/* VOICE */
-.voice-wrap{display:flex;flex-direction:column;align-items:center;padding:20px 16px;gap:14px}
-.v-vis{position:relative;width:130px;height:130px;display:flex;align-items:center;justify-content:center}
+.pb-fill{height:100%;background:var(--em);border-radius:2px;transition:width .4s;width:0}
+.pb-log{font-size:11px;color:var(--t3);margin-top:4px}
+/* Voice */
+.voice-wrap{display:flex;flex-direction:column;align-items:center;padding:18px 16px;gap:12px}
+.v-vis{position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center}
 .vr{position:absolute;border-radius:50%;border:2px solid var(--em);opacity:0;pointer-events:none}
-.vr1{width:80px;height:80px}.vr2{width:108px;height:108px}.vr3{width:130px;height:130px}
+.vr1{width:76px;height:76px}.vr2{width:100px;height:100px}.vr3{width:120px;height:120px}
 .recording .vr1{animation:vp 1.5s ease infinite 0s}
 .recording .vr2{animation:vp 1.5s ease infinite .3s}
 .recording .vr3{animation:vp 1.5s ease infinite .6s}
 @keyframes vp{0%{transform:scale(.85);opacity:.8}100%{transform:scale(1.1);opacity:0}}
-.vbtn{width:62px;height:62px;border-radius:50%;border:none;background:var(--em);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .2s;box-shadow:0 0 0 5px var(--eml)}
+.vbtn{width:58px;height:58px;border-radius:50%;border:none;background:var(--em);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 0 0 5px var(--eml)}
 .vbtn.rec{background:var(--red);box-shadow:0 0 0 5px var(--rl)}
-.vtimer{font-size:24px;font-weight:600;font-variant-numeric:tabular-nums}
-.vstatus{font-size:13px;color:var(--t2);text-align:center}
-.vtrans{width:100%;max-height:140px;overflow-y:auto;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:12px;font-size:13px;line-height:1.6;display:none}
+.vtimer{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.vstatus{font-size:12px;color:var(--t2);text-align:center}
+.vtrans{width:100%;max-height:120px;overflow-y:auto;background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:11px;font-size:13px;line-height:1.6;display:none}
 .vtrans.on{display:block}
-/* CHAT */
-.chat-types{display:flex;gap:6px;margin-bottom:10px}
+/* Chat */
+.chat-types{display:flex;gap:6px;margin-bottom:8px}
 .ctype{padding:5px 12px;border-radius:20px;border:1px solid var(--bd);background:none;color:var(--t2);font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
 .ctype.on{background:var(--em);border-color:var(--em);color:#fff}
-.eq-box{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:10px 12px;margin-top:8px;max-height:110px;overflow-y:auto;display:none}
+.eq-box{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rs);padding:9px 12px;margin-top:8px;max-height:100px;overflow-y:auto;display:none}
 .eq-box.on{display:block}
-.eq-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:6px}
+.eq-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:5px}
 .eq-item{font-size:12px;padding:3px 0;border-bottom:.5px solid var(--bd);line-height:1.5}
 .eq-item:last-child{border:none}
 /* GENERATE */
 .gen-wrap{padding:14px 16px 0}
-.btn-gen{width:100%;padding:15px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(16,185,129,.3);transition:all .15s}
+.btn-gen{width:100%;padding:16px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(16,185,129,.3);transition:all .15s}
 .btn-gen:active{transform:scale(.98)}
-.btn-gen:disabled{background:var(--t3);box-shadow:none;transform:none;cursor:default}
+.btn-gen:disabled{background:var(--t3);box-shadow:none;transform:none}
 .usage-strip{margin-top:10px;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:10px 14px;display:flex;align-items:center;gap:10px}
-.us-label{font-size:12px;color:var(--t2)}
-.us-label b{color:var(--t1)}
+.us-lbl{font-size:12px;color:var(--t2)}
+.us-lbl b{color:var(--t1)}
 .us-bar{flex:1;height:4px;background:var(--sf2);border-radius:2px;overflow:hidden}
 .us-fill{height:100%;background:var(--em);border-radius:2px;transition:width .4s}
 .us-fill.warn{background:var(--amber)}
 .us-fill.danger{background:var(--red)}
 .us-upg{font-size:11px;font-weight:600;color:var(--em);border:none;background:none;flex-shrink:0}
-/* STATUS BANNER */
-.status-banner{margin:10px 16px 0;padding:10px 14px;border-radius:var(--rs);font-size:12px;line-height:1.6;display:none}
-.status-banner.on{display:block}
-.status-banner.warn{background:var(--ambl);border:1px solid var(--amber);color:var(--amber)}
-.status-banner.err{background:var(--rl);border:1px solid var(--red);color:var(--red)}
+.gen-err{margin:10px 0 0;padding:10px 13px;background:var(--rl);border:1px solid var(--red);border-radius:var(--rs);font-size:12px;color:var(--red);line-height:1.5;display:none}
+.gen-err.on{display:block}
 /* RESULTS */
 .res-hdr{padding:14px 16px 0;display:flex;align-items:center;gap:8px;flex-shrink:0}
 .res-title{font-size:14px;font-weight:600;flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
@@ -176,136 +174,131 @@ input[type=file]{display:none}
 .fca{display:flex;flex-direction:column;align-items:center;padding:18px 16px;gap:14px}
 .fc-ctr{font-size:12px;color:var(--t3);font-weight:500}
 .fcwrap{width:100%;perspective:1100px;cursor:pointer;user-select:none}
-.fcinner{position:relative;width:100%;min-height:200px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.fcinner{position:relative;width:100%;min-height:210px;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1)}
 .fcinner.flip{transform:rotateY(180deg)}
 .fcface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);display:flex;flex-direction:column;padding:20px;border:1.5px solid var(--bd)}
 .fc-front{background:var(--sf);box-shadow:var(--shm);align-items:center;justify-content:center;text-align:center}
 .fc-back{background:var(--sf2);transform:rotateY(180deg);overflow-y:auto}
-.fc-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:10px}
-.fc-question{font-size:16px;font-weight:500;line-height:1.5}
+.fc-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:10px}
+.fc-q{font-size:15px;font-weight:500;line-height:1.6}
 .fc-hint{font-size:11px;color:var(--t3);margin-top:10px}
-.fc-marks-badge{display:inline-block;background:var(--eml);color:var(--emt);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:8px}
-.fc-scheme{font-size:13px;color:var(--t1);line-height:1.75;white-space:pre-wrap;margin-bottom:8px}
-.fc-mistake-box{background:var(--ambl);border:1px solid var(--amber);border-radius:var(--rs);padding:8px 12px;font-size:12px;color:var(--amber);line-height:1.5}
-.fc-mistake-box::before{content:"⚠ Common mistake: ";font-weight:600}
+.fc-marks{display:inline-flex;align-items:center;background:var(--eml);color:var(--emt);font-size:10px;font-weight:700;padding:2px 9px;border-radius:4px;margin-bottom:8px}
+.fc-scheme{font-size:13px;color:var(--t1);line-height:1.8;white-space:pre-wrap;word-break:break-word;margin-bottom:8px}
+.fc-mistake{background:var(--ambl);border:1px solid var(--amber);border-radius:var(--rs);padding:8px 11px;font-size:11px;color:var(--amber);line-height:1.5;margin-top:4px}
+.fc-mistake b{font-weight:700}
 .fc-nav{display:flex;gap:12px;align-items:center}
-.fcnb{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--bd);background:var(--sf);color:var(--t2);font-size:20px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.fcnb{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--bd);background:var(--sf);color:var(--t2);font-size:20px;display:flex;align-items:center;justify-content:center}
 .fcnb:active{background:var(--sf2)}
 .fc-shuf{padding:9px 16px;border-radius:20px;border:1.5px solid var(--bd);background:var(--sf);color:var(--t2);font-size:12px;font-weight:500}
 /* QUIZ */
 .qa{padding:14px 16px;display:flex;flex-direction:column;gap:12px}
-.q-prog-row{display:flex;align-items:center;gap:8px}
-.q-prog-bar{flex:1;height:3px;background:var(--sf2);border-radius:2px;overflow:hidden}
-.q-prog-fill{height:100%;background:var(--em);transition:width .3s}
-.q-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px}
-.q-num{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;display:flex;align-items:center;gap:6px}
-.q-marks{font-size:9px;font-weight:700;background:var(--eml);color:var(--emt);padding:1px 7px;border-radius:3px}
-.q-text{font-size:14px;font-weight:500;line-height:1.5}
-.q-opts{display:flex;flex-direction:column;gap:8px}
-.q-opt{padding:12px 14px;border-radius:var(--rs);border:1.5px solid var(--bd);background:var(--sf);color:var(--t1);font-size:13px;text-align:left;transition:all .15s;line-height:1.4}
-.q-opt.ok{background:var(--eml);border-color:var(--em);color:var(--emt)}
-.q-opt.ng{background:var(--rl);border-color:var(--red);color:var(--red)}
-.q-expl{background:var(--bll);border-radius:var(--rs);padding:11px 14px;font-size:12px;color:var(--blue);line-height:1.6;display:none}
-.q-expl.on{display:block}
-.btn-next{width:100%;padding:13px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;display:none;transition:all .15s}
+.qprow{display:flex;align-items:center;gap:8px}
+.qpbar{flex:1;height:3px;background:var(--sf2);border-radius:2px;overflow:hidden}
+.qpfill{height:100%;background:var(--em);transition:width .3s}
+.qcard{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px}
+.qnum{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.qmarks{font-size:9px;font-weight:700;background:var(--eml);color:var(--emt);padding:1px 7px;border-radius:3px}
+.qtext{font-size:14px;font-weight:500;line-height:1.5}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qopt{padding:12px 14px;border-radius:var(--rs);border:1.5px solid var(--bd);background:var(--sf);color:var(--t1);font-size:13px;text-align:left;transition:all .15s;line-height:1.4}
+.qopt.ok{background:var(--eml);border-color:var(--em);color:var(--emt)}
+.qopt.ng{background:var(--rl);border-color:var(--red);color:var(--red)}
+.qexpl{background:var(--bll);border-radius:var(--rs);padding:11px 14px;font-size:12px;color:var(--blue);line-height:1.6;display:none}
+.qexpl.on{display:block}
+.btn-next{width:100%;padding:13px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;display:none}
 .btn-next.on{display:block}
 .score-wrap{display:flex;flex-direction:column;align-items:center;padding:28px 16px;gap:10px}
-.score-emoji{font-size:56px}
-.score-pct{font-size:40px;font-weight:800;color:var(--em);letter-spacing:-1px}
-.score-label{font-size:14px;color:var(--t2)}
+.score-e{font-size:54px}
+.score-p{font-size:42px;font-weight:800;color:var(--em);letter-spacing:-1px}
+.score-l{font-size:14px;color:var(--t2)}
 .btn-retry{margin-top:8px;padding:12px 28px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:600}
-/* NOTES/SUMMARY */
-.text-view{padding:14px 16px}
-.text-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px;font-size:14px;line-height:1.8;white-space:pre-wrap;word-break:break-word}
-.sum-wrap{padding:14px 16px}
-.sum-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px}
+/* TEXT VIEWS */
+.tv{padding:14px 16px}
+.tv-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:16px;font-size:14px;line-height:1.8;white-space:pre-wrap;word-break:break-word}
 .sum-text{font-size:14px;line-height:1.8}
 .sum-text p{margin-bottom:13px}
 .sum-text p:last-child{margin:0}
-/* KEY TERMS */
 .terms-list{padding:14px 16px;display:flex;flex-direction:column;gap:8px}
-.term-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rs);padding:12px 14px}
-.term-top{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.term{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--rs);padding:12px 14px}
+.term-hd{display:flex;align-items:center;gap:6px;margin-bottom:4px}
 .term-name{font-size:13px;font-weight:600}
-.term-marks{font-size:9px;font-weight:700;background:var(--eml);color:var(--emt);padding:1px 7px;border-radius:3px}
+.term-mk{font-size:9px;font-weight:700;background:var(--eml);color:var(--emt);padding:1px 7px;border-radius:3px}
 .term-def{font-size:12px;color:var(--t2);line-height:1.6}
 /* RESULT ACTIONS */
 .ract{padding:10px 16px;display:flex;gap:7px;border-top:1px solid var(--bd);background:var(--sf);flex-shrink:0;padding-bottom:calc(10px + env(safe-area-inset-bottom,0))}
-.ra{flex:1;padding:9px 4px;border-radius:var(--rs);border:1.5px solid var(--bd);background:var(--sf2);color:var(--t2);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:3px;transition:all .15s}
+.ra{flex:1;padding:9px 4px;border-radius:var(--rs);border:1.5px solid var(--bd);background:var(--sf2);color:var(--t2);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:3px}
 .ra:active{background:var(--bd)}
 .ra.hi{background:var(--em);border-color:var(--em);color:#fff}
 /* LIBRARY */
 .lib-hdr{padding:20px 16px 14px;display:flex;align-items:center;justify-content:space-between}
+.lib-t{font-size:22px;font-weight:700}
 .lib-list{padding:0 16px;display:flex;flex-direction:column;gap:9px}
-.lib-card{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:13px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;box-shadow:var(--sh)}
-.lib-card:active{background:var(--sf2)}
-.lib-ico{width:40px;height:40px;border-radius:12px;background:var(--eml);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.lib-info{flex:1;min-width:0}
-.lib-t{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
-.lib-m{font-size:11px;color:var(--t3)}
-.lib-del{width:28px;height:28px;border-radius:50%;border:none;background:none;color:var(--t3);font-size:15px;flex-shrink:0}
+.lcard{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);padding:13px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;box-shadow:var(--sh)}
+.lcard:active{background:var(--sf2)}
+.lico{width:40px;height:40px;border-radius:12px;background:var(--eml);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.linf{flex:1;min-width:0}
+.ltt{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.lmm{font-size:11px;color:var(--t3)}
+.ldel{width:28px;height:28px;border-radius:50%;border:none;background:none;color:var(--t3);font-size:15px;flex-shrink:0}
 .empty{padding:60px 20px;text-align:center;color:var(--t3)}
-.empty-icon{font-size:52px;margin-bottom:12px}
-.empty-text{font-size:14px;line-height:1.6}
+.ei{font-size:50px;margin-bottom:12px}
+.el{font-size:14px;line-height:1.6}
 /* SETTINGS */
 .set-hdr{padding:20px 16px 0;display:flex;align-items:center;gap:10px}
+.set-t{font-size:22px;font-weight:700}
 .slist{padding:14px 16px;display:flex;flex-direction:column;gap:5px}
 .slabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);padding:10px 4px 6px}
 .scard{background:var(--sf);border:1.5px solid var(--bd);border-radius:var(--r);overflow:hidden}
 .srow{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:.5px solid var(--bd)}
 .srow:last-child{border-bottom:none}
 .sico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.sinfo{flex:1}
-.sinfo-t{font-size:13px;font-weight:500}
-.sinfo-s{font-size:11px;color:var(--t3);margin-top:1px}
+.si{flex:1}
+.si-t{font-size:13px;font-weight:500}
+.si-s{font-size:11px;color:var(--t3);margin-top:1px}
 .stog{width:44px;height:26px;background:var(--bd);border-radius:13px;border:none;position:relative;transition:background .2s;flex-shrink:0}
 .stog.on{background:var(--em)}
 .stog::after{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
 .stog.on::after{left:21px}
 .sact{font-size:11px;font-weight:600;color:var(--em);border:none;background:none}
-/* PREMIUM CARD */
-.premium-card{background:linear-gradient(135deg,#064e3b 0%,#065f46 100%);border:1px solid var(--em);border-radius:var(--r);padding:18px;margin-bottom:6px}
-.pc-head{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
-.pc-sub{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:14px;line-height:1.5}
-.pc-features{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:16px}
-.pc-feat{background:rgba(255,255,255,.1);border-radius:var(--rs);padding:8px 10px;font-size:11px;color:#fff;font-weight:500}
-.pc-feat::before{content:"✓ ";color:var(--emt);font-weight:700}
-.btn-pay{width:100%;padding:14px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:700;box-shadow:0 4px 14px rgba(16,185,129,.35)}
-.btn-pay:active{background:var(--emd)}
+.prem-card{background:linear-gradient(135deg,#064e3b,#065f46);border:1px solid var(--em);border-radius:var(--r);padding:18px;margin-bottom:6px}
+.prem-hd{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.prem-sub{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:14px;line-height:1.5}
+.prem-fs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:16px}
+.prem-f{background:rgba(255,255,255,.1);border-radius:var(--rs);padding:8px 10px;font-size:11px;color:#fff;font-weight:500}
+.prem-f::before{content:"✓ ";color:var(--emt);font-weight:700}
+.btn-prem{width:100%;padding:14px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:700;box-shadow:0 4px 14px rgba(16,185,129,.35)}
 /* LOADER */
 .loader{display:none;position:fixed;inset:0;background:rgba(24,24,27,.94);z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:14px}
 .loader.on{display:flex}
-.spin{width:46px;height:46px;border:3px solid var(--sf2);border-top-color:var(--em);border-radius:50%;animation:spin .75s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.load-title{font-size:15px;font-weight:600}
-.load-sub{font-size:12px;color:var(--t2)}
-.load-bar-wrap{width:220px;height:4px;background:var(--sf2);border-radius:2px;overflow:hidden;margin-top:2px}
-.load-bar{height:100%;background:var(--em);border-radius:2px;transition:width .4s ease;width:0}
-/* AUTH MODAL */
+.spin{width:46px;height:46px;border:3px solid var(--sf2);border-top-color:var(--em);border-radius:50%;animation:sp .75s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ld-t{font-size:15px;font-weight:600}
+.ld-s{font-size:12px;color:var(--t2)}
+.ld-bw{width:220px;height:4px;background:var(--sf2);border-radius:2px;overflow:hidden;margin-top:2px}
+.ld-b{height:100%;background:var(--em);border-radius:2px;transition:width .4s;width:0}
+/* MODALS */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:400;align-items:flex-end;justify-content:center}
 .modal-bg.on{display:flex}
 .modal-box{background:var(--sf);border-radius:var(--r) var(--r) 0 0;padding:28px 22px 32px;width:100%;max-width:520px}
-.modal-title{font-size:20px;font-weight:700;margin-bottom:4px}
-.modal-sub{font-size:13px;color:var(--t2);margin-bottom:18px}
+.m-title{font-size:20px;font-weight:700;margin-bottom:4px}
+.m-sub{font-size:13px;color:var(--t2);margin-bottom:18px}
 .field{width:100%;padding:13px 14px;background:var(--sf2);border:1.5px solid var(--bd);border-radius:var(--rs);color:var(--t1);font-size:14px;font-family:inherit;outline:none;margin-bottom:10px}
 .field:focus{border-color:var(--em)}
 .field::placeholder{color:var(--t3)}
-.btn-submit{width:100%;padding:14px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:15px;font-weight:700;margin-bottom:10px;transition:all .15s}
-.btn-submit:disabled{background:var(--t3)}
-.auth-err-msg{font-size:12px;color:var(--red);background:var(--rl);border:1px solid var(--red);border-radius:var(--rs);padding:9px 12px;margin-bottom:10px;display:none;line-height:1.5}
-.auth-err-msg.on{display:block}
-.auth-switch{text-align:center;font-size:13px;color:var(--t2)}
-.auth-switch button{color:var(--em);border:none;background:none;font-weight:600;font-size:13px}
-/* PAYWALL */
-.pw-body{text-align:center}
-.pw-emoji{font-size:52px;margin-bottom:12px}
+.btn-sub{width:100%;padding:14px;background:var(--em);color:#fff;border:none;border-radius:var(--rs);font-size:15px;font-weight:700;margin-bottom:10px}
+.btn-sub:disabled{background:var(--t3)}
+.auth-err{font-size:12px;color:var(--red);background:var(--rl);border:1px solid var(--red);border-radius:var(--rs);padding:9px 12px;margin-bottom:10px;display:none;line-height:1.5}
+.auth-err.on{display:block}
+.auth-sw{text-align:center;font-size:13px;color:var(--t2)}
+.auth-sw button{color:var(--em);border:none;background:none;font-weight:600;font-size:13px}
+.pw-emoji{font-size:52px;text-align:center;margin-bottom:12px}
 .pw-title{font-size:20px;font-weight:700;margin-bottom:8px}
 .pw-copy{font-size:13px;color:var(--t2);margin-bottom:18px;line-height:1.6}
 .pw-perks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
-.pw-perk{background:var(--eml);border-radius:var(--rs);padding:10px;font-size:12px;font-weight:500;color:var(--emt);text-align:left}
+.pw-perk{background:var(--eml);border-radius:var(--rs);padding:10px;font-size:12px;font-weight:500;color:var(--emt)}
 .pw-perk::before{content:"✓ ";font-weight:700}
-.btn-pw-pay{width:100%;padding:15px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:700;margin-bottom:10px;box-shadow:0 4px 14px rgba(16,185,129,.35)}
-.btn-pw-skip{width:100%;padding:12px;background:none;color:var(--t3);border:none;font-size:13px}
+.btn-pw{width:100%;padding:15px;background:var(--em);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:700;margin-bottom:10px}
+.btn-skip{width:100%;padding:12px;background:none;color:var(--t3);border:none;font-size:13px}
 /* TOAST */
 .toast{position:fixed;bottom:calc(var(--nav)+14px);left:50%;transform:translateX(-50%) translateY(16px);background:var(--sf);color:var(--t1);border:1px solid var(--bd);padding:10px 18px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:all .25s;z-index:500;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis;box-shadow:var(--shm)}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -318,29 +311,29 @@ input[type=file]{display:none}
 <div id="s-home" class="screen active">
   <div class="dash-hero">
     <div class="dash-logo">Study<em>OS</em></div>
-    <div class="dash-sub">AI exam preparation &mdash; every exam, every subject, globally</div>
+    <div class="dash-sub">AI exam preparation &mdash; every exam, every subject</div>
     <div class="dash-user" id="dash-user-area"></div>
   </div>
-  <div class="sec-h">Input tools</div>
+  <div class="sh">Quick start</div>
   <div class="tools-grid">
-    <div class="tc" onclick="openTool('photo')"><div class="tc-ico" style="background:var(--ambl)">&#128247;</div><div class="tc-name">Camera / Photo</div><div class="tc-desc">Snap notes, textbooks, whiteboards</div></div>
-    <div class="tc" onclick="openTool('pdf')"><div class="tc-ico" style="background:var(--rl)">&#128196;</div><div class="tc-name">PDF</div><div class="tc-desc">Upload any PDF document</div></div>
-    <div class="tc" onclick="openTool('voice')"><div class="tc-ico" style="background:var(--pl)">&#127908;</div><div class="tc-name">Voice</div><div class="tc-desc">Record and transcribe lectures</div></div>
-    <div class="tc" onclick="openTool('chat')"><div class="tc-ico" style="background:var(--bll)">&#128172;</div><div class="tc-name">Chat</div><div class="tc-desc">WhatsApp / Telegram study groups</div></div>
-    <div class="tc" onclick="openTool('url')"><div class="tc-ico" style="background:var(--eml)">&#128279;</div><div class="tc-name">URL / Article</div><div class="tc-desc">Any webpage or article</div></div>
-    <div class="tc" onclick="openTool('text')"><div class="tc-ico" style="background:var(--sf2)">&#9999;&#65039;</div><div class="tc-name">Paste Text</div><div class="tc-desc">Copy-paste any content</div></div>
+    <div class="tc" onclick="startWith('camera')"><div class="tc-ico" style="background:var(--ambl)">&#128247;</div><div class="tc-name">Camera</div><div class="tc-desc">Snap notes or textbook page</div></div>
+    <div class="tc" onclick="startWith('pdf')"><div class="tc-ico" style="background:var(--rl)">&#128196;</div><div class="tc-name">PDF</div><div class="tc-desc">Upload any PDF document</div></div>
+    <div class="tc" onclick="startWith('voice')"><div class="tc-ico" style="background:var(--pl)">&#127908;</div><div class="tc-name">Voice</div><div class="tc-desc">Record and transcribe a lecture</div></div>
+    <div class="tc" onclick="startWith('url')"><div class="tc-ico" style="background:var(--eml)">&#128279;</div><div class="tc-name">URL / Article</div><div class="tc-desc">Any webpage or article</div></div>
+    <div class="tc" onclick="startWith('text')"><div class="tc-ico" style="background:var(--sf2)">&#9999;&#65039;</div><div class="tc-name">Paste Text</div><div class="tc-desc">Copy-paste any content</div></div>
+    <div class="tc" onclick="startWith('topic')"><div class="tc-ico" style="background:var(--bll)">&#128161;</div><div class="tc-name">Topic Only</div><div class="tc-desc">Generate from topic alone</div></div>
   </div>
-  <div class="sec-h">Stats</div>
+  <div class="sh">Stats</div>
   <div class="stats-row">
-    <div class="stat"><div class="stat-n" id="stat-gen">0</div><div class="stat-l">Kits made</div></div>
-    <div class="stat"><div class="stat-n" id="stat-cards">0</div><div class="stat-l">Flashcards</div></div>
-    <div class="stat"><div class="stat-n" id="stat-saved">0</div><div class="stat-l">Saved</div></div>
+    <div class="stat"><div class="stat-n" id="st-gen">0</div><div class="stat-l">Kits made</div></div>
+    <div class="stat"><div class="stat-n" id="st-cards">0</div><div class="stat-l">Flashcards</div></div>
+    <div class="stat"><div class="stat-n" id="st-saved">0</div><div class="stat-l">Saved</div></div>
   </div>
-  <div class="sec-h">Recent</div>
-  <div class="recent-list" id="rec-list"></div>
+  <div class="sh">Recent</div>
+  <div class="rec-list" id="rec-list"></div>
 </div>
 
-<!-- CREATE -->
+<!-- CREATE — STEP-BASED FLOW -->
 <div id="s-create" class="screen">
   <div class="cr-hdr">
     <div class="cr-title">Create Study Kit</div>
@@ -348,110 +341,132 @@ input[type=file]{display:none}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </button>
   </div>
-  <div class="exam-sel">
-    <div class="exam-row">
-      <select class="exam-drop" id="sel-exam" onchange="onExamChange()">
-        <option value="">Select exam (optional)</option>
-      </select>
-      <select class="exam-drop" id="sel-subject" disabled>
-        <option value="">Select subject</option>
-      </select>
+
+  <!-- STEP 1: EXAM -->
+  <div class="step-section" id="ss-exam">
+    <div class="step-hdr">
+      <div class="step-num" id="sn-exam">1</div>
+      <div class="step-title">Select your exam</div>
+      <div class="step-val" id="sv-exam"></div>
     </div>
-    <input class="topic-field" id="inp-topic" placeholder="Topic e.g. Organic Chemistry, Cold War, Calculus">
+    <div class="chips" id="exam-chips"></div>
   </div>
-  <div class="ttabs">
-    <button class="ttab on" id="tt-photo" onclick="selTool('photo',this)">&#128247; Camera</button>
-    <button class="ttab" id="tt-pdf"   onclick="selTool('pdf',this)">&#128196; PDF</button>
-    <button class="ttab" id="tt-voice" onclick="selTool('voice',this)">&#127908; Voice</button>
-    <button class="ttab" id="tt-chat"  onclick="selTool('chat',this)">&#128172; Chat</button>
-    <button class="ttab" id="tt-url"   onclick="selTool('url',this)">&#128279; URL</button>
-    <button class="ttab" id="tt-text"  onclick="selTool('text',this)">&#9999;&#65039; Text</button>
-    <button class="ttab" id="tt-topic" onclick="selTool('topic',this)">&#128161; Topic</button>
+
+  <!-- STEP 2: SUBJECT -->
+  <div class="step-section" id="ss-subject" style="display:none">
+    <div class="step-hdr">
+      <div class="step-num" id="sn-subject">2</div>
+      <div class="step-title">Select subject</div>
+      <div class="step-val" id="sv-subject"></div>
+    </div>
+    <div class="chips" id="subject-chips"></div>
   </div>
-  <div class="tpanels">
-    <div id="tp-photo" class="tpanel on">
-      <div class="uzone" onclick="document.getElementById('f-photo').click()">
-        <div class="uz-ico">&#128247;</div>
-        <div class="uz-lbl">Take photo or upload image</div>
-        <div class="uz-hint">OCR runs on your device &mdash; Tesseract reads printed &amp; handwritten text</div>
-        <div id="fn-photo" class="uz-file"></div>
-      </div>
-      <input type="file" id="f-photo" accept="image/*" capture="environment" onchange="loadPhoto(this)">
-      <img id="photo-prev" style="display:none;width:100%;border-radius:var(--rs);margin-top:10px;max-height:200px;object-fit:cover" alt="preview">
-      <div class="progress-box" id="ocr-box">
-        <div class="pb-step" id="ocr-step">Initialising OCR...</div>
-        <div class="pb-track"><div class="pb-fill" id="ocr-fill"></div></div>
-        <div class="pb-log" id="ocr-log"></div>
-      </div>
+
+  <!-- STEP 3: TOPIC -->
+  <div class="step-section" id="ss-topic" style="display:none">
+    <div class="step-hdr">
+      <div class="step-num" id="sn-topic">3</div>
+      <div class="step-title">Choose or type a topic</div>
+      <div class="step-val" id="sv-topic"></div>
     </div>
-    <div id="tp-pdf" class="tpanel">
-      <div class="uzone" onclick="document.getElementById('f-pdf').click()">
-        <div class="uz-ico">&#128196;</div>
-        <div class="uz-lbl">Upload PDF</div>
-        <div class="uz-hint">Text &amp; scanned PDFs supported &mdash; up to 30 pages</div>
-        <div id="fn-pdf" class="uz-file"></div>
-      </div>
-      <input type="file" id="f-pdf" accept=".pdf" onchange="loadPDF(this)">
-      <div class="progress-box" id="pdf-box">
-        <div class="pb-step" id="pdf-step">Reading PDF...</div>
-        <div class="pb-track"><div class="pb-fill" id="pdf-fill"></div></div>
-      </div>
+    <div class="chips" id="topic-chips" style="margin-bottom:8px"></div>
+    <input class="custom-topic" id="inp-topic" placeholder="Or type a specific topic / subtopic..." autocomplete="off" oninput="onTopicType()">
+  </div>
+
+  <!-- STEP 4: INPUT TOOL -->
+  <div class="step-section" id="ss-tool">
+    <div class="step-hdr">
+      <div class="step-num" id="sn-tool">4</div>
+      <div class="step-title">Add content <span class="step-opt-badge">optional</span></div>
     </div>
-    <div id="tp-voice" class="tpanel">
-      <div class="voice-wrap">
-        <div class="v-vis" id="v-vis">
-          <div class="vr vr1"></div><div class="vr vr2"></div><div class="vr vr3"></div>
-          <button class="vbtn" id="vbtn" onclick="toggleVoice()">&#127908;</button>
+    <div class="ttabs">
+      <button class="ttab on" id="tt-topic" onclick="selTool('topic',this)">&#128161; Topic only</button>
+      <button class="ttab" id="tt-photo" onclick="selTool('photo',this)">&#128247; Camera</button>
+      <button class="ttab" id="tt-pdf"   onclick="selTool('pdf',this)">&#128196; PDF</button>
+      <button class="ttab" id="tt-voice" onclick="selTool('voice',this)">&#127908; Voice</button>
+      <button class="ttab" id="tt-chat"  onclick="selTool('chat',this)">&#128172; Chat</button>
+      <button class="ttab" id="tt-url"   onclick="selTool('url',this)">&#128279; URL</button>
+      <button class="ttab" id="tt-text"  onclick="selTool('text',this)">&#9999;&#65039; Text</button>
+    </div>
+    <div class="tpanels">
+      <div id="tp-topic" class="tpanel on">
+        <p style="font-size:12px;color:var(--t3);margin-top:8px;line-height:1.6">Topic selected above will be used. The AI generates comprehensive study materials from scratch based on your exam, subject and topic.</p>
+      </div>
+      <div id="tp-photo" class="tpanel">
+        <div class="uzone" onclick="document.getElementById('f-photo').click()" style="margin-top:8px">
+          <div class="uz-ico">&#128247;</div>
+          <div class="uz-lbl">Take photo or upload image</div>
+          <div class="uz-hint">OCR reads text on device &mdash; Tesseract</div>
+          <div id="fn-photo" class="uz-file"></div>
         </div>
-        <div class="vtimer" id="vtimer">00:00</div>
-        <div class="vstatus" id="vstatus">Tap mic to start recording</div>
-        <div class="vtrans" id="vtrans"></div>
-        <p style="font-size:11px;color:var(--t3);text-align:center">Auto-stops at 2 minutes &bull; Groq Whisper transcribes</p>
+        <input type="file" id="f-photo" accept="image/*" capture="environment" onchange="loadPhoto(this)">
+        <img id="photo-prev" style="display:none;width:100%;border-radius:var(--rs);margin-top:10px;max-height:190px;object-fit:cover" alt="">
+        <div class="pb-box" id="ocr-box">
+          <div class="pb-step" id="ocr-step">Initialising OCR...</div>
+          <div class="pb-track"><div class="pb-fill" id="ocr-fill"></div></div>
+          <div class="pb-log" id="ocr-log"></div>
+        </div>
       </div>
-    </div>
-    <div id="tp-chat" class="tpanel">
-      <div class="chat-types">
-        <button class="ctype on" id="ct-wa" onclick="setChatType('whatsapp',this)">WhatsApp</button>
-        <button class="ctype" id="ct-tg" onclick="setChatType('telegram',this)">Telegram</button>
-        <button class="ctype" id="ct-ot" onclick="setChatType('other',this)">Other</button>
+      <div id="tp-pdf" class="tpanel">
+        <div class="uzone" onclick="document.getElementById('f-pdf').click()" style="margin-top:8px">
+          <div class="uz-ico">&#128196;</div>
+          <div class="uz-lbl">Upload PDF</div>
+          <div class="uz-hint">Text and scanned PDFs &mdash; up to 30 pages</div>
+          <div id="fn-pdf" class="uz-file"></div>
+        </div>
+        <input type="file" id="f-pdf" accept=".pdf" onchange="loadPDF(this)">
+        <div class="pb-box" id="pdf-box">
+          <div class="pb-step" id="pdf-step">Reading...</div>
+          <div class="pb-track"><div class="pb-fill" id="pdf-fill"></div></div>
+        </div>
       </div>
-      <textarea id="t-chat" placeholder="Paste your group chat export here...&#10;&#10;Questions and discussions will be extracted and turned into a deep study kit." style="min-height:150px" oninput="analyzeChat()"></textarea>
-      <div class="eq-box" id="eq-box">
-        <div class="eq-title">Found <span id="eq-count">0</span> questions</div>
-        <div id="eq-list"></div>
+      <div id="tp-voice" class="tpanel">
+        <div class="voice-wrap">
+          <div class="v-vis" id="v-vis">
+            <div class="vr vr1"></div><div class="vr vr2"></div><div class="vr vr3"></div>
+            <button class="vbtn" id="vbtn" onclick="toggleVoice()">&#127908;</button>
+          </div>
+          <div class="vtimer" id="vtimer">00:00</div>
+          <div class="vstatus" id="vstatus">Tap mic to start recording</div>
+          <div class="vtrans" id="vtrans"></div>
+        </div>
       </div>
-    </div>
-    <div id="tp-url" class="tpanel">
-      <textarea id="t-url" placeholder="Paste any URL...&#10;&#10;Wikipedia, blog posts, news articles, lecture slides" style="min-height:80px"></textarea>
-    </div>
-    <div id="tp-text" class="tpanel">
-      <textarea id="t-text" placeholder="Paste notes, lecture content, textbook excerpts..."></textarea>
-    </div>
-    <div id="tp-topic" class="tpanel">
-      <textarea id="t-topic-inp" placeholder="Describe what to study...&#10;&#10;e.g. The role of enzymes in digestion&#10;e.g. Shakespeare Macbeth themes&#10;e.g. Newton Laws of Motion with worked examples" style="min-height:100px"></textarea>
+      <div id="tp-chat" class="tpanel">
+        <div class="chat-types" style="margin-top:8px">
+          <button class="ctype on" id="ct-wa" onclick="setCT('whatsapp',this)">WhatsApp</button>
+          <button class="ctype" id="ct-tg" onclick="setCT('telegram',this)">Telegram</button>
+          <button class="ctype" id="ct-ot" onclick="setCT('other',this)">Other</button>
+        </div>
+        <textarea id="t-chat" placeholder="Paste group chat export here..." oninput="analyzeChat()"></textarea>
+        <div class="eq-box" id="eq-box"><div class="eq-title">Found <span id="eq-count">0</span> questions</div><div id="eq-list"></div></div>
+      </div>
+      <div id="tp-url" class="tpanel">
+        <textarea id="t-url" placeholder="Paste a URL..." style="margin-top:8px;min-height:70px"></textarea>
+      </div>
+      <div id="tp-text" class="tpanel">
+        <textarea id="t-text" placeholder="Paste your notes or any text content..." style="margin-top:8px"></textarea>
+      </div>
     </div>
   </div>
+
+  <!-- GENERATE -->
   <div class="gen-wrap">
     <button class="btn-gen" id="btn-gen" onclick="generate()">&#9889; Generate Study Kit</button>
     <div class="usage-strip">
-      <div class="us-label"><b id="us-used">0</b>/5 free today</div>
+      <div class="us-lbl"><b id="us-used">0</b> / 5 free today</div>
       <div class="us-bar"><div class="us-fill" id="us-fill" style="width:0%"></div></div>
       <button class="us-upg" onclick="showPaywall()">Upgrade &#8594;</button>
     </div>
-    <div class="status-banner" id="gen-banner"></div>
+    <div class="gen-err" id="gen-err"></div>
   </div>
 </div>
 
 <!-- RESULTS -->
 <div id="s-results" class="screen">
   <div class="res-hdr">
-    <button class="ibtn" onclick="showScreen('create')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
+    <button class="ibtn" onclick="showScreen('create')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
     <div class="res-title" id="res-title">Study Kit</div>
-    <button class="ibtn" onclick="shareKit()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-    </button>
+    <button class="ibtn" onclick="shareKit()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
   </div>
   <div class="rtabs">
     <button class="rtab on" onclick="switchRT('fc',this)">&#127183; Cards</button>
@@ -465,16 +480,12 @@ input[type=file]{display:none}
       <div class="fc-ctr" id="fc-ctr">Card 0 of 0</div>
       <div class="fcwrap" onclick="flipCard()">
         <div class="fcinner" id="fcinner">
-          <div class="fcface fc-front">
-            <div class="fc-label">Question</div>
-            <div class="fc-question" id="fc-q">&#8211;</div>
-            <div class="fc-hint">Tap to reveal mark scheme</div>
-          </div>
+          <div class="fcface fc-front"><div class="fc-lbl">Question</div><div class="fc-q" id="fc-q">-</div><div class="fc-hint">Tap card to reveal answer &amp; mark scheme</div></div>
           <div class="fcface fc-back">
-            <div class="fc-label">Mark Scheme</div>
-            <div class="fc-marks-badge" id="fc-mbadge" style="display:none"></div>
-            <div class="fc-scheme" id="fc-scheme">&#8211;</div>
-            <div class="fc-mistake-box" id="fc-mistake" style="display:none"></div>
+            <div class="fc-lbl">Answer &amp; Mark Scheme</div>
+            <div class="fc-marks" id="fc-marks" style="display:none"></div>
+            <div class="fc-scheme" id="fc-scheme">-</div>
+            <div class="fc-mistake" id="fc-mistake" style="display:none"></div>
           </div>
         </div>
       </div>
@@ -486,8 +497,8 @@ input[type=file]{display:none}
     </div>
   </div>
   <div id="rp-quiz" class="rpanel"><div class="qa" id="qa-area"></div></div>
-  <div id="rp-notes" class="rpanel"><div class="text-view"><div class="text-card" id="notes-content">&#8211;</div></div></div>
-  <div id="rp-sum" class="rpanel"><div class="sum-wrap"><div class="sum-card"><div class="sum-text" id="sum-content">&#8211;</div></div></div></div>
+  <div id="rp-notes" class="rpanel"><div class="tv"><div class="tv-card" id="notes-txt">-</div></div></div>
+  <div id="rp-sum" class="rpanel"><div class="tv"><div class="tv-card"><div class="sum-text" id="sum-txt">-</div></div></div></div>
   <div id="rp-terms" class="rpanel"><div class="terms-list" id="terms-list"></div></div>
   <div class="ract">
     <button class="ra" onclick="saveKit()">&#128190; Save</button>
@@ -500,10 +511,8 @@ input[type=file]{display:none}
 <!-- LIBRARY -->
 <div id="s-library" class="screen">
   <div class="lib-hdr">
-    <div class="page-title">Library</div>
-    <button class="ibtn" style="color:var(--red)" onclick="clearLib()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg>
-    </button>
+    <div class="lib-t">Library</div>
+    <button class="ibtn" style="color:var(--red)" onclick="clearLib()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg></button>
   </div>
   <div class="lib-list" id="lib-list"></div>
 </div>
@@ -511,232 +520,201 @@ input[type=file]{display:none}
 <!-- SETTINGS -->
 <div id="s-settings" class="screen">
   <div class="set-hdr">
-    <button class="ibtn" onclick="goBack()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <div class="page-title">Settings</div>
+    <button class="ibtn" onclick="goBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+    <div class="set-t">Settings</div>
   </div>
   <div class="slist">
-    <div class="premium-card">
-      <div class="pc-head">&#128640; Premium</div>
-      <div class="pc-sub">Remove daily limits. Faster generation. No ads. Support StudyOS.</div>
-      <div class="pc-features">
-        <div class="pc-feat">Unlimited generations</div>
-        <div class="pc-feat">Priority AI speed</div>
-        <div class="pc-feat">No ads</div>
-        <div class="pc-feat">All input tools</div>
-      </div>
-      <button class="btn-pay" onclick="goPremium()">Upgrade &mdash; $2.99 / month</button>
+    <div class="prem-card">
+      <div class="prem-hd">&#128640; Premium</div>
+      <div class="prem-sub">Unlimited generations, faster AI, no ads.</div>
+      <div class="prem-fs"><div class="prem-f">Unlimited kits</div><div class="prem-f">Priority speed</div><div class="prem-f">No ads</div><div class="prem-f">All tools</div></div>
+      <button class="btn-prem" onclick="goPremium()">Upgrade &mdash; $2.99 / month</button>
     </div>
     <div class="slabel">Account</div>
-    <div class="scard" id="account-card">
+    <div class="scard">
       <div class="srow">
         <div class="sico" style="background:var(--eml)">&#128100;</div>
-        <div class="sinfo"><div class="sinfo-t" id="acc-status">Not signed in</div><div class="sinfo-s" id="acc-email">Sign in to sync kits across devices</div></div>
+        <div class="si"><div class="si-t" id="acc-status">Not signed in</div><div class="si-s" id="acc-email">Sign in to sync kits across devices</div></div>
         <button class="sact" id="acc-btn" onclick="handleAccBtn()">Sign in</button>
       </div>
     </div>
     <div class="slabel">Appearance</div>
     <div class="scard">
-      <div class="srow">
-        <div class="sico" style="background:var(--sf2)">&#127769;</div>
-        <div class="sinfo"><div class="sinfo-t">Dark Mode</div></div>
-        <button class="stog" id="dark-tog" onclick="toggleDark(this)"></button>
-      </div>
+      <div class="srow"><div class="sico" style="background:var(--sf2)">&#127769;</div><div class="si"><div class="si-t">Dark Mode</div></div><button class="stog" id="dark-tog" onclick="toggleDark(this)"></button></div>
     </div>
     <div class="slabel">Usage</div>
     <div class="scard">
-      <div class="srow">
-        <div class="sico" style="background:var(--ambl)">&#9889;</div>
-        <div class="sinfo"><div class="sinfo-t">Today</div><div class="sinfo-s" id="usage-detail">0 / 5 generated</div></div>
-        <button class="sact" onclick="resetUsage()">Reset</button>
-      </div>
-      <div class="srow">
-        <div class="sico" style="background:var(--eml)">&#128218;</div>
-        <div class="sinfo"><div class="sinfo-t">Lifetime</div><div class="sinfo-s" id="lifetime-detail">0 kits generated</div></div>
-      </div>
+      <div class="srow"><div class="sico" style="background:var(--ambl)">&#9889;</div><div class="si"><div class="si-t">Today</div><div class="si-s" id="usage-det">0 / 5</div></div><button class="sact" onclick="resetUsage()">Reset</button></div>
+      <div class="srow"><div class="sico" style="background:var(--eml)">&#128218;</div><div class="si"><div class="si-t">Lifetime</div><div class="si-s" id="lifetime-det">0 kits generated</div></div></div>
     </div>
-    <div class="slabel">System status</div>
+    <div class="slabel">System</div>
     <div class="scard">
-      <div class="srow">
-        <div class="sico" style="background:var(--eml)">&#129302;</div>
-        <div class="sinfo"><div class="sinfo-t">Groq AI</div><div class="sinfo-s" id="status-groq">Checking...</div></div>
-        <div id="status-groq-dot" style="width:8px;height:8px;border-radius:50%;background:var(--t3)"></div>
-      </div>
-      <div class="srow">
-        <div class="sico" style="background:var(--bll)">&#9749;</div>
-        <div class="sinfo"><div class="sinfo-t">Supabase</div><div class="sinfo-s" id="status-sb">Checking...</div></div>
-        <div id="status-sb-dot" style="width:8px;height:8px;border-radius:50%;background:var(--t3)"></div>
-      </div>
+      <div class="srow"><div class="sico" style="background:var(--eml)">&#129302;</div><div class="si"><div class="si-t">Groq AI</div><div class="si-s" id="s-groq">Checking...</div></div><div id="d-groq" style="width:8px;height:8px;border-radius:50%;background:var(--t3);flex-shrink:0"></div></div>
+      <div class="srow"><div class="sico" style="background:var(--bll)">&#9749;</div><div class="si"><div class="si-t">Supabase</div><div class="si-s" id="s-sb">Not configured</div></div><div id="d-sb" style="width:8px;height:8px;border-radius:50%;background:var(--t3);flex-shrink:0"></div></div>
     </div>
     <div class="slabel">About</div>
     <div class="scard">
-      <div class="srow"><div class="sico" style="background:var(--eml)">&#128218;</div><div class="sinfo"><div class="sinfo-t">StudyOS v2.0</div><div class="sinfo-s">30 global exams &bull; 7 input tools &bull; AI-powered</div></div></div>
-      <div class="srow"><div class="sico" style="background:var(--pl)">&#128274;</div><div class="sinfo"><div class="sinfo-t">Privacy</div><div class="sinfo-s">Camera OCR runs on your device. Content sent to Groq only during generation. Keys stored in Netlify environment, never in the HTML.</div></div></div>
+      <div class="srow"><div class="sico" style="background:var(--eml)">&#128218;</div><div class="si"><div class="si-t">StudyOS v2.0</div><div class="si-s">30 exams &bull; 7 tools &bull; AI-powered</div></div></div>
     </div>
   </div>
 </div>
 
 <nav class="bnav">
-  <button class="nb on" id="nb-home" onclick="showScreen('home')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    <span class="nb-lbl">Home</span>
-  </button>
-  <button class="nb" id="nb-create" onclick="showScreen('create')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    <span class="nb-lbl">Create</span>
-  </button>
-  <button class="nb" id="nb-results" onclick="showScreen('results')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-    <span class="nb-lbl">Results</span>
-  </button>
-  <button class="nb" id="nb-library" onclick="showScreen('library')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-    <span class="nb-lbl">Library</span>
-  </button>
-  <button class="nb" id="nb-settings" onclick="showScreen('settings')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-    <span class="nb-lbl">Settings</span>
-  </button>
+  <button class="nb on" id="nb-home" onclick="showScreen('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="nb-lbl">Home</span></button>
+  <button class="nb" id="nb-create" onclick="showScreen('create')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="nb-lbl">Create</span></button>
+  <button class="nb" id="nb-results" onclick="showScreen('results')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span class="nb-lbl">Results</span></button>
+  <button class="nb" id="nb-library" onclick="showScreen('library')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span class="nb-lbl">Library</span></button>
+  <button class="nb" id="nb-settings" onclick="showScreen('settings')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="nb-lbl">Settings</span></button>
 </nav>
 </div>
 
-<!-- LOADER -->
-<div class="loader" id="loader">
-  <div class="spin"></div>
-  <div class="load-title" id="load-title">Generating...</div>
-  <div class="load-sub" id="load-sub">Building your study kit</div>
-  <div class="load-bar-wrap"><div class="load-bar" id="load-bar"></div></div>
-</div>
+<div class="loader" id="loader"><div class="spin"></div><div class="ld-t" id="ld-t">Generating...</div><div class="ld-s" id="ld-s">Building your study kit</div><div class="ld-bw"><div class="ld-b" id="ld-b"></div></div></div>
 
-<!-- AUTH MODAL -->
 <div class="modal-bg" id="auth-modal">
   <div class="modal-box">
-    <div class="modal-title" id="auth-title">Sign in</div>
-    <div class="modal-sub" id="auth-sub">Sync your kits across devices</div>
-    <div class="auth-err-msg" id="auth-err"></div>
+    <div class="m-title" id="auth-title">Sign in</div>
+    <div class="m-sub" id="auth-sub">Sync your kits across devices</div>
+    <div class="auth-err" id="auth-err"></div>
     <input class="field" id="auth-email" type="email" placeholder="Email address" autocomplete="email">
-    <input class="field" id="auth-pass"  type="password" placeholder="Password (min 8 characters)" autocomplete="current-password">
-    <button class="btn-submit" id="auth-btn" onclick="submitAuth()">Sign in</button>
-    <div class="auth-switch"><span id="auth-switch-text">No account?</span> <button id="auth-switch-btn" onclick="toggleAuthMode()">Sign up free</button></div>
+    <input class="field" id="auth-pass" type="password" placeholder="Password (min 8 characters)">
+    <button class="btn-sub" id="auth-btn" onclick="submitAuth()">Sign in</button>
+    <div class="auth-sw"><span id="auth-sw-txt">No account?</span> <button id="auth-sw-btn" onclick="toggleAuthMode()">Sign up free</button></div>
   </div>
 </div>
 
-<!-- PAYWALL MODAL -->
 <div class="modal-bg" id="paywall">
   <div class="modal-box">
-    <div class="pw-body">
-      <div class="pw-emoji">&#128640;</div>
-      <div class="pw-title">Daily limit reached</div>
-      <div class="pw-copy">You have used all 5 free generations today. Upgrade to Premium for unlimited access and faster generation.</div>
-      <div class="pw-perks">
-        <div class="pw-perk">Unlimited kits</div>
-        <div class="pw-perk">Priority speed</div>
-        <div class="pw-perk">No ads</div>
-        <div class="pw-perk">All tools</div>
-      </div>
-      <button class="btn-pw-pay" onclick="goPremium()">Upgrade &mdash; $2.99 / month</button>
-      <button class="btn-pw-skip" onclick="closeModal('paywall')">Not now</button>
-    </div>
+    <div class="pw-emoji">&#128640;</div>
+    <div class="pw-title">Daily limit reached</div>
+    <div class="pw-copy">You have used all 5 free generations today. Upgrade to Premium for unlimited access.</div>
+    <div class="pw-perks"><div class="pw-perk">Unlimited kits</div><div class="pw-perk">Priority speed</div><div class="pw-perk">No ads</div><div class="pw-perk">All tools</div></div>
+    <button class="btn-pw" onclick="goPremium()">Upgrade &mdash; $2.99 / month</button>
+    <button class="btn-skip" onclick="closeM('paywall')">Not now</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 <script>
-/* =========================================================
-   PDF.js worker
-========================================================= */
 if(typeof pdfjsLib!=='undefined')
-  pdfjsLib.GlobalWorkerOptions.workerSrc=
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-/* =========================================================
-   LOCAL EXAM DATA — works with zero API calls
-   Selector populates immediately on page load
-========================================================= */
+/* ================================================
+   ALL EXAM DATA — LOCAL, ZERO API CALLS NEEDED
+================================================ */
 const LOCAL_EXAMS=[
-  {code:'igcse',       name:'Cambridge IGCSE'},
-  {code:'caslevel',    name:'Cambridge AS & A Level'},
-  {code:'sat',         name:'SAT'},
-  {code:'act',         name:'ACT'},
-  {code:'ap',          name:'AP Exams'},
-  {code:'ib_diploma',  name:'IB Diploma Programme'},
-  {code:'gcse_aqa',    name:'GCSE (AQA)'},
-  {code:'gcse_edx',    name:'GCSE (Edexcel)'},
-  {code:'alevel_aqa',  name:'A Level (AQA)'},
-  {code:'alevel_edx',  name:'A Level (Edexcel)'},
-  {code:'wassce',      name:'WAEC WASSCE'},
-  {code:'neco_ss',     name:'NECO SSCE'},
-  {code:'utme',        name:'JAMB UTME'},
-  {code:'kcse',        name:'KCSE (Kenya)'},
-  {code:'kcpe',        name:'KCPE (Kenya Primary)'},
-  {code:'csee',        name:'CSEE Tanzania'},
-  {code:'acsee',       name:'ACSEE Tanzania'},
-  {code:'uce',         name:'UCE Uganda'},
-  {code:'uace',        name:'UACE Uganda'},
-  {code:'nsc',         name:'NSC Matric (South Africa)'},
-  {code:'zimsec_o',    name:'ZIMSEC O Level'},
-  {code:'zimsec_a',    name:'ZIMSEC A Level'},
-  {code:'cbse_board',  name:'CBSE Board Exams'},
-  {code:'jee_main',    name:'JEE Main'},
-  {code:'jee_advanced',name:'JEE Advanced'},
-  {code:'neet',        name:'NEET'},
-  {code:'fslic',       name:'FSc / ICS (Pakistan)'},
-  {code:'baccalaureat',name:'Baccalaureat (France)'},
-  {code:'enem',        name:'ENEM (Brazil)'}
+  {code:'igcse',name:'Cambridge IGCSE'},{code:'caslevel',name:'Cambridge A Level'},
+  {code:'sat',name:'SAT'},{code:'act',name:'ACT'},{code:'ap',name:'AP Exams'},
+  {code:'ib_diploma',name:'IB Diploma'},{code:'gcse_aqa',name:'GCSE (AQA)'},
+  {code:'gcse_edx',name:'GCSE (Edexcel)'},{code:'alevel_aqa',name:'A Level (AQA)'},
+  {code:'alevel_edx',name:'A Level (Edexcel)'},{code:'wassce',name:'WAEC WASSCE'},
+  {code:'neco_ss',name:'NECO SSCE'},{code:'utme',name:'JAMB UTME'},
+  {code:'kcse',name:'KCSE Kenya'},{code:'kcpe',name:'KCPE Kenya'},
+  {code:'csee',name:'CSEE Tanzania'},{code:'acsee',name:'ACSEE Tanzania'},
+  {code:'uce',name:'UCE Uganda'},{code:'uace',name:'UACE Uganda'},
+  {code:'nsc',name:'NSC Matric SA'},{code:'zimsec_o',name:'ZIMSEC O Level'},
+  {code:'zimsec_a',name:'ZIMSEC A Level'},{code:'cbse_board',name:'CBSE India'},
+  {code:'jee_main',name:'JEE Main'},{code:'jee_advanced',name:'JEE Advanced'},
+  {code:'neet',name:'NEET'},{code:'fslic',name:'FSc Pakistan'},
+  {code:'baccalaureat',name:'Baccalaureat'},{code:'enem',name:'ENEM Brazil'}
 ];
 
 const LOCAL_SUBJECTS={
-  igcse:['Mathematics','Additional Mathematics','English Language','English Literature','Physics','Chemistry','Biology','Combined Science','History','Geography','Economics','Accounting','Computer Science','Business Studies','French','Spanish','Sociology','Psychology'],
+  igcse:['Mathematics','Add. Mathematics','English Language','English Literature','Physics','Chemistry','Biology','Combined Science','History','Geography','Economics','Accounting','Computer Science','Business Studies','French','Spanish','Sociology','Psychology'],
   caslevel:['Mathematics','Further Mathematics','Physics','Chemistry','Biology','English Language','English Literature','History','Geography','Economics','Psychology','Sociology','Business','Computer Science','Accounting'],
-  sat:['Evidence-Based Reading and Writing','Mathematics'],
+  sat:['Reading & Writing','Mathematics'],
   act:['English','Mathematics','Reading','Science','Writing'],
-  ap:['AP Biology','AP Chemistry','AP Physics 1','AP Physics 2','AP Physics C','AP Calculus AB','AP Calculus BC','AP Statistics','AP English Language','AP English Literature','AP World History','AP US History','AP Psychology','AP Computer Science A','AP Macroeconomics','AP Microeconomics'],
-  ib_diploma:['Mathematics AA','Mathematics AI','Physics','Chemistry','Biology','English A Literature','English A Language','History','Economics','Geography','Psychology','Computer Science','Theory of Knowledge'],
-  gcse_aqa:['Mathematics','English Language','English Literature','Biology','Chemistry','Physics','Combined Science','History','Geography','Computer Science','Business','Economics','Psychology','Sociology','French','Spanish','Art and Design'],
-  gcse_edx:['Mathematics','English Language','English Literature','Biology','Chemistry','Physics','Combined Science','History','Geography','Computer Science','Business','Economics'],
+  ap:['AP Biology','AP Chemistry','AP Physics 1','AP Physics 2','AP Calculus AB','AP Calculus BC','AP Statistics','AP English Language','AP English Literature','AP World History','AP US History','AP Psychology','AP Macroeconomics','AP Microeconomics','AP Computer Science A'],
+  ib_diploma:['Mathematics AA HL/SL','Mathematics AI HL/SL','Physics','Chemistry','Biology','English A Literature','English A Language','History','Economics','Geography','Psychology','Computer Science','Theory of Knowledge'],
+  gcse_aqa:['Mathematics','English Language','English Literature','Biology','Chemistry','Physics','Combined Science','History','Geography','Computer Science','Business','Economics','Psychology','Sociology','French','Spanish'],
+  gcse_edx:['Mathematics','English Language','English Literature','Biology','Chemistry','Physics','Combined Science','History','Geography','Computer Science','Business'],
   alevel_aqa:['Mathematics','Further Mathematics','Physics','Chemistry','Biology','English Literature','History','Geography','Economics','Psychology','Sociology','Computer Science','Business'],
-  alevel_edx:['Mathematics','Further Mathematics','Physics','Chemistry','Biology','English Literature','History','Geography','Economics','Psychology','Business','Computer Science'],
-  wassce:['English Language','Mathematics','Physics','Chemistry','Biology','Agricultural Science','Economics','Government','Literature in English','Geography','Financial Accounting','Commerce','Further Mathematics','Technical Drawing','Food and Nutrition','Christian Religious Studies','Islamic Religious Studies','Yoruba','Hausa','Igbo'],
+  alevel_edx:['Mathematics','Further Mathematics','Physics','Chemistry','Biology','English Literature','History','Geography','Economics','Psychology','Business'],
+  wassce:['English Language','Mathematics','Physics','Chemistry','Biology','Agricultural Science','Economics','Government','Literature in English','Geography','Financial Accounting','Commerce','Further Mathematics','Technical Drawing','Food & Nutrition','Christian Religious Studies','Islamic Religious Studies','Yoruba','Hausa','Igbo'],
   neco_ss:['English Language','Mathematics','Physics','Chemistry','Biology','Economics','Government','Agricultural Science','Geography','Financial Accounting','Literature in English','Commerce','Further Mathematics'],
-  utme:['Use of English','Mathematics','Physics','Chemistry','Biology','Economics','Government','Literature in English','Accounting','Geography','Agricultural Science','Commerce','Christian Religious Studies','Islamic Religious Studies'],
-  kcse:['English','Kiswahili','Mathematics','Physics','Chemistry','Biology','History','Geography','CRE','IRE','Business Studies','Agriculture','Computer Studies','Home Science','Art and Design'],
-  kcpe:['English','Kiswahili','Mathematics','Science and Technology','Social Studies and CRE/IRE'],
-  csee:['Kiswahili','English','Mathematics','Physics','Chemistry','Biology','History','Geography','Civics','Commerce','Book Keeping','Agriculture','English Language'],
-  acsee:['General Studies','English','Advanced Mathematics','Physics','Chemistry','Biology','History','Geography','Economics','Accountancy','Agriculture'],
-  uce:['English Language','Mathematics','Physics','Chemistry','Biology','History','Geography','CRE','IRE','Commerce','Agriculture','Entrepreneurship'],
-  uace:['General Paper','Mathematics','Physics','Chemistry','Biology','History','Geography','Economics','Divinity','Entrepreneurship','Fine Art'],
-  nsc:['Mathematics','Mathematical Literacy','English Home Language','Afrikaans First Additional Language','Physical Sciences','Life Sciences','Accounting','Economics','Business Studies','Geography','History','Life Orientation','Computer Applications Technology','Information Technology'],
-  zimsec_o:['Mathematics','English Language','Physics','Chemistry','Biology','History','Geography','Commerce','Accounts','Agriculture','Combined Science','Food and Nutrition'],
-  zimsec_a:['Pure Mathematics','Physics','Chemistry','Biology','History','Geography','Economics','Accounting','Business Studies','English Literature','Computer Science'],
-  cbse_board:['Mathematics','Physics','Chemistry','Biology','English Core','Computer Science','Accountancy','Economics','Business Studies','History','Political Science','Geography','Psychology','Sociology'],
+  utme:['Use of English','Mathematics','Physics','Chemistry','Biology','Economics','Government','Literature in English','Accounting','Geography','Agricultural Science','Commerce','CRS','IRS'],
+  kcse:['English','Kiswahili','Mathematics','Physics','Chemistry','Biology','History','Geography','CRE','IRE','Business Studies','Agriculture','Computer Studies','Home Science'],
+  kcpe:['English','Kiswahili','Mathematics','Science & Technology','Social Studies & CRE/IRE'],
+  csee:['Kiswahili','English','Mathematics','Physics','Chemistry','Biology','History','Geography','Civics','Commerce','Book Keeping','Agriculture'],
+  acsee:['General Studies','English','Advanced Mathematics','Physics','Chemistry','Biology','History','Geography','Economics','Accountancy'],
+  uce:['English Language','Mathematics','Physics','Chemistry','Biology','History','Geography','CRE','Commerce','Agriculture'],
+  uace:['General Paper','Mathematics','Physics','Chemistry','Biology','History','Geography','Economics'],
+  nsc:['Mathematics','Mathematical Literacy','English HL','Afrikaans FAL','Physical Sciences','Life Sciences','Accounting','Economics','Business Studies','Geography','History','Life Orientation','Computer Applications Technology'],
+  zimsec_o:['Mathematics','English Language','Physics','Chemistry','Biology','History','Geography','Commerce','Accounts','Agriculture','Combined Science'],
+  zimsec_a:['Mathematics','Physics','Chemistry','Biology','History','Geography','Economics','Accounting','Business Studies'],
+  cbse_board:['Mathematics','Physics','Chemistry','Biology','English Core','Computer Science','Accountancy','Economics','Business Studies','History','Political Science','Geography','Psychology'],
   jee_main:['Physics','Chemistry','Mathematics'],
   jee_advanced:['Physics','Chemistry','Mathematics'],
   neet:['Physics','Chemistry','Botany','Zoology'],
-  fslic:['Physics','Chemistry','Biology','Mathematics','English','Urdu','Islamic Studies','Computer Science','Statistics'],
-  baccalaureat:['Philosophie','Mathematiques','Physique-Chimie','Sciences de la Vie et de la Terre','Histoire-Geographie','Sciences Economiques et Sociales','Langues Vivantes'],
-  enem:['Linguagens e Codigos','Ciencias Humanas','Ciencias da Natureza','Matematica e suas Tecnologias','Redacao']
+  fslic:['Physics','Chemistry','Biology','Mathematics','English','Urdu','Islamic Studies','Computer Science'],
+  baccalaureat:['Philosophie','Mathematiques','Physique-Chimie','SVT','Histoire-Geographie','SES','Langues Vivantes'],
+  enem:['Linguagens e Codigos','Ciencias Humanas','Ciencias da Natureza','Matematica','Redacao']
 };
 
-/* =========================================================
+const LOCAL_TOPICS={
+  igcse_mathematics:['Number & Numeration','Algebra','Functions','Coordinate Geometry','Geometry & Mensuration','Trigonometry','Vectors','Statistics & Probability','Sets','Matrices','Transformations'],
+  igcse_physics:['Measurements & Units','Forces & Motion','Momentum','Energy & Work','Pressure','Thermal Physics','Waves & Sound','Light & Optics','Electricity','Magnetism','Atomic Physics','Space Physics'],
+  igcse_chemistry:['States of Matter & Kinetic Theory','Atomic Structure','Bonding','Stoichiometry','Electrochemistry','Acids, Bases & Salts','Organic Chemistry','Metals & Reactivity','Chemical Analysis','Rates of Reaction','Equilibrium','Environmental Chemistry'],
+  igcse_biology:['Cell Biology','Enzymes','Nutrition & Digestion','Transport in Plants','Transport in Animals','Respiration','Excretion','Coordination & Response','Reproduction','Genetics & Inheritance','Evolution','Ecology & Ecosystems'],
+  igcse_english_language:['Reading Comprehension','Summary Writing','Directed Writing','Narrative Writing','Descriptive Writing','Argumentative Writing','Informal Letters','Formal Letters'],
+  igcse_history:['World War 1 Origins','Treaty of Versailles','Rise of Dictators','World War 2','Cold War Origins','Cold War Crises','Decolonisation'],
+  igcse_economics:['Basic Economic Problem','Demand','Supply','Price Mechanism','Market Structures','National Economy','Money & Banking','International Trade'],
+  caslevel_mathematics:['Pure 1: Algebra & Functions','Pure 1: Coordinate Geometry','Pure 1: Trigonometry','Pure 1: Calculus','Pure 2: Sequences & Series','Pure 2: Logarithms','Pure 2: Further Calculus','Mechanics: Kinematics','Mechanics: Forces','Statistics: Data & Probability','Statistics: Hypothesis Testing'],
+  caslevel_physics:['Measurements & Uncertainties','Kinematics','Forces & Newton Laws','Work, Energy & Power','Momentum','Circular Motion','Gravitational Fields','Thermal Physics','Electric Fields','Current Electricity','Magnetic Fields','Electromagnetic Induction','Waves','Quantum Physics','Nuclear Physics'],
+  caslevel_chemistry:['Atomic Structure','Chemical Bonding','Amount of Substance','Kinetics','Thermodynamics','Equilibrium','Redox Chemistry','Group 2 Elements','Group 17 Elements','Transition Metals','Organic Chemistry: Alkanes & Alkenes','Organic Chemistry: Alcohols & Carbonyls','Organic Chemistry: Acids & Amines','Spectroscopy'],
+  caslevel_biology:['Biological Molecules','Cell Structure & Division','Transport in Cells','Cell Signalling','Enzymes','Gas Exchange','Circulatory System','Immunity','Excretion','Nervous System','Muscles','Homeostasis','Genetics','Inheritance','Populations & Ecology'],
+  wassce_mathematics:['Number & Numeration','Algebraic Expressions','Equations & Inequalities','Geometry: Lines & Angles','Geometry: Triangles & Polygons','Circles','Mensuration','Trigonometry','Bearings','Statistics','Probability','Vectors','Matrices','Calculus: Differentiation','Calculus: Integration'],
+  wassce_physics:['Measurement & Units','Motion: Kinematics','Motion: Dynamics','Work, Energy & Power','Heat & Temperature','Thermal Expansion','Gas Laws','Sound Waves','Light & Optics','Electrostatics','Current Electricity','Magnetism','Electromagnetic Induction','Atomic & Nuclear Physics','Electronics'],
+  wassce_chemistry:['Introduction to Chemistry','Kinetic Theory & States of Matter','Atomic Structure','Chemical Bonding','Stoichiometry & Formulae','Electrochemistry','Acids, Bases & Salts','Preparation of Salts','Rates of Reaction','Equilibrium','Organic Chemistry: Hydrocarbons','Organic Chemistry: Functional Groups','Metals & Reactivity Series','Air & Water Chemistry','Chemical Industry'],
+  wassce_biology:['Cell Biology','Nutrition & Digestion','Gaseous Exchange','Transport in Plants','Transport in Animals','Excretion','Coordination & Response','Reproduction in Plants','Reproduction in Animals','Genetics','Evolution','Ecology','Population & Environment'],
+  wassce_economics:['Basic Economic Concepts','Demand','Supply','Price Determination','Market Structures','National Income','Economic Development','Money & Banking','International Trade','Fiscal Policy','Monetary Policy'],
+  wassce_government:['Basic Concepts of Government','Constitution','Organs of Government','Federalism','Electoral Systems','Political Parties','Public Administration','International Organizations','Foreign Policy'],
+  wassce_english_language:['Comprehension','Summary Writing','Lexis & Structure','Oral English','Essay Writing: Argumentative','Essay Writing: Descriptive','Essay Writing: Narrative','Letter Writing','Report Writing'],
+  kcse_mathematics:['Numbers','Commercial Arithmetic','Fractions & Decimals','Algebra','Quadratics','Linear Programming','Geometry','Trigonometry','Vectors','Matrices','Transformations','Statistics','Probability','Calculus'],
+  kcse_biology:['Cell Biology','Nutrition','Transport in Plants','Transport in Animals','Gaseous Exchange','Respiration','Excretion','Coordination','Reproduction in Plants','Reproduction in Animals','Genetics','Evolution','Ecology'],
+  kcse_chemistry:['Introduction','Air & Combustion','Water & Hydrogen','Structure of Atom','Periodic Table','Chemical Families','Bonding','Stoichiometry','Electrochemistry','Organic Chemistry','Salts','Metals','Acids & Bases'],
+  kcse_physics:['Measurements','Fluid Pressure','Thermal Expansion','Heat Transfer','Electricity','Magnetism','Waves','Sound','Light','Radioactivity','Cathode Rays'],
+  utme_use_of_english:['Lexis & Structure','Comprehension Passages','Summary','Antonyms & Synonyms','Register','Sentence Interpretation','Figures of Speech','Oral English'],
+  utme_mathematics:['Number & Numeration','Algebra','Geometry','Trigonometry','Statistics','Calculus'],
+  utme_biology:['Cell Biology','Genetics','Ecology','Evolution','Nutrition','Transport','Excretion','Coordination','Reproduction'],
+  utme_physics:['Measurements','Mechanics','Thermal Physics','Waves','Electricity','Magnetism','Modern Physics'],
+  utme_chemistry:['Stoichiometry','Atomic Structure','Bonding','Electrochemistry','Organic Chemistry','Equilibrium','Acids & Bases'],
+  utme_economics:['Demand & Supply','Price Determination','National Income','Money & Banking','International Trade'],
+  utme_government:['Constitution','Organs of Government','Federalism','Electoral Systems','International Organizations'],
+  jee_main_physics:['Kinematics','Laws of Motion','Work, Energy & Power','Rotational Motion','Gravitation','Thermal Physics','Oscillations','Waves','Electrostatics','Current Electricity','Magnetic Effects','Electromagnetic Induction','Alternating Current','Optics','Dual Nature','Atoms & Nuclei','Semiconductors'],
+  jee_main_chemistry:['Mole Concept','Atomic Structure','Chemical Bonding','States of Matter','Thermodynamics','Chemical Equilibrium','Ionic Equilibrium','Electrochemistry','Chemical Kinetics','Coordination Compounds','p-Block Elements','d-Block Elements','Organic: Basic Concepts','Organic: Hydrocarbons','Organic: Functional Groups','Biomolecules'],
+  jee_main_mathematics:['Sets, Relations & Functions','Complex Numbers','Sequences & Series','Permutations & Combinations','Binomial Theorem','Matrices & Determinants','Limits & Continuity','Differentiation','Applications of Derivatives','Integration','Differential Equations','Vectors','3D Geometry','Coordinate Geometry: Straight Lines','Coordinate Geometry: Conic Sections','Trigonometry','Probability','Statistics'],
+  neet_physics:['Physical World & Measurement','Kinematics','Laws of Motion','Work & Energy','Gravitation','Thermal Properties','Thermodynamics','Waves','Electric Charges','Current Electricity','Magnetic Effects','EMI','Optics','Dual Nature','Atoms & Nuclei'],
+  neet_chemistry:['Basic Concepts','Atomic Structure','Chemical Bonding','States of Matter','Thermodynamics','Equilibrium','Redox','Hydrogen','s-Block','p-Block','Organic Basics','Hydrocarbons','Environmental Chemistry','Coordination Compounds','Biomolecules'],
+  neet_botany:['Cell Biology','Plant Kingdom','Morphology','Anatomy','Transport','Photosynthesis','Respiration','Plant Growth','Reproduction in Plants','Genetics','Evolution','Ecology'],
+  neet_zoology:['Animal Kingdom','Structural Organisation','Digestion & Absorption','Breathing','Body Fluids','Circulation','Excretion','Locomotion','Neural Control','Chemical Coordination','Reproduction','Human Health','Biotechnology'],
+  nsc_mathematics:['Algebraic Expressions','Equations & Inequalities','Patterns & Sequences','Functions: Parabola & Hyperbola','Functions: Exponential & Logarithm','Finance','Trigonometry','Analytical Geometry','Euclidean Geometry','Statistics','Calculus: Derivatives','Calculus: Integrals','Probability'],
+  nsc_physical_sciences:['Mechanics: Kinematics','Mechanics: Dynamics','Work, Energy & Power','Waves: Transverse','Waves: Sound','Electricity: Current','Electricity: Circuits','Electromagnetism','Chemical Bonding','Intermolecular Forces','Stoichiometry','Electrochemistry','Acids & Bases','Organic Chemistry'],
+  cbse_board_physics:['Physical World','Kinematics','Laws of Motion','Work & Energy','Rotational Motion','Gravitation','Mechanical Properties','Thermal Properties','Thermodynamics','Oscillations','Waves','Electric Charges','Potential & Capacitance','Current Electricity','Magnetic Effects','EMI','Alternating Current','Optics','Dual Nature','Atoms','Nuclei','Semiconductors'],
+  cbse_board_chemistry:['Solid State','Solutions','Electrochemistry','Chemical Kinetics','Surface Chemistry','Isolation of Elements','p-Block Elements','d-Block Elements','Coordination Compounds','Haloalkanes','Alcohols & Phenols','Aldehydes & Ketones','Carboxylic Acids','Amines','Biomolecules','Polymers'],
+  cbse_board_mathematics:['Relations & Functions','Inverse Trigonometric Functions','Matrices','Determinants','Continuity & Differentiability','Application of Derivatives','Integrals','Application of Integrals','Differential Equations','Vectors','3D Geometry','Linear Programming','Probability'],
+  alevel_aqa_mathematics:['Pure: Algebra','Pure: Coordinate Geometry','Pure: Trigonometry','Pure: Exponentials & Logs','Pure: Calculus: Differentiation','Pure: Calculus: Integration','Pure: Numerical Methods','Mechanics: Kinematics','Mechanics: Forces','Statistics: Data','Statistics: Probability','Statistics: Hypothesis Testing'],
+  alevel_aqa_physics:['Measurements','Particles & Radiation','Waves & Quantum','Mechanics','Further Mechanics','Thermal Physics','Fields: Gravitational','Fields: Electric','Fields: Magnetic','Nuclear Physics','Astrophysics','Medical Physics'],
+  alevel_aqa_chemistry:['Physical: Atomic Structure','Physical: Amount of Substance','Physical: Bonding','Physical: Kinetics','Physical: Thermodynamics','Physical: Equilibrium','Physical: Redox','Inorganic: Group 2','Inorganic: Group 7','Inorganic: Transition Metals','Organic: Alkanes','Organic: Alkenes','Organic: Halogenoalkanes','Organic: Alcohols','Organic: Carbonyls','Organic: Carboxylic Acids','Organic: Aromatics','Organic: Amines','Analytical: Chromatography','Analytical: Spectroscopy'],
+  alevel_aqa_biology:['Biological Molecules','Cells & Transport','Gas Exchange & Circulation','Immunity','Genetics','Ecosystems & Evolution','Control: Nervous','Control: Hormones','Control: Homeostasis','Responses','Muscles']
+};
+
+/* ================================================
    STATE
-========================================================= */
+================================================ */
 const S={
-  tool:'photo', currentExamCode:'', currentSubject:'', currentTopic:'',
+  examCode:'', subject:'', topic:'', tool:'topic',
   photoText:'', pdfText:'', voiceText:'', chatType:'whatsapp',
-  recording:false, mediaRec:null, speechRec:null, voiceTimer:null, voiceStart:0,
+  recording:false, mediaRec:null, speechRec:null, voiceTimer:null,
   kit:null, cards:[], cardIdx:0, quiz:[], qIdx:0, qScore:0,
-  user:null, SB:null, prevScreen:'home', resultTab:'fc'
+  user:null, SB:null, prevScreen:'home'
 };
-
-const LIMIT=5;
-const DK='sos4', HK='sos4_hist';
+const LIMIT=5, DK='sos5', HK='sos5h';
 const ICONS={photo:'📷',pdf:'📄',voice:'🎤',chat:'💬',url:'🔗',text:'✏️',topic:'💡'};
-const TOOLS=['photo','pdf','voice','chat','url','text','topic'];
+const TOOLS=['topic','photo','pdf','voice','chat','url','text'];
 
-/* =========================================================
+/* ================================================
    STORAGE
-========================================================= */
+================================================ */
 const ld=()=>{try{return JSON.parse(localStorage.getItem(DK)||'{}')}catch{return{}}};
 const sv=d=>localStorage.setItem(DK,JSON.stringify(d));
 const hist=()=>{try{return JSON.parse(localStorage.getItem(HK)||'[]')}catch{return[]}};
@@ -745,210 +723,126 @@ function getUsed(){const d=ld();return d.usage?.date===today()?d.usage.count||0:
 function incUsed(){const d=ld(),t=today();d.usage=d.usage?.date===t?{date:t,count:(d.usage.count||0)+1}:{date:t,count:1};sv(d)}
 function resetUsage(){const d=ld();d.usage={date:today(),count:0};sv(d);updUsage();toast('Usage reset')}
 
-/* =========================================================
-   INIT — load config from server, no hardcoded keys
-========================================================= */
-let _initDone=false;
+/* ================================================
+   INIT — no hardcoded keys
+================================================ */
 async function initApp(){
-  if(_initDone)return; _initDone=true;
-
-  /* Apply saved theme */
   const p=ld().prefs||{};
-  if(p.dark!==undefined)document.documentElement.setAttribute('data-theme',p.dark?'dark':'light');
-  const tog=document.getElementById('dark-tog');
-  if(tog)tog.classList.toggle('on',p.dark!==false);
-
-  /* Populate exam selector immediately from local data */
-  populateExamSelector();
+  document.documentElement.setAttribute('data-theme',p.dark===false?'light':'dark');
+  document.getElementById('dark-tog')?.classList.toggle('on',p.dark!==false);
+  renderExamChips();
   updUsage(); updStats(); renderRecent();
-
-  /* Load server config for Supabase — non-blocking */
   try{
-    const cfg=await fetch('/.netlify/functions/config',{signal:AbortSignal.timeout(5000)}).then(r=>r.json());
-    if(cfg.hasSupabase && typeof supabase!=='undefined'){
+    const cfg=await fetch('/.netlify/functions/config',{signal:AbortSignal.timeout(6000)}).then(r=>r.json());
+    if(cfg.hasSupabase&&typeof supabase!=='undefined'){
       S.SB=supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
       const{data:{session}}=await S.SB.auth.getSession();
       if(session?.user)setUser(session.user);
       S.SB.auth.onAuthStateChange((_,sess)=>setUser(sess?.user||null));
+      document.getElementById('d-sb').style.background='var(--em)';
+      document.getElementById('s-sb').textContent='Connected';
     }
-  }catch(e){console.warn('Config load:',e.message)}
-
-  /* System status check */
-  checkStatus();
-
+  }catch(e){console.warn('Config:',e.message)}
+  checkGroq();
   if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 
-/* =========================================================
-   EXAM SELECTOR — from local data, instant
-========================================================= */
-function populateExamSelector(){
-  const sel=document.getElementById('sel-exam');
-  if(!sel)return;
-  LOCAL_EXAMS.forEach(e=>{
-    const o=document.createElement('option');
-    o.value=e.code; o.textContent=e.name;
-    sel.appendChild(o);
-  });
-}
-function onExamChange(){
-  const code=document.getElementById('sel-exam').value;
-  S.currentExamCode=code;
-  const subSel=document.getElementById('sel-subject');
-  subSel.innerHTML='<option value="">Select subject</option>';
-  subSel.disabled=!code;
-  if(!code)return;
-  const subs=LOCAL_SUBJECTS[code]||[];
-  subs.forEach(s=>{
-    const o=document.createElement('option');
-    o.value=s; o.textContent=s;
-    subSel.appendChild(o);
-  });
-}
-
-/* =========================================================
-   AUTH — loads Supabase client from config, not hardcoded
-========================================================= */
-let _authMode='login';
-function openAuth(mode){
-  if(!S.SB){
-    toast('Auth requires Supabase env vars in Netlify');
-    return;
-  }
-  _authMode=mode||'login';
-  const isLogin=_authMode==='login';
-  document.getElementById('auth-title').textContent=isLogin?'Sign in':'Create account';
-  document.getElementById('auth-sub').textContent=isLogin?'Sync your kits across devices':'Free — sync kits across devices';
-  document.getElementById('auth-btn').textContent=isLogin?'Sign in':'Create account';
-  document.getElementById('auth-switch-text').textContent=isLogin?'No account?':'Already have one?';
-  document.getElementById('auth-switch-btn').textContent=isLogin?'Sign up free':'Sign in';
-  document.getElementById('auth-err').className='auth-err-msg';
-  document.getElementById('auth-email').value='';
-  document.getElementById('auth-pass').value='';
-  document.getElementById('auth-modal').classList.add('on');
-}
-function toggleAuthMode(){openAuth(_authMode==='login'?'signup':'login')}
-function closeAuth(){document.getElementById('auth-modal').classList.remove('on')}
-
-async function submitAuth(){
-  const email=document.getElementById('auth-email').value.trim();
-  const pass=document.getElementById('auth-pass').value;
-  const errEl=document.getElementById('auth-err');
-  const btn=document.getElementById('auth-btn');
-  const showErr=msg=>{errEl.textContent=msg;errEl.className='auth-err-msg on'};
-
-  if(!email){showErr('Enter your email address');return}
-  if(!/^[^@]+@[^@]+\.[^@]+$/.test(email)){showErr('Enter a valid email address');return}
-  if(!pass||pass.length<8){showErr('Password must be at least 8 characters');return}
-  if(!S.SB){showErr('Supabase not configured — check Netlify env vars');return}
-
-  btn.disabled=true;
-  btn.textContent='Please wait...';
-
-  const{data,error}=_authMode==='login'
-    ?await S.SB.auth.signInWithPassword({email,password:pass})
-    :await S.SB.auth.signUp({email,password:pass});
-
-  btn.disabled=false;
-  btn.textContent=_authMode==='login'?'Sign in':'Create account';
-
-  if(error){
-    showErr(error.message);
-    return;
-  }
-  if(_authMode==='signup'&&!data.session){
-    showErr('Check your email for a verification link, then sign in here.');
-    return;
-  }
-  closeAuth();
-  toast(_authMode==='login'?'Welcome back! ✓':'Account created! ✓');
-}
-
-async function signOut(){
-  if(S.SB)await S.SB.auth.signOut();
-  S.user=null;
-  updateAuthUI();
-  toast('Signed out');
-}
-
-function handleAccBtn(){S.user?signOut():openAuth('login')}
-
-function setUser(user){
-  S.user=user;
-  updateAuthUI();
-}
-function updateAuthUI(){
-  const area=document.getElementById('dash-user-area');
-  const accStatus=document.getElementById('acc-status');
-  const accEmail=document.getElementById('acc-email');
-  const accBtn=document.getElementById('acc-btn');
-  if(S.user){
-    const name=S.user.email.split('@')[0];
-    if(area)area.innerHTML=`<div class="du-chip"><div class="du-avatar">${name[0].toUpperCase()}</div><span class="du-name">${name}</span><button class="du-signout" onclick="signOut()">Sign out</button></div>`;
-    if(accStatus)accStatus.textContent='Signed in as '+S.user.email;
-    if(accEmail)accEmail.textContent='Kits sync across your devices';
-    if(accBtn){accBtn.textContent='Sign out';accBtn.onclick=signOut}
-  }else{
-    if(area)area.innerHTML=`<button class="du-login" onclick="openAuth('login')">Sign in / Sign up</button>`;
-    if(accStatus)accStatus.textContent='Not signed in';
-    if(accEmail)accEmail.textContent='Sign in to sync kits across devices';
-    if(accBtn){accBtn.textContent='Sign in';accBtn.onclick=()=>openAuth('login')}
-  }
-}
-
-/* =========================================================
-   SYSTEM STATUS CHECK
-========================================================= */
-async function checkStatus(){
-  const groqDot=document.getElementById('status-groq-dot');
-  const groqTxt=document.getElementById('status-groq');
-  const sbDot=document.getElementById('status-sb-dot');
-  const sbTxt=document.getElementById('status-sb');
-
-  /* Check Groq via our generate function with tiny content */
+async function checkGroq(){
   try{
     const r=await fetch('/.netlify/functions/generate',{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({content:'test',examCode:'',subject:'',topic:''}),
-      signal:AbortSignal.timeout(8000)
+      body:JSON.stringify({content:'ping',examCode:'',subject:'',topic:''}),
+      signal:AbortSignal.timeout(10000)
     });
     const d=await r.json();
-    if(r.ok||d.kit){
-      groqDot.style.background='var(--em)';groqTxt.textContent='Connected';
-    }else if(d.error&&d.error.includes('GROQ_API_KEY')){
-      groqDot.style.background='var(--red)';groqTxt.textContent='GROQ_API_KEY missing in Netlify env vars';
+    if(d.error?.includes('GROQ_API_KEY')){
+      document.getElementById('d-groq').style.background='var(--red)';
+      document.getElementById('s-groq').textContent='GROQ_API_KEY missing from Netlify env vars';
     }else{
-      groqDot.style.background='var(--em)';groqTxt.textContent='Connected';
+      document.getElementById('d-groq').style.background='var(--em)';
+      document.getElementById('s-groq').textContent='Connected';
     }
   }catch(e){
-    groqDot.style.background='var(--amber)';
-    groqTxt.textContent=e.name==='AbortError'?'Timeout — check connection':'Not reachable';
-  }
-
-  /* Supabase */
-  if(S.SB){
-    sbDot.style.background='var(--em)';sbTxt.textContent='Connected';
-  }else{
-    sbDot.style.background='var(--amber)';sbTxt.textContent='Not configured — add SUPABASE_URL + SUPABASE_ANON_KEY to Netlify';
+    document.getElementById('d-groq').style.background='var(--amber)';
+    document.getElementById('s-groq').textContent='Cannot reach — check connection';
   }
 }
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
-function showScreen(name){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
-  document.getElementById('s-'+name)?.classList.add('active');
-  document.getElementById('nb-'+name)?.classList.add('on');
-  if(name!=='settings')S.prevScreen=name;
-  if(name==='home'){updStats();renderRecent()}
-  if(name==='create')updUsage();
-  if(name==='library')renderLib();
-  if(name==='settings'){updUsage();updSettings()}
+/* ================================================
+   STEP 1: EXAM CHIPS
+================================================ */
+function renderExamChips(){
+  const el=document.getElementById('exam-chips'); if(!el)return;
+  el.innerHTML=LOCAL_EXAMS.map(e=>`<button class="chip${S.examCode===e.code?' on':''}" onclick="selectExam('${e.code}','${e.name.replace(/'/g,"\\'")}',this)">${e.name}</button>`).join('');
 }
-function goBack(){showScreen(S.prevScreen||'home')}
-function openTool(tool){selTool(tool,document.getElementById('tt-'+tool));showScreen('create')}
+
+function selectExam(code,name,btn){
+  S.examCode=code; S.subject=''; S.topic='';
+  document.querySelectorAll('#exam-chips .chip').forEach(c=>c.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('sv-exam').textContent=name;
+  document.getElementById('sn-exam').classList.add('done');
+  renderSubjectChips(code);
+  document.getElementById('ss-subject').style.display='';
+  document.getElementById('ss-topic').style.display='none';
+  document.getElementById('sv-subject').textContent='';
+  document.getElementById('sv-topic').textContent='';
+  btn.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ================================================
+   STEP 2: SUBJECT CHIPS
+================================================ */
+function renderSubjectChips(examCode){
+  const el=document.getElementById('subject-chips'); if(!el)return;
+  const subs=LOCAL_SUBJECTS[examCode]||[];
+  el.innerHTML=subs.map(s=>`<button class="chip" onclick="selectSubject('${s.replace(/'/g,"\\'")}',this)">${s}</button>`).join('');
+}
+
+function selectSubject(subject,btn){
+  S.subject=subject; S.topic='';
+  document.querySelectorAll('#subject-chips .chip').forEach(c=>c.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('sv-subject').textContent=subject;
+  document.getElementById('sn-subject').classList.add('done');
+  renderTopicChips(S.examCode,subject);
+  document.getElementById('ss-topic').style.display='';
+  document.getElementById('sv-topic').textContent='';
+  document.getElementById('inp-topic').value='';
+  btn.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+/* ================================================
+   STEP 3: TOPIC CHIPS
+================================================ */
+function renderTopicChips(examCode,subject){
+  const el=document.getElementById('topic-chips'); if(!el)return;
+  const key=(examCode+'_'+subject).toLowerCase().replace(/[^a-z0-9]/g,'_').replace(/_+/g,'_');
+  const topics=LOCAL_TOPICS[key]||[];
+  if(!topics.length){el.innerHTML='<p style="font-size:12px;color:var(--t3)">Type a topic below or generate from the full subject</p>';return}
+  el.innerHTML=topics.map(t=>`<button class="topic-chip" onclick="selectTopic('${t.replace(/'/g,"\\'")}',this)">${t}</button>`).join('');
+}
+
+function selectTopic(topic,btn){
+  S.topic=topic;
+  document.querySelectorAll('#topic-chips .topic-chip').forEach(c=>c.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('sv-topic').textContent=topic;
+  document.getElementById('sn-topic').classList.add('done');
+  document.getElementById('inp-topic').value=topic;
+}
+
+function onTopicType(){
+  const v=document.getElementById('inp-topic').value.trim();
+  S.topic=v;
+  document.querySelectorAll('#topic-chips .topic-chip').forEach(c=>c.classList.remove('on'));
+  document.getElementById('sv-topic').textContent=v?v:'';
+  document.getElementById('sn-topic').classList.toggle('done',!!v);
+}
+
+/* ================================================
+   STEP 4: TOOL SELECTION
+================================================ */
 function selTool(tool,btn){
   S.tool=tool;
   TOOLS.forEach(t=>{
@@ -957,140 +851,196 @@ function selTool(tool,btn){
   });
 }
 
-/* =========================================================
+/* ================================================
+   NAVIGATION
+================================================ */
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById('s-'+name)?.classList.add('active');
+  document.getElementById('nb-'+name)?.classList.add('on');
+  if(name!=='settings')S.prevScreen=name;
+  if(name==='home'){updStats();renderRecent()}
+  if(name==='library')renderLib();
+  if(name==='settings')updSettings();
+  if(name==='create')updUsage();
+}
+function goBack(){showScreen(S.prevScreen||'home')}
+function startWith(tool){
+  if(tool==='camera')tool='photo';
+  selTool(tool,document.getElementById('tt-'+tool));
+  showScreen('create');
+}
+
+/* ================================================
+   AUTH
+================================================ */
+let _authMode='login';
+function openAuth(mode){
+  if(!S.SB){toast('Auth: add SUPABASE_URL + SUPABASE_ANON_KEY in Netlify env vars');return}
+  _authMode=mode||'login';
+  const isL=_authMode==='login';
+  document.getElementById('auth-title').textContent=isL?'Sign in':'Create account';
+  document.getElementById('auth-sub').textContent=isL?'Sync kits across devices':'Free account';
+  document.getElementById('auth-btn').textContent=isL?'Sign in':'Create account';
+  document.getElementById('auth-sw-txt').textContent=isL?'No account?':'Have one?';
+  document.getElementById('auth-sw-btn').textContent=isL?'Sign up free':'Sign in';
+  document.getElementById('auth-err').className='auth-err';
+  document.getElementById('auth-email').value='';
+  document.getElementById('auth-pass').value='';
+  document.getElementById('auth-modal').classList.add('on');
+}
+function toggleAuthMode(){openAuth(_authMode==='login'?'signup':'login')}
+function closeAuth(){document.getElementById('auth-modal').classList.remove('on')}
+function handleAccBtn(){S.user?signOut():openAuth('login')}
+async function submitAuth(){
+  const email=document.getElementById('auth-email').value.trim();
+  const pass=document.getElementById('auth-pass').value;
+  const errEl=document.getElementById('auth-err');
+  const btn=document.getElementById('auth-btn');
+  const showErr=m=>{errEl.textContent=m;errEl.className='auth-err on'};
+  if(!email||!/^[^@]+@[^@]+\.[^@]+$/.test(email))return showErr('Enter a valid email address');
+  if(!pass||pass.length<8)return showErr('Password must be at least 8 characters');
+  btn.disabled=true; btn.textContent='Please wait...';
+  const{data,error}=_authMode==='login'
+    ?await S.SB.auth.signInWithPassword({email,password:pass})
+    :await S.SB.auth.signUp({email,password:pass});
+  btn.disabled=false; btn.textContent=_authMode==='login'?'Sign in':'Create account';
+  if(error)return showErr(error.message);
+  if(_authMode==='signup'&&!data.session)return showErr('Check your email to verify your account, then sign in.');
+  closeAuth(); toast(_authMode==='login'?'Welcome back!':'Account created!');
+}
+async function signOut(){if(S.SB)await S.SB.auth.signOut();S.user=null;updateAuthUI();toast('Signed out')}
+function setUser(user){S.user=user;updateAuthUI()}
+function updateAuthUI(){
+  const area=document.getElementById('dash-user-area');
+  const st=document.getElementById('acc-status');
+  const em=document.getElementById('acc-email');
+  const btn=document.getElementById('acc-btn');
+  if(S.user){
+    const nm=S.user.email.split('@')[0];
+    if(area)area.innerHTML=`<div class="du-chip"><div class="du-av">${nm[0].toUpperCase()}</div><span class="du-nm">${nm}</span><button class="du-out" onclick="signOut()">Sign out</button></div>`;
+    if(st)st.textContent='Signed in as '+S.user.email;
+    if(em)em.textContent='Kits sync across your devices';
+    if(btn){btn.textContent='Sign out';btn.onclick=signOut}
+  }else{
+    if(area)area.innerHTML=`<button class="du-login" onclick="openAuth('login')">Sign in / Sign up</button>`;
+    if(st)st.textContent='Not signed in';
+    if(em)em.textContent='Sign in to sync kits';
+    if(btn){btn.textContent='Sign in';btn.onclick=()=>openAuth('login')}
+  }
+}
+
+/* ================================================
    INPUT HANDLERS
-========================================================= */
-/* Camera — Tesseract.js, runs on device */
+================================================ */
 function loadPhoto(inp){
   if(!inp.files[0])return;
   const file=inp.files[0];
-  document.getElementById('fn-photo').textContent=''+file.name;
+  document.getElementById('fn-photo').textContent=file.name;
   const prev=document.getElementById('photo-prev');
   prev.src=URL.createObjectURL(file); prev.style.display='block';
   runOCR(file);
 }
 async function runOCR(file){
   const box=document.getElementById('ocr-box');
-  const step=document.getElementById('ocr-step');
-  const fill=document.getElementById('ocr-fill');
-  const log=document.getElementById('ocr-log');
-  box.classList.add('on'); fill.style.width='5%';
-  S.photoText='';
+  const stepEl=document.getElementById('ocr-step');
+  const fillEl=document.getElementById('ocr-fill');
+  const logEl=document.getElementById('ocr-log');
+  box.classList.add('on'); fillEl.style.width='5%'; S.photoText='';
   try{
     const worker=await Tesseract.createWorker('eng',1,{
       logger:m=>{
-        if(m.status==='loading tesseract core'){step.textContent='Loading OCR engine...';fill.style.width='10%'}
-        else if(m.status==='loading language traineddata'){step.textContent='Loading language data...';fill.style.width='25%'}
-        else if(m.status==='recognizing text'){
-          const p=Math.round(m.progress*70)+25;
-          fill.style.width=p+'%';
-          log.textContent='Reading characters... '+Math.round(m.progress*100)+'%';
-        }
+        if(m.status==='loading tesseract core'){stepEl.textContent='Loading OCR engine...';fillEl.style.width='10%'}
+        else if(m.status==='loading language traineddata'){stepEl.textContent='Loading language data...';fillEl.style.width='25%'}
+        else if(m.status==='recognizing text'){fillEl.style.width=(25+Math.round(m.progress*65))+'%';logEl.textContent='Reading... '+Math.round(m.progress*100)+'%'}
       }
     });
-    step.textContent='Recognising text in image...';
+    stepEl.textContent='Recognising text...';
     const{data:{text,confidence}}=await worker.recognize(file);
     await worker.terminate();
-    fill.style.width='100%';
-    if(!text||text.trim().length<15){
-      step.textContent='Very little text found. Try better lighting, or use the Topic tool instead.';
-      log.textContent=''; S.photoText=''; return;
-    }
+    fillEl.style.width='100%';
+    if(!text||text.trim().length<15){stepEl.textContent='Little text found. Try better lighting or use Topic tool.';S.photoText='';return}
     S.photoText=text.trim();
-    step.textContent='Text extracted ('+Math.round(confidence)+'% confidence) — tap Generate';
-    log.textContent=S.photoText.length+' characters ready';
-  }catch(e){
-    step.textContent='OCR failed: '+e.message.slice(0,60);
-    fill.style.width='0'; S.photoText='';
-  }
+    stepEl.textContent=`✓ Extracted (${Math.round(confidence)}% confidence) — tap Generate`;
+    logEl.textContent=S.photoText.length+' characters';
+  }catch(e){stepEl.textContent='OCR error: '+e.message.slice(0,60);fillEl.style.width='0';S.photoText=''}
 }
 
-/* PDF */
 async function loadPDF(inp){
   if(!inp.files[0])return;
   const file=inp.files[0];
-  document.getElementById('fn-pdf').textContent=''+file.name;
+  document.getElementById('fn-pdf').textContent=file.name;
   const box=document.getElementById('pdf-box');
-  const step=document.getElementById('pdf-step');
-  const fill=document.getElementById('pdf-fill');
-  box.classList.add('on'); fill.style.width='5%'; S.pdfText='';
+  const stepEl=document.getElementById('pdf-step');
+  const fillEl=document.getElementById('pdf-fill');
+  box.classList.add('on'); fillEl.style.width='5%'; S.pdfText='';
   try{
-    if(typeof pdfjsLib==='undefined')throw new Error('PDF library not loaded — try refresh');
+    if(typeof pdfjsLib==='undefined')throw new Error('PDF reader unavailable — try refresh');
     const buf=await file.arrayBuffer();
     const pdf=await pdfjsLib.getDocument({data:buf}).promise;
     const total=Math.min(pdf.numPages,30);
     let txt='';
     for(let i=1;i<=total;i++){
-      step.textContent='Reading page '+i+' of '+total+'...';
-      fill.style.width=Math.round((i/total)*85)+'%';
+      stepEl.textContent=`Reading page ${i} of ${total}...`;
+      fillEl.style.width=Math.round(i/total*85)+'%';
       const pg=await pdf.getPage(i);
       const ct=await pg.getTextContent();
-      const pageText=ct.items.map(x=>x.str).join(' ');
-      txt+=pageText+'\n';
-      if(pageText.trim().length<20&&typeof Tesseract!=='undefined'){
-        step.textContent='OCR scanning page '+i+' (image-based)...';
+      const pt=ct.items.map(x=>x.str).join(' ');
+      txt+=pt+'\n';
+      if(pt.trim().length<20&&typeof Tesseract!=='undefined'){
+        stepEl.textContent=`OCR scanning page ${i} (image-based)...`;
         const canvas=document.createElement('canvas');
         const vp=pg.getViewport({scale:1.5});
         canvas.width=vp.width; canvas.height=vp.height;
         await pg.render({canvasContext:canvas.getContext('2d'),viewport:vp}).promise;
         const w=await Tesseract.createWorker('eng',1,{logger:()=>{}});
         const{data:{text}}=await w.recognize(canvas);
-        await w.terminate();
-        txt+=text+'\n';
+        await w.terminate(); txt+=text+'\n';
       }
     }
     S.pdfText=txt.trim();
-    fill.style.width='100%';
-    step.textContent=S.pdfText.length>50
-      ?'PDF loaded ('+Math.round(S.pdfText.length/1000)+'k chars) — tap Generate'
-      :'Very little text found. This may be an image-only PDF.';
-  }catch(e){step.textContent='PDF error: '+e.message.slice(0,60);fill.style.width='0';S.pdfText=''}
+    fillEl.style.width='100%';
+    stepEl.textContent=S.pdfText.length>50?`✓ Loaded (${Math.round(S.pdfText.length/1000)}k chars) — tap Generate`:'Very little text found.';
+  }catch(e){stepEl.textContent='PDF error: '+e.message.slice(0,60);fillEl.style.width='0';S.pdfText=''}
 }
 
-/* Voice */
 async function toggleVoice(){
   if(S.recording){stopVoice();return}
   try{
     const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-    const mime=MediaRecorder.isTypeSupported('audio/webm')?'audio/webm':
-                MediaRecorder.isTypeSupported('audio/mp4')?'audio/mp4':'audio/ogg';
+    const mime=MediaRecorder.isTypeSupported('audio/webm')?'audio/webm':MediaRecorder.isTypeSupported('audio/mp4')?'audio/mp4':'audio/ogg';
     const chunks=[];
     S.mediaRec=new MediaRecorder(stream,{mimeType:mime});
     S.mediaRec.ondataavailable=e=>chunks.push(e.data);
     S.mediaRec.onstop=async()=>{
       stream.getTracks().forEach(t=>t.stop());
-      const blob=new Blob(chunks,{type:mime});
-      await transcribeBlob(blob,mime);
+      await transcribeBlob(new Blob(chunks,{type:mime}),mime);
     };
     const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
     if(SR){
-      S.speechRec=new SR();S.speechRec.continuous=true;S.speechRec.interimResults=true;
+      S.speechRec=new SR(); S.speechRec.continuous=true; S.speechRec.interimResults=true;
       let final='';
       S.speechRec.onresult=e=>{
         let interim='';
-        for(let i=e.resultIndex;i<e.results.length;i++){
-          if(e.results[i].isFinal)final+=e.results[i][0].transcript+' ';
-          else interim+=e.results[i][0].transcript;
-        }
+        for(let i=e.resultIndex;i<e.results.length;i++)
+          e.results[i].isFinal?final+=e.results[i][0].transcript+' ':interim+=e.results[i][0].transcript;
         S.voiceText=final+interim;
-        const vt=document.getElementById('vtrans');
-        vt.textContent=S.voiceText; vt.classList.add('on');
+        const vt=document.getElementById('vtrans'); vt.textContent=S.voiceText; vt.classList.add('on');
       };
       try{S.speechRec.start()}catch{}
     }
-    S.mediaRec.start(1000);
-    S.recording=true; S.voiceStart=Date.now();
+    S.mediaRec.start(1000); S.recording=true; S.voiceStart=Date.now();
     document.getElementById('vbtn').classList.add('rec');
     document.getElementById('vbtn').innerHTML='&#9209;';
     document.getElementById('vstatus').textContent='Recording... tap to stop';
     document.getElementById('v-vis').classList.add('recording');
     S.voiceTimer=setInterval(()=>{
       const sec=Math.floor((Date.now()-S.voiceStart)/1000);
-      document.getElementById('vtimer').textContent=
-        String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
+      document.getElementById('vtimer').textContent=`${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;
       if(sec>=120)stopVoice();
     },500);
-  }catch(e){toast('Microphone access denied: '+e.message.slice(0,60))}
+  }catch(e){toast('Mic access denied: '+e.message.slice(0,50))}
 }
 function stopVoice(){
   S.recording=false; clearInterval(S.voiceTimer);
@@ -1104,179 +1054,103 @@ function stopVoice(){
 async function transcribeBlob(blob,mime){
   setLoad('Transcribing audio...','Groq Whisper',30); showLoader(true);
   try{
-    const b64=await new Promise((res,rej)=>{
-      const r=new FileReader();
-      r.onload=e=>res(e.target.result.split(',')[1]); r.onerror=rej; r.readAsDataURL(blob);
-    });
-    const resp=await fetch('/.netlify/functions/transcribe',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({audioBase64:b64,mimeType:mime}),
-      signal:AbortSignal.timeout(30000)
-    });
+    const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>res(e.target.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(blob)});
+    const resp=await fetch('/.netlify/functions/transcribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({audioBase64:b64,mimeType:mime}),signal:AbortSignal.timeout(35000)});
     const d=await resp.json();
     if(!resp.ok||d.error)throw new Error(d.error||'Transcription failed');
     S.voiceText=d.text||'';
-    const vt=document.getElementById('vtrans');
-    vt.textContent=S.voiceText||'No speech detected'; vt.classList.add('on');
-    document.getElementById('vstatus').textContent=
-      S.voiceText?'Transcript ready — tap Generate':'No speech detected';
+    const vt=document.getElementById('vtrans'); vt.textContent=S.voiceText||'No speech detected'; vt.classList.add('on');
+    document.getElementById('vstatus').textContent=S.voiceText?'✓ Transcript ready — tap Generate':'No speech detected';
     showLoader(false);
-  }catch(e){
-    showLoader(false);
-    document.getElementById('vstatus').textContent='Error: '+e.message.slice(0,70);
-    toast('Transcription error: '+e.message.slice(0,60));
-  }
+  }catch(e){showLoader(false);document.getElementById('vstatus').textContent='Error: '+e.message.slice(0,60);toast('Transcription error')}
 }
 
-/* Chat parser */
-function setChatType(type,btn){
+function setCT(type,btn){
   S.chatType=type;
-  document.querySelectorAll('.ctype').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on'); analyzeChat();
+  document.querySelectorAll('.ctype').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); analyzeChat();
 }
 function analyzeChat(){
   const txt=document.getElementById('t-chat').value;
   if(!txt||txt.length<20){document.getElementById('eq-box').classList.remove('on');return}
   const lines=txt.split('\n');
   let qs=[];
-  if(S.chatType==='whatsapp')
-    qs=lines.filter(l=>/\]\s*.+?:/.test(l)&&l.includes('?')).map(l=>l.replace(/^\[?.+?\]?\s*.+?:\s*/,'').trim()).filter(Boolean);
-  else if(S.chatType==='telegram')
-    qs=lines.filter(l=>/^\[?\d/.test(l)&&l.includes('?')).map(l=>l.replace(/^\[?.+?\]?\s*.+?:\s*/,'').trim()).filter(Boolean);
-  else
-    qs=lines.filter(l=>l.trim().endsWith('?')&&l.length>8).map(l=>l.trim());
+  if(S.chatType==='whatsapp')qs=lines.filter(l=>/\]\s*.+?:/.test(l)&&l.includes('?')).map(l=>l.replace(/^\[?.+?\]?\s*.+?:\s*/,'').trim()).filter(Boolean);
+  else if(S.chatType==='telegram')qs=lines.filter(l=>/^\[?\d/.test(l)&&l.includes('?')).map(l=>l.replace(/^\[?.+?\]?\s*.+?:\s*/,'').trim()).filter(Boolean);
+  else qs=lines.filter(l=>l.trim().endsWith('?')&&l.length>8).map(l=>l.trim());
   document.getElementById('eq-count').textContent=qs.length;
-  document.getElementById('eq-list').innerHTML=qs.slice(0,8).map(q=>'<div class="eq-item">'+q+'</div>').join('');
+  document.getElementById('eq-list').innerHTML=qs.slice(0,8).map(q=>`<div class="eq-item">${q}</div>`).join('');
   document.getElementById('eq-box').classList.toggle('on',qs.length>0);
 }
 
-/* =========================================================
-   GET CONTENT
-========================================================= */
+/* ================================================
+   GET CONTENT FOR GENERATION
+================================================ */
 async function getContent(){
   switch(S.tool){
-    case'photo':
-      if(!S.photoText)throw new Error('No text extracted yet. Wait for OCR to finish, or try another input tool.');
-      return S.photoText;
-    case'pdf':
-      if(!S.pdfText)throw new Error('Upload a PDF first and wait for it to finish loading.');
-      return S.pdfText;
-    case'voice':
-      if(!S.voiceText)throw new Error('Record audio first — tap the microphone button.');
-      return S.voiceText;
-    case'chat':{
-      const v=document.getElementById('t-chat').value.trim();
-      if(!v)throw new Error('Paste a chat export first.');
-      return 'Chat export ('+S.chatType+'):\n\n'+v;
-    }
-    case'url':{
-      const v=document.getElementById('t-url').value.trim();
-      if(!v)throw new Error('Enter a URL first.');
-      setLoad('Fetching page...','Reading content from URL',15);
-      const r=await fetch('/.netlify/functions/fetch-url?url='+encodeURIComponent(v),
-        {signal:AbortSignal.timeout(18000)});
-      const d=await r.json();
-      if(!r.ok||d.error)throw new Error(d.error||'Could not fetch URL — try pasting the text directly');
-      return d.text;
-    }
-    case'text':{
-      const v=document.getElementById('t-text').value.trim();
-      if(!v||v.length<15)throw new Error('Add some content to the text area first.');
-      return v;
-    }
-    case'topic':{
-      const main=document.getElementById('t-topic-inp').value.trim();
-      const fallback=document.getElementById('inp-topic').value.trim();
-      const v=main||fallback;
-      if(!v)throw new Error('Describe a topic first — e.g. "Photosynthesis" or "The French Revolution"');
-      return 'Generate comprehensive study materials for: "'+v+'". Cover key concepts, definitions, worked examples, and important relationships between ideas.';
-    }
+    case'topic': return null; // topic-only generation
+    case'photo': if(!S.photoText)throw new Error('No text extracted yet — wait for OCR or try another tool'); return S.photoText;
+    case'pdf':   if(!S.pdfText)throw new Error('Upload a PDF first and wait for it to load'); return S.pdfText;
+    case'voice': if(!S.voiceText)throw new Error('Record audio first — tap the microphone'); return S.voiceText;
+    case'chat':{ const v=document.getElementById('t-chat').value.trim(); if(!v)throw new Error('Paste a chat export first'); return `Chat export (${S.chatType}):\n\n${v}`;}
+    case'url':{ const v=document.getElementById('t-url').value.trim(); if(!v)throw new Error('Enter a URL first');
+      setLoad('Fetching URL...','Reading page content',15);
+      const r=await fetch('/.netlify/functions/fetch-url?url='+encodeURIComponent(v),{signal:AbortSignal.timeout(18000)});
+      const d=await r.json(); if(!r.ok||d.error)throw new Error(d.error||'Could not fetch URL — paste the text instead'); return d.text;}
+    case'text':{ const v=document.getElementById('t-text').value.trim(); if(!v||v.length<15)throw new Error('Add some text content first'); return v;}
   }
 }
 
-/* =========================================================
+/* ================================================
    GENERATE
-========================================================= */
+================================================ */
 async function generate(){
   if(getUsed()>=LIMIT){showPaywall();return}
+  const topic=document.getElementById('inp-topic')?.value.trim()||S.topic;
+  if(!S.examCode&&!topic){toast('Select an exam above, or type a topic first');return}
   const btn=document.getElementById('btn-gen');
-  const banner=document.getElementById('gen-banner');
-  banner.className='status-banner';
+  const errEl=document.getElementById('gen-err');
+  errEl.className='gen-err';
   btn.disabled=true; btn.textContent='Generating...';
-
   let content;
-  try{content=await getContent()}
-  catch(e){
-    toast(e.message);
-    btn.disabled=false; btn.textContent='Generate Study Kit';
-    return;
-  }
-
-  showLoader(true);
-  setLoad('Building exam prompt...','Groq LLaMA 3.3 70B',10);
-
-  const examCode=document.getElementById('sel-exam')?.value||'';
-  const subject=document.getElementById('sel-subject')?.value||'';
-  const topic=document.getElementById('inp-topic')?.value.trim()||'';
-
+  try{content=await getContent()}catch(e){toast(e.message);btn.disabled=false;btn.textContent='Generate Study Kit';return}
+  showLoader(true); setLoad('Building exam context...','LLaMA 3.3 70B',10);
   try{
-    setLoad('Asking AI...','Processing your content',40);
+    setLoad('Asking AI...','Generating your study kit',40);
     const resp=await fetch('/.netlify/functions/generate',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        content,
-        examCode:examCode||null,
-        subject:subject||null,
-        topic:topic||null,
-        tool:S.tool,
-        userId:S.user?.id||null
-      }),
-      signal:AbortSignal.timeout(40000)
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({content,examCode:S.examCode||null,subject:S.subject||null,topic:topic||null,tool:S.tool,userId:S.user?.id||null}),
+      signal:AbortSignal.timeout(45000)
     });
-
-    setLoad('Formatting study kit...','Building flashcards and quiz',85);
+    setLoad('Formatting kit...','Building cards, quiz, terms',85);
     const data=await resp.json();
-
-    if(!resp.ok||data.error){
-      throw new Error(data.error||'Server error '+resp.status+'. Check Netlify env vars and function logs.');
-    }
-
+    if(!resp.ok||data.error)throw new Error(data.error||`Server error ${resp.status}`);
     const kit=data.kit;
-    if(!kit?.flashcards?.length&&!kit?.summary){
-      throw new Error('AI returned incomplete data. Please try again.');
-    }
-
-    kit.createdAt=new Date().toISOString(); kit.tool=S.tool; kit.examCode=examCode;
-    S.kit=kit;
-    S.cards=kit.flashcards||[]; S.cardIdx=0;
-    S.quiz=kit.quiz||[]; S.qIdx=0; S.qScore=0;
+    if(!kit?.flashcards?.length&&!kit?.summary)throw new Error('Incomplete response — please try again');
+    kit.createdAt=new Date().toISOString(); kit.tool=S.tool; kit.examCode=S.examCode; kit.subject=S.subject; kit.topic=topic;
+    S.kit=kit; S.cards=kit.flashcards||[]; S.cardIdx=0; S.quiz=kit.quiz||[]; S.qIdx=0; S.qScore=0;
     incUsed(); updUsage();
     const d=ld(); d.genCount=(d.genCount||0)+1; sv(d);
-    renderKit(kit);
-    showLoader(false); btn.disabled=false; btn.textContent='Generate Study Kit';
+    renderKit(kit); showLoader(false); btn.disabled=false; btn.textContent='Generate Study Kit';
     openResults();
-
   }catch(e){
     showLoader(false); btn.disabled=false; btn.textContent='Generate Study Kit';
-    const msg=e.name==='AbortError'?'Request timed out — check your internet connection':e.message;
-    banner.textContent=msg; banner.className='status-banner on err';
+    const msg=e.name==='AbortError'?'Timed out — check your internet connection':e.message;
+    errEl.textContent=msg; errEl.className='gen-err on';
     toast('Error: '+msg.slice(0,80));
   }
 }
 
-/* =========================================================
+/* ================================================
    RENDER KIT
-========================================================= */
+================================================ */
 function renderKit(kit){
   document.getElementById('res-title').textContent=kit.title||'Study Kit';
-  document.getElementById('notes-content').textContent=kit.notes||'No notes extracted.';
-  const sumEl=document.getElementById('sum-content');
-  sumEl.innerHTML=(kit.summary||'No summary.').split('\n').filter(p=>p.trim()).map(p=>'<p>'+p+'</p>').join('');
-  const termsEl=document.getElementById('terms-list');
-  termsEl.innerHTML=(kit.keyterms||[]).length
-    ?(kit.keyterms.map(t=>'<div class="term-card"><div class="term-top"><span class="term-name">'+t.term+'</span>'+(t.marks?'<span class="term-marks">'+t.marks+' mark'+(t.marks>1?'s':'')+'</span>':'')+'</div><div class="term-def">'+t.definition+'</div></div>').join(''))
-    :'<div class="empty"><div class="empty-text">No key terms returned.</div></div>';
+  document.getElementById('notes-txt').textContent=kit.notes||'No notes.';
+  const s=document.getElementById('sum-txt');
+  s.innerHTML=(kit.summary||'No summary.').split('\n').filter(p=>p.trim()).map(p=>`<p>${p}</p>`).join('');
+  document.getElementById('terms-list').innerHTML=(kit.keyterms||[]).length
+    ?kit.keyterms.map(t=>`<div class="term"><div class="term-hd"><span class="term-name">${t.term}</span>${t.marks?`<span class="term-mk">${t.marks}m</span>`:''}</div><div class="term-def">${t.definition}</div></div>`).join('')
+    :'<div class="empty"><div class="el">No key terms returned.</div></div>';
   renderCard();
 }
 function openResults(){
@@ -1284,255 +1158,201 @@ function openResults(){
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   document.getElementById('s-results').classList.add('active');
   document.getElementById('nb-results').classList.add('on');
-  S.prevScreen='results';
   switchRT('fc',document.querySelector('.rtab'));
 }
 
-/* =========================================================
+/* ================================================
    FLASHCARDS
-========================================================= */
+================================================ */
 function renderCard(){
-  const cards=S.cards;
-  if(!cards.length){document.getElementById('fc-ctr').textContent='No cards';return}
-  const c=cards[S.cardIdx];
+  if(!S.cards.length){document.getElementById('fc-ctr').textContent='No cards';return}
+  const c=S.cards[S.cardIdx];
   document.getElementById('fc-q').textContent=c.q||'';
-  document.getElementById('fc-ctr').textContent='Card '+(S.cardIdx+1)+' of '+cards.length;
-  const mbadge=document.getElementById('fc-mbadge');
-  if(c.marks){mbadge.textContent=c.marks+' mark'+(c.marks>1?'s':'');mbadge.style.display='inline-block'}
-  else{mbadge.style.display='none'}
-  const scheme=document.getElementById('fc-scheme');
-  if(c.mark_scheme&&c.mark_scheme.trim()){scheme.textContent=c.mark_scheme}
-  else{scheme.textContent=c.a||'No answer provided.'}
+  document.getElementById('fc-ctr').textContent=`Card ${S.cardIdx+1} of ${S.cards.length}`;
+  const mb=document.getElementById('fc-marks');
+  if(c.marks){mb.textContent=c.marks+' mark'+(c.marks>1?'s':'');mb.style.display='inline-flex'}else mb.style.display='none';
+  document.getElementById('fc-scheme').textContent=c.mark_scheme?.trim()?c.mark_scheme:c.a||'';
   const mis=document.getElementById('fc-mistake');
-  if(c.common_mistake&&c.common_mistake.trim()){mis.textContent=c.common_mistake;mis.style.display='block'}
-  else{mis.style.display='none'}
+  if(c.common_mistake?.trim()){mis.innerHTML='<b>Common mistake:</b> '+c.common_mistake;mis.style.display='block'}else mis.style.display='none';
   document.getElementById('fcinner').classList.remove('flip');
 }
 function flipCard(){document.getElementById('fcinner').classList.toggle('flip')}
-function nextCard(){
-  if(S.cardIdx<S.cards.length-1){S.cardIdx++;renderCard()}
-  else toast('Last card! Start again from Card 1')
-}
+function nextCard(){if(S.cardIdx<S.cards.length-1){S.cardIdx++;renderCard()}else toast('Last card!')}
 function prevCard(){if(S.cardIdx>0){S.cardIdx--;renderCard()}}
 function shuffleCards(){
-  for(let i=S.cards.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [S.cards[i],S.cards[j]]=[S.cards[j],S.cards[i]];
-  }
-  S.cardIdx=0; renderCard(); toast('Cards shuffled');
+  for(let i=S.cards.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[S.cards[i],S.cards[j]]=[S.cards[j],S.cards[i]]}
+  S.cardIdx=0; renderCard(); toast('Shuffled');
 }
 
-/* =========================================================
+/* ================================================
    QUIZ
-========================================================= */
+================================================ */
 function renderQuiz(){
   const a=document.getElementById('qa-area');
-  if(!S.quiz.length){a.innerHTML='<div class="empty"><div class="empty-icon">&#10067;</div><div class="empty-text">No quiz questions were generated.</div></div>';return}
+  if(!S.quiz.length){a.innerHTML='<div class="empty"><div class="ei">❓</div><div class="el">No quiz questions.</div></div>';return}
   if(S.qIdx>=S.quiz.length){
-    const pct=Math.round(S.qScore/S.quiz.length*100);
-    const emoji=pct>=80?'🏆':pct>=60?'👍':pct>=40?'📚':'💪';
-    a.innerHTML='<div class="score-wrap"><div class="score-emoji">'+emoji+'</div><div class="score-pct">'+pct+'%</div><div class="score-label">'+S.qScore+' / '+S.quiz.length+' correct</div><button class="btn-retry" onclick="S.qIdx=0;S.qScore=0;renderQuiz()">Try Again</button></div>';
+    const p=~~(S.qScore/S.quiz.length*100),em=p>=80?'🏆':p>=60?'👍':p>=40?'📚':'💪';
+    a.innerHTML=`<div class="score-wrap"><div class="score-e">${em}</div><div class="score-p">${p}%</div><div class="score-l">${S.qScore} / ${S.quiz.length} correct</div><button class="btn-retry" onclick="S.qIdx=0;S.qScore=0;renderQuiz()">Try Again</button></div>`;
     return;
   }
-  const q=S.quiz[S.qIdx];
-  const prog=Math.round(S.qIdx/S.quiz.length*100);
-  a.innerHTML='<div class="q-prog-row"><span style="font-size:11px;color:var(--t3)">'+( S.qIdx+1)+'/'+S.quiz.length+'</span><div class="q-prog-bar"><div class="q-prog-fill" style="width:'+prog+'%"></div></div><span style="font-size:11px;color:var(--em);font-weight:600">'+S.qScore+'&#10003;</span></div>'
-    +'<div class="q-card"><div class="q-num">Q'+(S.qIdx+1)+(q.marks?'<span class="q-marks">'+q.marks+' mark'+(q.marks>1?'s':'')+'</span>':'')+'</div><div class="q-text">'+q.question+'</div></div>'
-    +'<div class="q-opts">'+(q.options||[]).map((o,i)=>'<button class="q-opt" onclick="answerQ('+i+')">'+String.fromCharCode(65+i)+'. '+o+'</button>').join('')+'</div>'
-    +'<div class="q-expl" id="qexpl">'+(q.explanation||'')+'</div>'
-    +'<button class="btn-next" id="qnext" onclick="S.qIdx++;renderQuiz()">Next &rarr;</button>';
+  const q=S.quiz[S.qIdx],prog=~~(S.qIdx/S.quiz.length*100);
+  a.innerHTML=`<div class="qprow"><span style="font-size:11px;color:var(--t3)">${S.qIdx+1}/${S.quiz.length}</span><div class="qpbar"><div class="qpfill" style="width:${prog}%"></div></div><span style="font-size:11px;color:var(--em);font-weight:600">${S.qScore}✓</span></div>
+  <div class="qcard"><div class="qnum">Q${S.qIdx+1}${q.marks?`<span class="qmarks">${q.marks}m</span>`:''}</div><div class="qtext">${q.question}</div></div>
+  <div class="qopts">${(q.options||[]).map((o,i)=>`<button class="qopt" onclick="answerQ(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
+  <div class="qexpl" id="qe">${q.explanation||''}</div>
+  <button class="btn-next" id="qn" onclick="S.qIdx++;renderQuiz()">Next →</button>`;
 }
 function answerQ(sel){
-  const q=S.quiz[S.qIdx]; const cor=q.correct??0;
-  document.querySelectorAll('.q-opt').forEach((o,i)=>{
-    o.disabled=true;
-    if(i===cor)o.classList.add('ok');
-    else if(i===sel&&sel!==cor)o.classList.add('ng');
-  });
+  const q=S.quiz[S.qIdx],cor=q.correct??0;
+  document.querySelectorAll('.qopt').forEach((o,i)=>{o.disabled=true;if(i===cor)o.classList.add('ok');else if(i===sel&&sel!==cor)o.classList.add('ng')});
   if(sel===cor)S.qScore++;
-  document.getElementById('qexpl')?.classList.add('on');
-  document.getElementById('qnext')?.classList.add('on');
+  document.getElementById('qe')?.classList.add('on');
+  document.getElementById('qn')?.classList.add('on');
 }
 function switchRT(tab,btn){
-  S.resultTab=tab;
   document.querySelectorAll('.rtab').forEach(t=>t.classList.remove('on'));
   document.querySelectorAll('.rpanel').forEach(p=>p.classList.remove('on'));
-  const tabs=['fc','quiz','notes','sum','terms'];
   if(btn)btn.classList.add('on');
-  else document.querySelectorAll('.rtab')[tabs.indexOf(tab)]?.classList.add('on');
+  else{const ts=['fc','quiz','notes','sum','terms'];document.querySelectorAll('.rtab')[ts.indexOf(tab)]?.classList.add('on')}
   document.getElementById('rp-'+tab)?.classList.add('on');
   if(tab==='quiz')renderQuiz();
 }
 
-/* =========================================================
+/* ================================================
    SAVE / SHARE / COPY / EXPORT
-========================================================= */
+================================================ */
 function saveKit(){
-  if(!S.kit){toast('Nothing to save yet');return}
+  if(!S.kit){toast('Nothing to save');return}
   const h=hist();
-  h.unshift({id:Date.now(),title:S.kit.title||'Study Kit',date:new Date().toLocaleDateString(),tool:S.tool,examCode:S.kit.examCode||'',kit:S.kit});
+  h.unshift({id:Date.now(),title:S.kit.title||'Study Kit',date:new Date().toLocaleDateString(),tool:S.tool,kit:S.kit});
   if(h.length>60)h.pop();
   localStorage.setItem(HK,JSON.stringify(h));
-  toast('Saved to Library');
-  updStats();
+  toast('Saved to Library'); updStats();
 }
 async function shareKit(){
   if(!S.kit)return;
   const k=S.kit;
-  const txt='Study Kit: '+k.title+'\n\nSummary:\n'+(k.summary||'')+'\n\nKey Terms:\n'+(k.keyterms||[]).slice(0,6).map(t=>'- '+t.term+': '+t.definition).join('\n')+'\n\nFlashcards:\n'+(k.flashcards||[]).slice(0,8).map((f,i)=>(i+1)+'. Q: '+f.q+'\nA: '+(f.mark_scheme||f.a)).join('\n\n')+'\n\n— StudyOS';
+  const txt=`${k.title}\n\nSummary:\n${k.summary||''}\n\nKey Terms:\n${(k.keyterms||[]).slice(0,6).map(t=>`- ${t.term}: ${t.definition}`).join('\n')}\n\nFlashcards:\n${(k.flashcards||[]).slice(0,8).map((f,i)=>`${i+1}. Q: ${f.q}\nA: ${f.mark_scheme||f.a}`).join('\n\n')}\n\n- StudyOS`;
   if(navigator.share){try{await navigator.share({title:k.title,text:txt});return}catch{}}
-  if(navigator.clipboard){await navigator.clipboard.writeText(txt);toast('Copied to clipboard');}
-  else toast('Share not available on this browser');
+  navigator.clipboard?.writeText(txt).then(()=>toast('Copied to clipboard'));
 }
 function copyTab(){
-  if(!S.kit){toast('Nothing to copy yet');return}
+  if(!S.kit){toast('Nothing to copy');return}
+  const tab=document.querySelector('.rtab.on')?.textContent?.toLowerCase()||'';
   let txt='';
-  const t=S.resultTab;
-  if(t==='fc')txt=(S.kit.flashcards||[]).map((f,i)=>(i+1)+'. ['+( f.marks||1)+' mark(s)] '+f.q+'\n'+(f.mark_scheme||f.a)+(f.common_mistake?'\n Warning: '+f.common_mistake:'')).join('\n\n');
-  else if(t==='quiz')txt=(S.kit.quiz||[]).map((q,i)=>(i+1)+'. '+q.question+'\n'+(q.options||[]).map((o,j)=>'   '+String.fromCharCode(65+j)+'. '+o).join('\n')+'\n   Answer: '+String.fromCharCode(65+(q.correct||0))+'. '+q.explanation).join('\n\n');
-  else if(t==='notes')txt=S.kit.notes||'';
-  else if(t==='sum')txt=S.kit.summary||'';
-  else txt=(S.kit.keyterms||[]).map(t2=>t2.term+': '+t2.definition).join('\n\n');
-  if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast('Copied'));
-  else toast('Copy not available');
+  if(tab.includes('card'))txt=(S.kit.flashcards||[]).map((f,i)=>`${i+1}. [${f.marks||1}m] ${f.q}\n${f.mark_scheme||f.a}${f.common_mistake?'\n⚠ '+f.common_mistake:''}`).join('\n\n');
+  else if(tab.includes('quiz'))txt=(S.kit.quiz||[]).map((q,i)=>`${i+1}. ${q.question}\n${(q.options||[]).map((o,j)=>`   ${String.fromCharCode(65+j)}. ${o}`).join('\n')}\n   ✓ ${String.fromCharCode(65+(q.correct||0))}: ${q.explanation}`).join('\n\n');
+  else if(tab.includes('note'))txt=S.kit.notes||'';
+  else if(tab.includes('sum'))txt=S.kit.summary||'';
+  else txt=(S.kit.keyterms||[]).map(t=>`${t.term}: ${t.definition}`).join('\n\n');
+  navigator.clipboard?.writeText(txt).then(()=>toast('Copied'));
 }
 function exportTxt(){
   if(!S.kit)return;
   const k=S.kit;
-  const lines=[
-    '# '+( k.title||'Study Kit'),'Generated: '+new Date().toLocaleString(),'',
-    '## NOTES',k.notes||'','',
+  const lines=[`# ${k.title}`,`Generated: ${new Date().toLocaleString()}`,'',
     '## SUMMARY',k.summary||'','',
-    '## KEY TERMS',(k.keyterms||[]).map(t=>'- '+(t.marks?'['+t.marks+'m] ':'')+t.term+': '+t.definition).join('\n'),'',
-    '## FLASHCARDS',(k.flashcards||[]).map((f,i)=>(i+1)+'. ['+( f.marks||1)+' mark(s)]\nQ: '+f.q+'\nA: '+(f.mark_scheme||f.a)+(f.common_mistake?'\nMistake: '+f.common_mistake:'')).join('\n\n'),'',
-    '## QUIZ',(k.quiz||[]).map((q,i)=>(i+1)+'. ['+( q.marks||1)+'m] '+q.question+'\n'+(q.options||[]).map((o,j)=>'   '+String.fromCharCode(65+j)+'. '+o).join('\n')+'\n   Answer: '+String.fromCharCode(65+(q.correct||0))+'\n   '+q.explanation).join('\n\n')
-  ];
+    '## KEY TERMS',(k.keyterms||[]).map(t=>`- ${t.term}${t.marks?` [${t.marks}m]`:''}: ${t.definition}`).join('\n'),'',
+    '## FLASHCARDS',(k.flashcards||[]).map((f,i)=>`${i+1}. [${f.marks||1}m] ${f.q}\n${f.mark_scheme||f.a}${f.common_mistake?'\n⚠ '+f.common_mistake:''}`).join('\n\n'),'',
+    '## QUIZ',(k.quiz||[]).map((q,i)=>`${i+1}. [${q.marks||1}m] ${q.question}\n${(q.options||[]).map((o,j)=>`   ${String.fromCharCode(65+j)}. ${o}`).join('\n')}\n   ✓ ${String.fromCharCode(65+(q.correct||0))}: ${q.explanation}`).join('\n\n')];
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain'}));
   a.download=((k.title||'StudyKit').replace(/[^a-z0-9]/gi,'_'))+'.txt';
   a.click(); toast('Exported');
 }
 
-/* =========================================================
+/* ================================================
    LIBRARY
-========================================================= */
+================================================ */
 function renderLib(){
-  const h=hist(); const el=document.getElementById('lib-list'); if(!el)return;
-  if(!h.length){el.innerHTML='<div class="empty"><div class="empty-icon">&#128218;</div><div class="empty-text">No saved kits yet.<br>Generate one and tap Save.</div></div>';return}
-  el.innerHTML=h.map(e=>'<div class="lib-card" onclick="loadEntry('+e.id+')"><div class="lib-ico">'+(ICONS[e.tool]||'📚')+'</div><div class="lib-info"><div class="lib-t">'+e.title+'</div><div class="lib-m">'+e.date+' &bull; '+(e.kit?.flashcards?.length||0)+' cards</div></div><button class="lib-del" onclick="delEntry(event,'+e.id+')">&#10005;</button></div>').join('');
+  const h=hist(),el=document.getElementById('lib-list');if(!el)return;
+  if(!h.length){el.innerHTML='<div class="empty"><div class="ei">📭</div><div class="el">No saved kits.<br>Generate one and tap Save.</div></div>';return}
+  el.innerHTML=h.map(e=>`<div class="lcard" onclick="loadEntry(${e.id})"><div class="lico">${ICONS[e.tool]||'📚'}</div><div class="linf"><div class="ltt">${e.title}</div><div class="lmm">${e.date} · ${e.kit?.flashcards?.length||0} cards</div></div><button class="ldel" onclick="delEntry(event,${e.id})">✕</button></div>`).join('');
 }
 function loadEntry(id){
-  const e=hist().find(x=>x.id===id); if(!e)return;
-  S.kit=e.kit; S.tool=e.tool||'text';
-  S.cards=e.kit.flashcards||[]; S.cardIdx=0;
+  const e=hist().find(x=>x.id===id);if(!e)return;
+  S.kit=e.kit; S.tool=e.tool||'topic'; S.cards=e.kit.flashcards||[]; S.cardIdx=0;
   S.quiz=e.kit.quiz||[]; S.qIdx=0; S.qScore=0;
   renderKit(e.kit); openResults();
 }
-function delEntry(ev,id){
-  ev.stopPropagation();
-  localStorage.setItem(HK,JSON.stringify(hist().filter(e=>e.id!==id)));
-  renderLib(); updStats(); toast('Deleted');
-}
-function clearLib(){
-  if(!confirm('Delete all saved kits? This cannot be undone.'))return;
-  localStorage.removeItem(HK); renderLib(); updStats(); toast('Library cleared');
-}
+function delEntry(ev,id){ev.stopPropagation();localStorage.setItem(HK,JSON.stringify(hist().filter(e=>e.id!==id)));renderLib();updStats();toast('Deleted')}
+function clearLib(){if(!confirm('Delete all saved kits?'))return;localStorage.removeItem(HK);renderLib();updStats();toast('Library cleared')}
 function renderRecent(){
-  const h=hist().slice(0,4); const el=document.getElementById('rec-list'); if(!el)return;
-  if(!h.length){el.innerHTML='<div class="empty" style="padding:20px"><div class="empty-text">No recent activity.<br>Tap a tool above to start.</div></div>';return}
-  el.innerHTML=h.map(e=>'<div class="rec" onclick="loadEntry('+e.id+')"><div class="rec-ico">'+(ICONS[e.tool]||'📚')+'</div><div class="rec-info"><div class="rec-t">'+e.title+'</div><div class="rec-m">'+e.date+'</div></div></div>').join('');
+  const h=hist().slice(0,4),el=document.getElementById('rec-list');if(!el)return;
+  if(!h.length){el.innerHTML='<div class="empty" style="padding:16px 0"><div class="el">No recent activity. Tap a tool to start.</div></div>';return}
+  el.innerHTML=h.map(e=>`<div class="rec" onclick="loadEntry(${e.id})"><div class="rec-ico">${ICONS[e.tool]||'📚'}</div><div class="rec-info"><div class="rec-t">${e.title}</div><div class="rec-m">${e.date}</div></div></div>`).join('');
 }
 
-/* =========================================================
+/* ================================================
    USAGE + STATS
-========================================================= */
+================================================ */
 function updUsage(){
-  const used=getUsed(); const pct=Math.min(100,(used/LIMIT)*100);
-  const usedEl=document.getElementById('us-used'); if(usedEl)usedEl.textContent=used;
-  const fill=document.getElementById('us-fill');
-  if(fill){fill.style.width=pct+'%';fill.className='us-fill'+(used>=LIMIT?' danger':used>=3?' warn':'');}
-  const det=document.getElementById('usage-detail'); if(det)det.textContent=used+' / '+LIMIT+' generated today';
+  const used=getUsed(),pct=Math.min(100,used/LIMIT*100);
+  const u=document.getElementById('us-used');if(u)u.textContent=used;
+  const f=document.getElementById('us-fill');if(f){f.style.width=pct+'%';f.className='us-fill'+(used>=LIMIT?' danger':used>=3?' warn':'')}
 }
 function updStats(){
-  const h=hist(); const d=ld();
-  const g=document.getElementById('stat-gen'); if(g)g.textContent=d.genCount||0;
-  const c=document.getElementById('stat-cards'); if(c)c.textContent=h.reduce((a,e)=>a+(e.kit?.flashcards?.length||0),0);
-  const s=document.getElementById('stat-saved'); if(s)s.textContent=h.length;
-  const lf=document.getElementById('lifetime-detail'); if(lf)lf.textContent=(d.genCount||0)+' kits generated';
+  const h=hist(),d=ld();
+  const g=document.getElementById('st-gen');if(g)g.textContent=d.genCount||0;
+  const c=document.getElementById('st-cards');if(c)c.textContent=h.reduce((a,e)=>a+(e.kit?.flashcards?.length||0),0);
+  const s=document.getElementById('st-saved');if(s)s.textContent=h.length;
 }
 function updSettings(){
-  updStats(); updUsage();
+  updUsage(); updStats();
+  const d=ld();
+  const ud=document.getElementById('usage-det');if(ud)ud.textContent=`${getUsed()} / ${LIMIT}`;
+  const ld2=document.getElementById('lifetime-det');if(ld2)ld2.textContent=(d.genCount||0)+' kits generated';
   const tog=document.getElementById('dark-tog');
-  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
-  if(tog)tog.classList.toggle('on',isDark);
+  if(tog)tog.classList.toggle('on',document.documentElement.getAttribute('data-theme')==='dark');
 }
 
-/* =========================================================
-   APPEARANCE
-========================================================= */
+/* ================================================
+   SETTINGS
+================================================ */
 function toggleDark(btn){
   const dark=document.documentElement.getAttribute('data-theme')==='dark';
   document.documentElement.setAttribute('data-theme',dark?'light':'dark');
   btn.classList.toggle('on',!dark);
-  const d=ld(); d.prefs={...( d.prefs||{}),dark:!dark}; sv(d);
+  const d=ld(); d.prefs={...(d.prefs||{}),dark:!dark}; sv(d);
 }
 
-/* =========================================================
-   MONETIZATION — Paystack integration
-   Replace pk_live_xxx with your Paystack public key
-========================================================= */
+/* ================================================
+   PREMIUM — Paystack
+================================================ */
 function goPremium(){
-  closeModal('paywall');
-  /* Paystack inline checkout */
-  const userEmail=S.user?.email||'';
+  closeM('paywall');
   if(typeof PaystackPop!=='undefined'){
     const handler=PaystackPop.newTransaction({
-      key:'pk_live_REPLACE_WITH_YOUR_PAYSTACK_KEY',
-      email:userEmail||prompt('Enter your email to continue:',''),
-      amount:299*100, // $2.99 in cents (USD) — adjust for your currency
+      key:'pk_live_REPLACE_WITH_YOUR_PAYSTACK_PUBLIC_KEY',
+      email:S.user?.email||prompt('Your email:',''),
+      amount:29900, // 299 in smallest currency unit
       currency:'USD',
       label:'StudyOS Premium',
-      onSuccess:(t)=>{ unlockPremium(t.reference); },
+      onSuccess:(t)=>{const d=ld();d.premium={ref:t.reference,date:new Date().toISOString()};sv(d);toast('Premium unlocked! Thank you.')},
       onCancel:()=>{}
     });
   }else{
-    // Fallback: open payment page directly
     window.open('https://paystack.com/pay/studyos-premium','_blank');
-    toast('Opening payment page...');
   }
 }
-function unlockPremium(ref){
-  const d=ld(); d.premium={ref,date:new Date().toISOString()}; sv(d);
-  toast('Premium unlocked! Thank you.');
-}
 function showPaywall(){document.getElementById('paywall').classList.add('on')}
-function closeModal(id){document.getElementById(id)?.classList.remove('on')}
+function closeM(id){document.getElementById(id)?.classList.remove('on')}
 
-/* =========================================================
-   UTILS
-========================================================= */
+/* ================================================
+   LOADER / TOAST
+================================================ */
 function showLoader(on){document.getElementById('loader').classList.toggle('on',on)}
-function setLoad(title,sub,pct){
-  const t=document.getElementById('load-title'); if(t)t.textContent=title;
-  const s=document.getElementById('load-sub');   if(s)s.textContent=sub;
-  const b=document.getElementById('load-bar');   if(b&&pct!==undefined)b.style.width=pct+'%';
+function setLoad(t,s,p){
+  const te=document.getElementById('ld-t');if(te)te.textContent=t;
+  const se=document.getElementById('ld-s');if(se)se.textContent=s;
+  const be=document.getElementById('ld-b');if(be&&p!==undefined)be.style.width=p+'%';
 }
-let _toastTimer;
-function toast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg; el.classList.add('on');
-  clearTimeout(_toastTimer);
-  _toastTimer=setTimeout(()=>el.classList.remove('on'),2800);
-}
-/* Close modals when tapping background */
-document.querySelectorAll('.modal-bg').forEach(bg=>{
-  bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('on')});
-});
+let _tt;
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('on'),2800)}
+document.querySelectorAll('.modal-bg').forEach(bg=>bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('on')}));
 
-/* =========================================================
+/* ================================================
    START
-========================================================= */
+================================================ */
 initApp();
-</script>
-</body>
-</html>
+</script></body></html>
