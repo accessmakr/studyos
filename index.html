@@ -364,9 +364,9 @@ input[type=file]{display:none}
     <div id="ep-topic-section" style="display:none">
       <div class="ep-label">Select topic</div>
       <div class="chip-row" id="ep-topics"></div>
-      <input class="custom-inp" id="ep-custom-topic" placeholder="Or type a custom topic..." oninput="S.topic=this.value;updateStudyBtn()">
+      <input class="custom-inp" id="ep-custom-topic" placeholder="Or type a specific topic / subtopic..." oninput="S.topic=this.value;updateStudyBtn();showYearSelector()">
       <div id="ep-year-section" style="display:none">
-        <div class="ep-label" style="margin-top:10px">Past paper year (optional)</div>
+        <div class="ep-label" style="margin-top:10px">Past paper year</div>
         <div class="chip-row" id="ep-years"></div>
       </div>
       <button class="btn-study" id="btn-study" onclick="startStudy()">&#9889; Generate Study Kit</button>
@@ -850,8 +850,9 @@ function selectSubject(sub,btn){
   topicEl.innerHTML=topics.map(t=>`<button class="topic-chip" onclick="selectTopic('${t.replace(/'/g,"\\'")}',this)">${t}</button>`).join('');
   if(!topics.length) topicEl.innerHTML='<span style="font-size:11px;color:var(--t3)">No preset topics — type one below</span>';
   document.getElementById('ep-topic-section').style.display='';
-  document.getElementById('ep-year-section').style.display='none';
   document.getElementById('ep-custom-topic').value='';
+  // Show year selector immediately after subject is selected
+  showYearSelector();
   updateStudyBtn();
 }
 
